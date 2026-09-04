@@ -50,6 +50,11 @@ const getStats = asyncHandler(async (req, res) => {
   res.json(stats);
 });
 
+const recordVisit = asyncHandler(async (req, res) => {
+  await petitionService.recordVisit();
+  res.json({ success: true });
+});
+
 const getWards = asyncHandler(async (req, res) => {
   const wards = await petitionService.getWards();
   res.json(wards);
@@ -61,4 +66,5 @@ module.exports = {
   trackPetition,
   getStats,
   getWards,
+  recordVisit,
 };

@@ -100,9 +100,26 @@ const trackPetition = async (trackingCode) => {
 };
 
 /**
+ * Record a visit for today
+ */
+const recordVisit = async () => {
+  const vnTime = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+  const dateStr = vnTime.toISOString().slice(0, 10);
+  await runAsync(`
+    INSERT INTO visits (date, count) VALUES (?, 1)
+    ON CONFLICT(date) DO UPDATE SET count = count + 1
+  `, [dateStr]);
+};
+
+/**
  * Get stats for the homepage
  */
 const getStats = async () => {
+  const vnTime = new Date(new Date().getTime() + 7 * 60 * 60 * 1000);
+  const dateStr = vnTime.toISOString().slice(0, 10);
+  const visitRow = await getAsync(`SELECT count FROM visits WHERE date = ?`, [dateStr]);
+  const visitsToday = visitRow?.count || 0;
+
   const stats = await getAsync(`
     SELECT 
       COUNT(*) as total,
@@ -119,6 +136,7 @@ const getStats = async () => {
     processing: stats?.processing || 0,
     pending: stats?.pending || 0,
     rejected: stats?.rejected || 0,
+    visitsToday: visitsToday,
   };
 };
 
@@ -135,4 +153,5 @@ module.exports = {
   trackPetition,
   getStats,
   getWards,
+  recordVisit,
 };

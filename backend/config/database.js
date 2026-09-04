@@ -112,7 +112,15 @@ const initDB = () => {
       )
     `);
 
-    // 7. Performance indexes
+    // 7. Visits table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS visits (
+        date TEXT PRIMARY KEY,
+        count INTEGER DEFAULT 1
+      )
+    `);
+
+    // 8. Performance indexes
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_createdAt ON petitions (createdAt DESC)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_status ON petitions (status)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_ward ON petitions (ward)`);

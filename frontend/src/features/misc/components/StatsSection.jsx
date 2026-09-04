@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../../lib/api';
 
 const StatsSection = () => {
-  const [stats, setStats] = useState({ total: 0, processing: 0, resolved: 0 });
+  const [stats, setStats] = useState({ total: 0, processing: 0, resolved: 0, visitsToday: 0 });
 
   useEffect(() => {
-    fetchApi('/petitions/stats')
+    // Record visit, then fetch stats
+    fetchApi('/petitions/visit', { method: 'POST' })
+      .then(() => fetchApi('/petitions/stats'))
       .then(data => setStats(data))
       .catch(err => console.error("Could not fetch stats:", err));
   }, []);
@@ -27,7 +29,7 @@ const StatsSection = () => {
         </div>
         <div className="stat">
           <div className="stat-icon">♧</div>
-          <div><strong>1.250</strong><span>Lượt truy cập<br/>hôm nay</span></div>
+          <div><strong>{stats.visitsToday?.toLocaleString('vi-VN')}</strong><span>Lượt truy cập<br/>hôm nay</span></div>
         </div>
       </div>
     </section>
