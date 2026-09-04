@@ -9,12 +9,14 @@ services:
     ports:
       - "3002:3002"
     volumes:
-      # Mount the database file to persist data across container restarts
-      - ./data/database.sqlite:/app/database.sqlite
+      # Mount the data directory to persist the sqlite database
+      - ./data:/app/data
       # Mount the uploads directory to persist uploaded images
       - ./data/uploads:/app/uploads
     env_file:
       - ./backend/.env
+    environment:
+      - DB_PATH=/app/data/database.sqlite
     restart: unless-stopped
     networks:
       - hnd_network

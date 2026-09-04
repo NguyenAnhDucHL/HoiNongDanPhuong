@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const DB_FILE = path.join(__dirname, '..', 'database.sqlite');
+const DB_FILE = process.env.DB_PATH || path.join(__dirname, '..', 'database.sqlite');
 const db = new sqlite3.Database(DB_FILE);
 
 const WARDS = [
