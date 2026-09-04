@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hnd_backend
+    ports:
+      - "3002:3002"
+    volumes:
+      # Mount the database file to persist data across container restarts
+      - ./data/database.sqlite:/app/database.sqlite
+      # Mount the uploads directory to persist uploaded images
+      - ./data/uploads:/app/uploads
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    networks:
+      - hnd_network
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: hnd_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - hnd_network
+
+networks:
+  hnd_network:
+    driver: bridge
