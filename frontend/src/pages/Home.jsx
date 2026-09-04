@@ -80,19 +80,20 @@ export default function Home() {
             <img src="/logo.png" alt="Logo" className="logo" />
             <div className="brand-text">
               <h1>HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h1>
-              <p className="subtitle">CỔNG TIẾP NHẬN, XỬ LÝ PHẢN ÁNH, KIẾN NGHỊ CỦA HỘI VIÊN VÀ NHÂN DÂN</p>
+              <p className="subtitle">
+                CỔNG TIẾP NHẬN, XỬ LÝ PHẢN ÁNH, KIẾN NGHỊ<br />
+                CỦA HỘI VIÊN
+              </p>
             </div>
           </div>
           <div className="header-actions">
-            <div className="header-action-item hotline">
-              📞 Hotline: 0987 654 321
-            </div>
-            <div className="header-action-item">
-              🕐 Thứ 2 - Thứ 6: 7:30 - 17:00
-            </div>
-            <a href="/admin/login" className="btn-admin-login">
-              🔒 Đăng nhập cán bộ
+            <a href="/admin/login" className="btn-admin-login-new">
+              👤 ĐĂNG NHẬP
             </a>
+            <div className="btn-hotline-new">
+              <div className="hotline-title">☎ ĐƯỜNG DÂY NÓNG</div>
+              <div className="hotline-number">0363789100/0838911445</div>
+            </div>
           </div>
         </div>
       </header>
