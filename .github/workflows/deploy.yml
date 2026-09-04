@@ -1,0 +1,30 @@
+name: Deploy to VNPT Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server via SSH
+        env:
+          VNPT_HOST: ${{ secrets.VNPT_HOST }}
+          VNPT_USER: ${{ secrets.VNPT_USER }}
+          VNPT_PASS: ${{ secrets.VNPT_PASS }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+          
+          sshpass -p "$VNPT_PASS" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 $VNPT_USER@$VNPT_HOST << 'EOF'
+            set -e
+            cd /root/HoiNongDanPhuong
+            git pull origin main
+            docker compose up -d --build
+          EOF
