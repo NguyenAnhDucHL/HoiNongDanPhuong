@@ -84,7 +84,7 @@ export default function AIAssistant() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 20 }}>🤖</span>
               <div>
-                <div style={{ fontSize: 14 }}>Trợ lý AI HND</div>
+                <div style={{ fontSize: 14 }}>Trợ lý AI Hội Nông Dân</div>
                 <div style={{ fontSize: 11, opacity: 0.8, fontWeight: 400 }}>
                   {aiAvailable ? '🟢 Đang hoạt động' : '🔴 Chưa cấu hình'}
                 </div>
@@ -174,7 +174,7 @@ export default function AIAssistant() {
       <button
         className="ai-fab-btn"
         onClick={() => setOpen(!open)}
-        title="Trợ lý AI HND"
+        title="Trợ lý AI Hội Nông Dân"
       >
         {open ? '×' : '🤖'}
       </button>

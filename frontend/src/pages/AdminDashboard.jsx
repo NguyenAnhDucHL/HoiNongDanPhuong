@@ -170,7 +170,7 @@ export default function AdminDashboard() {
       <div className="admin-topbar">
         <div className="admin-topbar-brand">
           <img src="/logo.png" alt="Logo" className="dashboard-logo-img" />
-          <span>HND Cẩm Phả - Quản trị</span>
+          <span>Hội Nông Dân Cẩm Phả - Quản trị</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <span style={{ fontSize: 14, opacity: 0.85 }}>👤 {adminInfo.fullName || adminInfo.username}</span>

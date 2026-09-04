@@ -20,7 +20,7 @@ router.use('/posts', postRoutes);
 router.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'HND Cẩm Phả Backend',
+    service: 'Hội Nông Dân Cẩm Phả Backend',
     timestamp: new Date().toISOString(),
   });
 });

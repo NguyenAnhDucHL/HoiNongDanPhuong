@@ -8,7 +8,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "HND Cẩm Phả",
+  "author": "Hội Nông Dân Cẩm Phả",
   "license": "ISC",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",

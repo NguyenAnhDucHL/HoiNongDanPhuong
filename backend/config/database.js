@@ -25,7 +25,7 @@ const initDB = () => {
       )
     `);
 
-    // 2. Petitions table - extended for HND with AI fields
+    // 2. Petitions table - extended for Hội Nông Dân with AI fields
     db.run(`
       CREATE TABLE IF NOT EXISTS petitions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +56,9 @@ const initDB = () => {
     db.run(`ALTER TABLE petitions ADD COLUMN aiSuggestion TEXT`, () => { });
     db.run(`ALTER TABLE petitions ADD COLUMN aiCategory TEXT`, () => { });
     db.run(`ALTER TABLE petitions ADD COLUMN updatedAt DATETIME`, () => { });
+
+    // Rename HND to Hội Nông Dân in existing accounts
+    db.run(`UPDATE admins SET fullName = 'Quản trị viên Hội Nông Dân' WHERE username = 'admin'`, () => { });
 
     // 3. Tracking logs table
     db.run(`
@@ -124,7 +127,7 @@ const initDB = () => {
           const hashed = await bcrypt.hash('hnd2026', 10);
           db.run(
             `INSERT INTO admins (username, password, fullName) VALUES (?, ?, ?)`,
-            ['admin', hashed, 'Quản trị viên HND']
+            ['admin', hashed, 'Quản trị viên Hội Nông Dân']
           );
           console.log('[DB] Default admin created: admin / hnd2026');
         } catch (e) {

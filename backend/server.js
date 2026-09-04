@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(config.port, () => {
-  console.log(`\n🌿 HND Cẩm Phả Backend đang chạy tại http://localhost:${config.port}`);
+  console.log(`\n🌿 Hội Nông Dân Cẩm Phả Backend đang chạy tại http://localhost:${config.port}`);
   console.log(`📡 API: http://localhost:${config.port}/api/health`);
   console.log(`🤖 AI Agent: ${config.geminiApiKey && config.geminiApiKey !== 'YOUR_GEMINI_API_KEY_HERE' ? 'Đã cấu hình ✅' : 'Chưa cấu hình (thêm GEMINI_API_KEY vào .env) ⚠️'}\n`);
 });
