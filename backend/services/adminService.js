@@ -91,9 +91,9 @@ const updatePetitionStatus = async (id, { status, adminNotes, adminId }) => {
 
   await runAsync(
     `UPDATE petitions 
-     SET status = ?, adminNotes = ?, updatedAt = CURRENT_TIMESTAMP
+     SET status = ?, adminNotes = ?, updatedAt = ?
      WHERE id = ?`,
-    [status, adminNotes || null, id]
+    [status, adminNotes || null, new Date().toISOString(), id]
   );
 
   const actionLabels = {
@@ -117,9 +117,9 @@ const updatePetitionStatus = async (id, { status, adminNotes, adminId }) => {
 const updateAIAnalysis = async (id, { aiSummary, aiPriority, aiSuggestion, aiCategory }) => {
   await runAsync(
     `UPDATE petitions 
-     SET aiSummary = ?, aiPriority = ?, aiSuggestion = ?, aiCategory = ?, updatedAt = CURRENT_TIMESTAMP
+     SET aiSummary = ?, aiPriority = ?, aiSuggestion = ?, aiCategory = ?, updatedAt = ?
      WHERE id = ?`,
-    [aiSummary, aiPriority, aiSuggestion, aiCategory, id]
+    [aiSummary, aiPriority, aiSuggestion, aiCategory, new Date().toISOString(), id]
   );
   return { success: true };
 };

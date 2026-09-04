@@ -92,8 +92,8 @@ const updatePost = asyncHandler(async (req, res) => {
         return reject(error);
       }
 
-      let query = 'UPDATE posts SET type = ?, title = ?, content = ?, updatedAt = CURRENT_TIMESTAMP';
-      const params = [type, title, content];
+      let query = 'UPDATE posts SET type = ?, title = ?, content = ?, updatedAt = ?';
+      const params = [type, title, content, new Date().toISOString()];
 
       if (image) {
         query += ', image = ?';
