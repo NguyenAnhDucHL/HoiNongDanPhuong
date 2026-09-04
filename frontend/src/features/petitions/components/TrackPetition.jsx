@@ -29,14 +29,10 @@ const TrackPetition = () => {
     setTrackLoading(true);
 
     try {
-      const res = await fetchApi(`/petitions/track/${trackCode.trim()}`);
-      if (res.status === 'success') {
-        setTrackResult(res.data);
-      } else {
-        setTrackError(res.message || 'Không tìm thấy phản ánh nào với mã này.');
-      }
+      const data = await fetchApi(`/petitions/track/${trackCode.trim()}`);
+      setTrackResult(data);
     } catch (err) {
-      setTrackError('Có lỗi xảy ra khi tra cứu. Vui lòng thử lại.');
+      setTrackError(err.message || 'Không tìm thấy phản ánh nào với mã này.');
     } finally {
       setTrackLoading(false);
     }

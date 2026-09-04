@@ -6,7 +6,7 @@ const StatsSection = () => {
 
   useEffect(() => {
     fetchApi('/petitions/stats')
-      .then(res => setStats(res.data))
+      .then(data => setStats(data))
       .catch(err => console.error("Could not fetch stats:", err));
   }, []);
 

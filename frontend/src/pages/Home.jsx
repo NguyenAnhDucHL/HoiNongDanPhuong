@@ -13,12 +13,12 @@ const Home = () => {
       <HeroSection />
       <StatsSection />
       <InfoSection />
-      
+
       <section className="form-section" id="gui-phan-anh">
         <div className="container">
           <div className="form-card">
-            <h3 style={{color: 'var(--green-dark)', fontSize: 22, marginBottom: 5}}>GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
-            <p style={{color: 'var(--muted)', marginBottom: 18}}>
+            <h3 style={{ color: 'var(--green-dark)', fontSize: 22, marginBottom: 5 }}>GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
+            <p style={{ color: 'var(--muted)', marginBottom: 18 }}>
               Vui lòng cung cấp đầy đủ thông tin để phản ánh được tiếp nhận và xử lý nhanh chóng.
             </p>
             <SubmitForm />
