@@ -6,3 +6,4 @@ database.sqlite-wal
 backend/uploads/
 extract_logo.txt
 .DS_Store
+frontend/dist/

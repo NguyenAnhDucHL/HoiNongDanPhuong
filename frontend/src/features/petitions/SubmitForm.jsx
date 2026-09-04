@@ -29,7 +29,7 @@ export default function SubmitForm() {
   useEffect(() => {
     fetchApi('/petitions/wards')
       .then(data => setWards(data))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const validate = () => {
