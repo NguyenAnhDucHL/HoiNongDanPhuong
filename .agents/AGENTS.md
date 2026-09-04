@@ -85,4 +85,4 @@ HoiNongDanPhuong/
 | Commit code | Dùng lệnh `git add` & `git commit` rõ ràng, sau đó `git push` để trigger deploy |
 
 **Status:** ACTIVE — HỘI NÔNG DÂN PHƯỜNG PROJECT RULES
-**See also:** [hnd-rule-nodejs-convention.md](rules/hnd-rule-nodejs-convention.md) | [hnd-rule-ai-behavior.md](rules/hnd-rule-ai-behavior.md) | [feature-development.md](workflows/feature-development.md)
+**See also:** [hnd-rule-nodejs-convention.md](rules/hnd-rule-nodejs-convention.md) | [hnd-rule-ai-behavior.md](rules/hnd-rule-ai-behavior.md) | [feature-development.md](workflows/feature-development.md) | [git-push.md](workflows/git-push.md)
