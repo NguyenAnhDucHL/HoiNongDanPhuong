@@ -6,8 +6,8 @@ function isAvailable() {
 
 async function analyzePetition(petition) {
   if (!isAvailable()) {
-    return { 
-      category: "Khác", 
+    return {
+      category: "Khác",
       priority: "Thấp",
       summary: "Tính năng AI đang tạm tắt (Chưa cấu hình API Key).",
       suggestion: "Cần cán bộ kiểm tra thủ công."
@@ -30,15 +30,15 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
 
     const result = await model.generateContent(prompt);
     let responseText = result.response.text();
-    
+
     // Clean up markdown syntax if AI still returns it
     responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-    
+
     return JSON.parse(responseText);
   } catch (error) {
     console.error("AI Error:", error);
-    return { 
-      category: "Khác", 
+    return {
+      category: "Khác",
       priority: "Thấp",
       summary: "Phân tích tự động thất bại do lỗi hệ thống/mạng.",
       suggestion: "Cần cán bộ kiểm tra thủ công."
@@ -50,7 +50,7 @@ async function chatWithAI(message, context) {
   if (!isAvailable()) {
     return { reply: "Xin lỗi, AI chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY." };
   }
-  
+
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -62,7 +62,7 @@ Hãy trả lời ngắn gọn, súc tích và thân thiện. Trả về dưới 
     const result = await model.generateContent(prompt);
     let responseText = result.response.text();
     responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-    
+
     return JSON.parse(responseText);
   } catch (error) {
     console.error("AI Chat Error:", error);

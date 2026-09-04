@@ -58,7 +58,7 @@ const getAdminPetitions = async ({ page = 1, limit = 20, status, category, ward,
  */
 const getPetitionById = async (id) => {
   const petition = await getAsync(
-    `SELECT * FROM petitions WHERE id = ?`,
+    `SELECT id, fullName, phone, cccd, ward, address, title, category, content, imagePaths, status, trackingCode, adminNotes, aiSummary, aiPriority, aiSuggestion, aiCategory, createdAt, updatedAt FROM petitions WHERE id = ?`,
     [id]
   );
 
