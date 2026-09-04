@@ -419,7 +419,7 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-bottom">
-            © 2026 Hội Nông Dân Phường Cẩm Phả · Xây dựng bởi AI Antigravity · Phiên bản 1.0
+            © 2026 Hội Nông Dân Phường Cẩm Phả, Bản quyền thuộc về UBND phường Cẩm Phả
           </div>
         </div>
       </footer>
