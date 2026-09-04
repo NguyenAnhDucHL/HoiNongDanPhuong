@@ -8,10 +8,10 @@ const PublicLayout = ({ children }) => {
       {/* ====== HEADER ====== */}
       <header className="header">
         <div className="container header-inner">
-          <div className="logo-group">
-            <img src="/logo.png" alt="Hội Nông Dân" className="logo-img" />
+          <div className="brand">
+            <img src="/logo.png" alt="Hội Nông Dân" className="logo" />
             <div>
-              <div className="title">HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</div>
+              <h1>HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h1>
               <div className="subtitle">CỔNG TIẾP NHẬN, XỬ LÝ PHẢN ÁNH, KIẾN NGHỊ<br />CỦA HỘI VIÊN</div>
             </div>
           </div>
