@@ -88,7 +88,28 @@ const initDB = () => {
       }
     });
 
-    // 5. Performance indexes
+    // 5. Posts table (for News and Guides)
+    db.run(`
+      CREATE TABLE IF NOT EXISTS posts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        image TEXT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // 6. Settings table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS settings (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL
+      )
+    `);
+
+    // 7. Performance indexes
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_createdAt ON petitions (createdAt DESC)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_status ON petitions (status)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_ward ON petitions (ward)`);

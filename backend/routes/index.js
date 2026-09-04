@@ -6,10 +6,15 @@ const authRoutes = require('./authRoutes');
 const adminRoutes = require('./adminRoutes');
 const aiRoutes = require('./aiRoutes');
 
+const settingRoutes = require('./settingRoutes');
+const postRoutes = require('./postRoutes');
+
 router.use('/petitions', petitionRoutes);
 router.use('/auth', authRoutes);
 router.use('/admin', adminRoutes);
 router.use('/ai', aiRoutes);
+router.use('/settings', settingRoutes);
+router.use('/posts', postRoutes);
 
 // Health check
 router.get('/health', (req, res) => {

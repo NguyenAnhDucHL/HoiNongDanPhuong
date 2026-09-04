@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { fetchApi } from '../lib/api';
 import { StatusBadge, PriorityBadge } from '../components/ui/Badge';
 import AIAssistant from '../components/ui/AIAssistant';
+import PostManager from '../features/admin/components/PostManager';
+import SettingsManager from '../features/admin/components/SettingsManager';
 
 const STATUS_OPTIONS = [
   { value: 'all', label: 'Tất cả trạng thái' },
@@ -189,6 +191,9 @@ export default function AdminDashboard() {
           {[
             { id: 'dashboard', label: '📊 Tổng quan' },
             { id: 'petitions', label: '📋 Danh sách phản ánh' },
+            { id: 'news', label: '📰 Tin tức' },
+            { id: 'guides', label: '📖 Hướng dẫn' },
+            { id: 'settings', label: '⚙️ Giới thiệu' },
           ].map(t => (
             <button
               key={t.id}
@@ -397,6 +402,21 @@ export default function AdminDashboard() {
               </div>
             )}
           </div>
+        )}
+
+        {/* ===== NEWS TAB ===== */}
+        {tab === 'news' && (
+          <PostManager type="news" title="Tin tức" />
+        )}
+
+        {/* ===== GUIDES TAB ===== */}
+        {tab === 'guides' && (
+          <PostManager type="guide" title="Hướng dẫn" />
+        )}
+
+        {/* ===== SETTINGS TAB ===== */}
+        {tab === 'settings' && (
+          <SettingsManager />
         )}
       </div>
 

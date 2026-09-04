@@ -1,166 +1,77 @@
-const config = require('../config/config');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Lazy-load Gemini to avoid crash when no API key
-let genAI = null;
-let geminiModel = null;
-
-const initGemini = () => {
-  if (!config.geminiApiKey || config.geminiApiKey === 'YOUR_GEMINI_API_KEY_HERE') {
-    return false;
-  }
-  try {
-    const { GoogleGenerativeAI } = require('@google/generative-ai');
-    genAI = new GoogleGenerativeAI(config.geminiApiKey);
-    geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    return true;
-  } catch (e) {
-    console.error('[AI] Failed to initialize Gemini:', e.message);
-    return false;
-  }
-};
-
-const isAvailable = () => {
-  if (!geminiModel) return initGemini();
-  return true;
-};
-
-/**
- * Analyze a single petition using Gemini AI
- * Returns: { summary, priority, suggestion, category }
- */
-const analyzePetition = async (petition) => {
-  if (!isAvailable()) {
-    return {
-      summary: 'Chức năng AI chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY vào file .env.',
-      priority: 'trung bình',
-      suggestion: 'Xem xét và xử lý theo quy trình thông thường.',
-      category: petition.category,
-    };
-  }
-
-  const prompt = `Bạn là trợ lý AI hỗ trợ cán bộ Hội Nông Dân phường Cẩm Phả xử lý phản ánh, kiến nghị của hội viên và người dân.
-
-Hãy phân tích phản ánh sau và trả lời ĐÚNG định dạng JSON:
-
-THÔNG TIN PHẢN ÁNH:
-- Họ tên: ${petition.fullName}
-- Khu phố: ${petition.ward || 'Không rõ'}
-- Lĩnh vực đã khai báo: ${petition.category}
-- Tiêu đề: ${petition.title}
-- Nội dung: ${petition.content}
-
-Trả lời theo định dạng JSON sau (không thêm gì khác):
-{
-  "summary": "Tóm tắt ngắn gọn nội dung phản ánh trong 1-2 câu",
-  "priority": "cao | trung bình | thấp",
-  "suggestion": "Gợi ý hành động xử lý cụ thể cho cán bộ (1-2 câu)",
-  "category": "Lĩnh vực đúng nhất: Trồng trọt | Chăn nuôi | Thủy sản | Đất đai - Thủy lợi | Phân bón - Thuốc BVTV | Vay vốn - Hỗ trợ | Thiên tai - Dịch bệnh | Khác"
+function isAvailable() {
+  return !!process.env.GEMINI_API_KEY;
 }
 
-Quy tắc đánh giá mức độ ưu tiên:
-- CAO: Thiên tai, dịch bệnh nghiêm trọng, vấn đề môi trường cấp bách, ảnh hưởng nhiều hộ dân
-- TRUNG BÌNH: Vấn đề cần giải quyết trong 1-2 tuần, ảnh hưởng một số hộ
-- THẤP: Yêu cầu thông tin, thắc mắc thông thường, kiến nghị dài hạn`;
-
-  try {
-    const result = await geminiModel.generateContent(prompt);
-    const text = result.response.text().trim();
-
-    // Extract JSON from response
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('Invalid AI response format');
-
-    const parsed = JSON.parse(jsonMatch[0]);
-    return {
-      summary: parsed.summary || 'Không có tóm tắt.',
-      priority: parsed.priority || 'trung bình',
-      suggestion: parsed.suggestion || 'Xem xét xử lý theo quy trình.',
-      category: parsed.category || petition.category,
-    };
-  } catch (err) {
-    console.error('[AI] analyzePetition error:', err.message);
-    return {
-      summary: `[AI Error] ${err.message}`,
-      priority: 'trung bình',
-      suggestion: 'Xem xét xử lý theo quy trình thông thường.',
-      category: petition.category,
-    };
-  }
-};
-
-/**
- * Chat with AI about petition data (admin query interface)
- * @param {string} userMessage - Admin's question
- * @param {object} context - Optional database context (stats, recent petitions)
- */
-const chatWithAI = async (userMessage, context = {}) => {
+async function analyzePetition(petition) {
   if (!isAvailable()) {
-    return {
-      reply: '⚠️ Chức năng AI chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY vào file .env của backend.',
+    return { 
+      category: "Khác", 
+      priority: "Thấp",
+      summary: "Tính năng AI đang tạm tắt (Chưa cấu hình API Key).",
+      suggestion: "Cần cán bộ kiểm tra thủ công."
     };
   }
 
-  // Build context string from database data
-  let contextStr = '';
-  if (context.stats) {
-    contextStr += `\nTHỐNG KÊ HIỆN TẠI:
-- Tổng phản ánh: ${context.stats.total}
-- Đã giải quyết: ${context.stats.resolved}
-- Đang xử lý: ${context.stats.processing}
-- Chờ xử lý: ${context.stats.pending}
-- Bị từ chối: ${context.stats.rejected}
-- Ưu tiên cao: ${context.stats.highPriority || 0}
-- Hôm nay: ${context.stats.today || 0}`;
-  }
-
-  if (context.byCategory && context.byCategory.length > 0) {
-    contextStr += '\n\nPHÂN LOẠI THEO LĨNH VỰC:\n';
-    context.byCategory.forEach(c => {
-      contextStr += `- ${c.category}: ${c.count} phản ánh\n`;
-    });
-  }
-
-  if (context.recentPetitions && context.recentPetitions.length > 0) {
-    contextStr += '\n\nPHẢN ÁNH GẦN ĐÂY:\n';
-    context.recentPetitions.forEach(p => {
-      contextStr += `- [${p.trackingCode}] ${p.title} (${p.category}, ${p.status})\n`;
-    });
-  }
-
-  const systemPrompt = `Bạn là trợ lý AI thông minh của Hội Nông Dân phường Cẩm Phả. 
-Nhiệm vụ của bạn là hỗ trợ cán bộ quản lý phân tích dữ liệu phản ánh, đưa ra nhận định và gợi ý.
-Trả lời bằng tiếng Việt, ngắn gọn, chuyên nghiệp, thân thiện.
-${contextStr}
-
-Câu hỏi của cán bộ: ${userMessage}`;
-
   try {
-    const result = await geminiModel.generateContent(systemPrompt);
-    const reply = result.response.text().trim();
-    return { reply };
-  } catch (err) {
-    console.error('[AI] chatWithAI error:', err.message);
-    return { reply: `Xin lỗi, có lỗi xảy ra khi xử lý câu hỏi: ${err.message}` };
-  }
-};
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `Bạn là trợ lý AI của Hệ thống quản lý phản ánh Hội Nông Dân.
+Hãy phân tích nội dung phản ánh sau đây và trả về định dạng JSON thuần túy (không chứa markdown \`\`\`json ... \`\`\`).
+Tiêu đề: "${petition.title}"
+Nội dung phản ánh: "${petition.content}"
 
-/**
- * Batch analyze multiple petitions
- */
-const batchAnalyzePetitions = async (petitions) => {
-  const results = [];
-  for (const petition of petitions) {
-    const analysis = await analyzePetition(petition);
-    results.push({ id: petition.id, ...analysis });
-    // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 500));
+Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
+- "category": Lĩnh vực liên quan nhất (chọn 1 trong: 'Trồng trọt', 'Chăn nuôi', 'Thủy sản', 'Đất đai - Thủy lợi', 'Phân bón - Thuốc BVTV', 'Vay vốn - Hỗ trợ', 'Thiên tai - Dịch bệnh', 'Khác').
+- "priority": Mức độ ưu tiên ('Cao', 'Trung bình', 'Thấp').
+- "summary": Tóm tắt nội dung phản ánh (khoảng 1-2 câu).
+- "suggestion": Gợi ý cách giải quyết (ngắn gọn, thiết thực).`;
+
+    const result = await model.generateContent(prompt);
+    let responseText = result.response.text();
+    
+    // Clean up markdown syntax if AI still returns it
+    responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    
+    return JSON.parse(responseText);
+  } catch (error) {
+    console.error("AI Error:", error);
+    return { 
+      category: "Khác", 
+      priority: "Thấp",
+      summary: "Phân tích tự động thất bại do lỗi hệ thống/mạng.",
+      suggestion: "Cần cán bộ kiểm tra thủ công."
+    };
   }
-  return results;
-};
+}
+
+async function chatWithAI(message, context) {
+  if (!isAvailable()) {
+    return { reply: "Xin lỗi, AI chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY." };
+  }
+  
+  try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const prompt = `Bạn là trợ lý ảo của Hệ thống quản lý phản ánh Hội Nông Dân. 
+Đây là dữ liệu ngữ cảnh hiện tại của hệ thống: ${JSON.stringify(context)}. 
+Câu hỏi của người dùng: "${message}". 
+Hãy trả lời ngắn gọn, súc tích và thân thiện. Trả về dưới định dạng JSON: { "reply": "nội dung trả lời" }`;
+
+    const result = await model.generateContent(prompt);
+    let responseText = result.response.text();
+    responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    
+    return JSON.parse(responseText);
+  } catch (error) {
+    console.error("AI Chat Error:", error);
+    return { reply: "Xin lỗi, đã xảy ra lỗi trong quá trình xử lý câu hỏi của bạn." };
+  }
+}
 
 module.exports = {
+  isAvailable,
   analyzePetition,
   chatWithAI,
-  batchAnalyzePetitions,
-  isAvailable,
 };

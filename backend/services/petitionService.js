@@ -1,4 +1,5 @@
 const { getAsync, allAsync, runAsync } = require('../utils/db-promise');
+const aiService = require('./aiService');
 
 /**
  * Create a new petition from public form submission
@@ -14,10 +15,13 @@ const createPetition = async (petitionData) => {
   const dateStr = new Date().toISOString().slice(2, 10).replace(/-/g, '');
   const trackingCode = `HND-${dateStr}-${randomStr}`;
 
+  // Analyze petition with AI
+  const analysis = await aiService.analyzePetition({ title, content });
+
   const result = await runAsync(
     `INSERT INTO petitions 
-      (fullName, phone, cccd, ward, address, title, category, content, imagePaths, trackingCode)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (fullName, phone, cccd, ward, address, title, category, content, imagePaths, trackingCode, aiSummary, aiPriority, aiSuggestion, aiCategory)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       fullName?.trim() || '',
       phone?.trim() || '',
@@ -28,7 +32,11 @@ const createPetition = async (petitionData) => {
       category || '',
       content?.trim() || '',
       imagePaths || '',
-      trackingCode
+      trackingCode,
+      analysis.summary || '',
+      analysis.priority || 'Thấp',
+      analysis.suggestion || '',
+      analysis.category || 'Khác'
     ]
   );
 
