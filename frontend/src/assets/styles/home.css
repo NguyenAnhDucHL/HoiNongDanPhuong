@@ -70,8 +70,6 @@ a {
 
 .menu-icon {
   display: none;
-  cursor: pointer;
-  color: #fff;
 }
 
 .brand {
@@ -611,11 +609,6 @@ footer {
 }
 
 @media(max-width:768px) {
-  .menu-icon {
-    display: block;
-    padding: 5px;
-  }
-  
   .logo {
     width: 44px;
     height: 44px;
@@ -626,21 +619,20 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 5px 15px; /* Shorter header height */
   }
 
   .brand {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 0px;
-    width: 60%;
+    width: auto;
   }
-  
+
   .brand-top {
     gap: 8px;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .brand h1 {
@@ -648,7 +640,7 @@ footer {
     line-height: 1.2;
     margin: 0;
   }
-  
+
   .badge-cp {
     font-size: 9px;
     padding: 2px 4px;
@@ -660,16 +652,17 @@ footer {
   }
 
   .actions {
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: auto;
+    gap: 15px;
     margin: 0;
   }
 
   .action {
     flex: none;
     min-width: unset;
-    padding: 5px;
+    padding: 0px;
     font-size: 12px;
     border-radius: 0;
     border: none;
