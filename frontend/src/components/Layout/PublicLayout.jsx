@@ -26,7 +26,7 @@ const PublicLayout = ({ children }) => {
           <div className="brand">
             <div className="brand-top">
               <img src="/logo.png" alt="Hội Nông Dân" className="logo" />
-              <h1>HỘI NÔNG DÂN <span className="badge-cp">CP</span></h1>
+              <h1>HỘI NÔNG DÂN <span className="badge-cp">CẨM PHẢ</span></h1>
             </div>
             <div className="subtitle">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
           </div>
