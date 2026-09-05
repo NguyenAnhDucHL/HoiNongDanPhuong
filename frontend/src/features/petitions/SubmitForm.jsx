@@ -24,7 +24,7 @@ export default function SubmitForm() {
     fetchApi('/wards')
       .then(data => setWards(data))
       .catch(() => { });
-      
+
     fetchApi('/categories')
       .then(data => setCategories(data))
       .catch(() => { });
@@ -203,7 +203,7 @@ export default function SubmitForm() {
             ))}
           </select>
           {errors.category && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.category}</span>}
-          
+
           {form.category === 'Khác' && (
             <div style={{ marginTop: 12 }}>
               <label>Nhập lĩnh vực phản ánh <span className="required">*</span></label>
@@ -271,18 +271,22 @@ export default function SubmitForm() {
           </label>
 
           {files.length > 0 && (
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 15 }}>
               {files.map((f, i) => (
-                <div key={i} style={{
-                  background: 'var(--green-light)', border: '1px solid var(--green-muted)',
-                  borderRadius: 8, padding: '6px 12px', fontSize: 13,
-                  display: 'flex', alignItems: 'center', gap: 6,
-                }}>
-                  🖼️ {f.name.length > 20 ? f.name.substring(0, 20) + '...' : f.name}
+                <div key={i} style={{ position: 'relative' }}>
+                  <img
+                    src={URL.createObjectURL(f)}
+                    alt={f.name}
+                    style={{ width: 70, height: 70, objectFit: 'cover', borderRadius: 6, border: '1px solid #ddd' }}
+                  />
                   <button
                     type="button"
                     onClick={() => removeFile(i)}
-                    style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: 14, padding: 0 }}
+                    style={{
+                      position: 'absolute', top: -8, right: -8, background: '#ef4444', color: 'white',
+                      border: 'none', borderRadius: '50%', width: 22, height: 22, cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 'bold'
+                    }}
                   >×</button>
                 </div>
               ))}
@@ -302,6 +306,7 @@ export default function SubmitForm() {
           type="button"
           className="btn btn-secondary"
           onClick={() => { setForm(initialForm); setFiles([]); setErrors({}); setSubmitError(''); }}
+          style={{ width: 'auto', minWidth: 140, padding: '12px 24px', background: 'var(--green-light)', color: 'var(--green-dark)' }}
         >
           🗑️ Xóa form
         </button>
@@ -309,7 +314,7 @@ export default function SubmitForm() {
           type="submit"
           className="btn btn-primary"
           disabled={loading}
-          style={{ minWidth: 200 }}
+          style={{ width: 'auto', minWidth: 200, padding: '12px 32px' }}
         >
           {loading ? (
             <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Đang gửi...</>
