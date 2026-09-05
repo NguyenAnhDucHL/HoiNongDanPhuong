@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../../lib/api';
+import { useNavigate } from 'react-router-dom';
 
 const InfoSection = () => {
   const [settings, setSettings] = useState({});
   const [news, setNews] = useState([]);
   const [guides, setGuides] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,7 +36,7 @@ const InfoSection = () => {
           </p>
         </div>
       )}
-      
+
       <div className="grid3">
         <div className="card">
           <h3>DANH MỤC PHẢN ÁNH, KIẾN NGHỊ</h3>
@@ -51,7 +53,7 @@ const InfoSection = () => {
           {guides.length > 0 ? (
             <ul className="list">
               {guides.map(g => (
-                <li key={g.id}>
+                <li key={g.id} onClick={() => navigate(`/post/${g.id}`)} style={{ cursor: 'pointer' }}>
                   <span>{g.title}</span><b>›</b>
                 </li>
               ))}
@@ -69,17 +71,26 @@ const InfoSection = () => {
           <h3>TIN TỨC - THÔNG BÁO</h3>
           {news.length > 0 ? (
             <ul className="list">
-              {news.map(n => (
-                <li key={n.id} style={{ display: 'flex', flexDirection: 'column', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
-                  <div style={{ display: 'flex', gap: 10 }}>
-                    {n.image && <img src={`/uploads/${n.image}`} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }} />}
-                    <div>
-                      <span style={{ fontWeight: 600, display: 'block', fontSize: 14 }}>{n.title}</span>
-                      <small style={{ color: 'var(--muted)', fontSize: 12 }}>{new Date(n.createdAt).toLocaleDateString('vi-VN')}</small>
+              {news.map(n => {
+                let thumb = n.image;
+                if (n.images) {
+                  try {
+                    const parsed = JSON.parse(n.images);
+                    if (parsed.length > 0) thumb = parsed[0];
+                  } catch(e) {}
+                }
+                return (
+                  <li key={n.id} onClick={() => navigate(`/post/${n.id}`)} style={{ display: 'flex', flexDirection: 'column', padding: '10px 0', borderBottom: '1px solid #f0f0f0', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      {thumb && <img src={`/uploads/${thumb}`} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }} />}
+                      <div>
+                        <span style={{ fontWeight: 600, display: 'block', fontSize: 14 }}>{n.title}</span>
+                        <small style={{ color: 'var(--muted)', fontSize: 12 }}>{new Date(n.createdAt).toLocaleDateString('vi-VN')}</small>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p style={{ color: 'var(--muted)', fontSize: 14, marginTop: 10 }}>Chưa có tin tức nào.</p>

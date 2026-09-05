@@ -1,0 +1,91 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { fetchApi } from '../lib/api';
+import Header from '../components/Layout/Header';
+import Footer from '../components/Layout/Footer';
+import Banner from '../features/misc/components/Banner';
+
+export default function PostDetail() {
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadPost = async () => {
+      try {
+        const data = await fetchApi(`/posts/${id}`);
+        setPost(data);
+      } catch (err) {
+        setError(err.message || 'Không tìm thấy bài viết');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPost();
+  }, [id]);
+
+  let imagesList = [];
+  if (post) {
+    if (post.images) {
+      try {
+        imagesList = JSON.parse(post.images);
+      } catch (e) { }
+    } else if (post.image) {
+      imagesList = [post.image];
+    }
+  }
+
+  return (
+    <div style={{ background: '#f5f7f9', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Header />
+      <Banner />
+
+      <main style={{ flex: 1, padding: '40px 0' }}>
+        <div className="container">
+          <Link to="/" style={{ color: 'var(--green-dark)', textDecoration: 'none', display: 'inline-block', marginBottom: 20 }}>
+            &larr; Quay lại trang chủ
+          </Link>
+
+          <div style={{ background: '#fff', padding: '40px', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            {loading && <p>Đang tải bài viết...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            {post && (
+              <article>
+                <h1 style={{ color: 'var(--green-dark)', marginBottom: 15, fontSize: 24, lineHeight: 1.4 }}>
+                  {post.title}
+                </h1>
+                <div style={{ color: 'var(--muted)', fontSize: 14, marginBottom: 30, paddingBottom: 15, borderBottom: '1px solid #eee' }}>
+                  {new Date(post.createdAt).toLocaleDateString('vi-VN')}
+                </div>
+
+                <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, fontSize: 16, color: '#333' }}>
+                  {post.content}
+                </div>
+
+                {imagesList.length > 0 && (
+                  <div style={{ marginTop: 40 }}>
+                    <h3 style={{ marginBottom: 20, fontSize: 18, color: 'var(--green-dark)' }}>Hình ảnh đính kèm</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                      {imagesList.map((img, idx) => (
+                        <img
+                          key={idx}
+                          src={`/uploads/${img}`}
+                          alt=""
+                          style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid #eee' }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </article>
+            )}
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

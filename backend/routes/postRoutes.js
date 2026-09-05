@@ -7,15 +7,9 @@ const upload = require('../config/upload');
 router.get('/', postController.getPosts);
 router.get('/:id', postController.getPostById);
 
-router.post('/', auth, upload.array('image', 1), (req, res, next) => {
-    if (req.files && req.files.length > 0) req.file = req.files[0];
-    next();
-}, postController.createPost);
+router.post('/', auth, upload.array('images', 10), postController.createPost);
 
-router.put('/:id', auth, upload.array('image', 1), (req, res, next) => {
-    if (req.files && req.files.length > 0) req.file = req.files[0];
-    next();
-}, postController.updatePost);
+router.put('/:id', auth, upload.array('images', 10), postController.updatePost);
 
 router.delete('/:id', auth, postController.deletePost);
 

@@ -12,7 +12,8 @@ export default function PostManager({ type, title }) {
 
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
-  const [imageFile, setImageFile] = useState(null);
+  const [existingImages, setExistingImages] = useState([]);
+  const [newFiles, setNewFiles] = useState([]);
 
   const loadPosts = useCallback(async () => {
     setLoading(true);
@@ -33,7 +34,17 @@ export default function PostManager({ type, title }) {
   const openForm = async (post = null) => {
     setCurrentPost(post);
     setPostTitle(post ? post.title : '');
-    setImageFile(null);
+    setNewFiles([]);
+
+    let parsedImages = [];
+    if (post) {
+      if (post.images) {
+        try { parsedImages = JSON.parse(post.images); } catch (e) { }
+      } else if (post.image) {
+        parsedImages = [post.image];
+      }
+    }
+    setExistingImages(parsedImages);
     setShowModal(true);
 
     if (post) {
@@ -60,7 +71,11 @@ export default function PostManager({ type, title }) {
     formData.append('type', type);
     formData.append('title', postTitle);
     formData.append('content', postContent);
-    if (imageFile) formData.append('image', imageFile);
+    formData.append('existingImages', JSON.stringify(existingImages));
+
+    newFiles.forEach(file => {
+      formData.append('images', file);
+    });
 
     try {
       const token = localStorage.getItem('hnd_admin_token');
@@ -119,20 +134,29 @@ export default function PostManager({ type, title }) {
               </tr>
             </thead>
             <tbody>
-              {posts.map(p => (
-                <tr key={p.id}>
-                  <td>#{p.id}</td>
-                  <td>{p.image ? <img src={`/uploads/${p.image}`} width="50" height="50" style={{ objectFit: 'cover', borderRadius: 4, display: 'block' }} alt="" /> : <span style={{ color: '#ccc' }}>-</span>}</td>
-                  <td style={{ fontWeight: 600 }}>{p.title}</td>
-                  <td>{new Date(p.createdAt).toLocaleDateString('vi-VN')}</td>
-                  <td style={{ textAlign: 'right' }}>
-                    <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-                      <button className="btn btn-secondary" onClick={() => openForm(p)} style={{ padding: '6px 12px' }}>Sửa</button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px' }}>Xóa</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {posts.map(p => {
+                let thumb = p.image;
+                if (p.images) {
+                  try {
+                    const parsed = JSON.parse(p.images);
+                    if (parsed.length > 0) thumb = parsed[0];
+                  } catch (e) { }
+                }
+                return (
+                  <tr key={p.id}>
+                    <td>#{p.id}</td>
+                    <td>{thumb ? <img src={`/uploads/${thumb}`} width="50" height="50" style={{ objectFit: 'cover', borderRadius: 4, display: 'block' }} alt="" /> : <span style={{ color: '#ccc' }}>-</span>}</td>
+                    <td style={{ fontWeight: 600 }}>{p.title}</td>
+                    <td>{new Date(p.createdAt).toLocaleDateString('vi-VN')}</td>
+                    <td style={{ textAlign: 'right' }}>
+                      <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
+                        <button className="btn btn-secondary" onClick={() => openForm(p)} style={{ padding: '6px 12px' }}>Sửa</button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px' }}>Xóa</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
               {posts.length === 0 && <tr><td colSpan="5">Chưa có dữ liệu</td></tr>}
             </tbody>
           </table>
@@ -149,9 +173,28 @@ export default function PostManager({ type, title }) {
                 <input type="text" value={postTitle} onChange={e => setPostTitle(e.target.value)} style={{ width: '100%', padding: 10, border: '1px solid #ddd', borderRadius: 8 }} required />
               </div>
               <div>
-                <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Hình ảnh đính kèm (nếu có)</label>
-                <input type="file" onChange={e => setImageFile(e.target.files[0])} accept="image/*" />
-                {currentPost?.image && !imageFile && <p style={{ fontSize: 12, color: '#666', marginTop: 4 }}>Đã có ảnh. Tải lên ảnh mới sẽ ghi đè ảnh cũ.</p>}
+                <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Hình ảnh đính kèm (có thể chọn nhiều)</label>
+                <input type="file" multiple onChange={e => setNewFiles(Array.from(e.target.files))} accept="image/*" />
+
+                {existingImages.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
+                    {existingImages.map((img, idx) => (
+                      <div key={idx} style={{ position: 'relative' }}>
+                        <img src={`/uploads/${img}`} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #ddd' }} alt="" />
+                        <button
+                          type="button"
+                          onClick={() => setExistingImages(prev => prev.filter((_, i) => i !== idx))}
+                          style={{
+                            position: 'absolute', top: -5, right: -5, background: 'red', color: 'white',
+                            border: 'none', borderRadius: '50%', width: 20, height: 20, cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12
+                          }}
+                        >✕</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {newFiles.length > 0 && <p style={{ fontSize: 13, color: 'var(--green-dark)', marginTop: 8 }}>+ {newFiles.length} ảnh mới được chọn</p>}
               </div>
               <div>
                 <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Nội dung chi tiết</label>

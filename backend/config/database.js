@@ -128,10 +128,14 @@ const initDB = () => {
         title TEXT NOT NULL,
         content TEXT NOT NULL,
         image TEXT,
+        images TEXT,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Migrate old posts table to have images column if missing
+    db.run(`ALTER TABLE posts ADD COLUMN images TEXT`, () => { });
 
     // 6. Settings table
     db.run(`
