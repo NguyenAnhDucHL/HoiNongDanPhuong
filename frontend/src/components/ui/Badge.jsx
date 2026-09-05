@@ -1,16 +1,16 @@
 import React from 'react';
 
 const STATUS_MAP = {
-  pending:    { label: '⏳ Chờ xử lý',   cls: 'badge-pending' },
-  processing: { label: '🔄 Đang xử lý',  cls: 'badge-processing' },
-  resolved:   { label: '✅ Đã giải quyết', cls: 'badge-resolved' },
-  rejected:   { label: '❌ Từ chối',      cls: 'badge-rejected' },
+  pending: { label: '⏳ Chờ xử lý', cls: 'badge-pending' },
+  processing: { label: '🔄 Đang xử lý', cls: 'badge-processing' },
+  resolved: { label: '✅ Đã giải quyết', cls: 'badge-resolved' },
+  rejected: { label: '❌ Từ chối', cls: 'badge-rejected' },
 };
 
 const PRIORITY_MAP = {
-  'cao':       { label: '🔴 Ưu tiên cao',    cls: 'badge-priority-cao' },
-  'trung bình':{ label: '🟡 Trung bình',     cls: 'badge-priority-trung-binh' },
-  'thấp':      { label: '⚪ Thấp',           cls: 'badge-priority-thap' },
+  'cao': { label: '🔴 Ưu tiên cao', cls: 'badge-priority-cao' },
+  'trung bình': { label: '🟡 Trung bình', cls: 'badge-priority-trung-binh' },
+  'thấp': { label: '⚪ Thấp', cls: 'badge-priority-thap' },
 };
 
 export function StatusBadge({ status }) {

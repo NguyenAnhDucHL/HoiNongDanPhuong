@@ -81,7 +81,7 @@ export default function AdminOverview({ stats, onNavigateToPetitions, onOpenDeta
         <div className="admin-card">
           <h3 className="admin-card-title">
             <span style={{ flex: 1 }}>🕐 Phản ánh mới nhất</span>
-            <button 
+            <button
               onClick={onNavigateToPetitions}
               style={{ background: 'none', border: 'none', color: 'var(--admin-primary)', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
             >
@@ -93,10 +93,10 @@ export default function AdminOverview({ stats, onNavigateToPetitions, onOpenDeta
               <div key={p.id} style={{
                 display: 'flex', gap: '12px', padding: '14px 12px', borderBottom: '1px solid var(--admin-border)',
                 cursor: 'pointer', transition: 'background 0.2s', borderRadius: '8px'
-              }} 
-              onClick={() => onOpenDetail(p.id)}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              }}
+                onClick={() => onOpenDetail(p.id)}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
                 <div style={{ flex: 1, overflow: 'hidden' }}>
                   <div style={{ fontWeight: 600, fontSize: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--admin-text)' }}>

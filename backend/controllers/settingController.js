@@ -25,11 +25,11 @@ const updateSettings = asyncHandler(async (req, res) => {
     db.serialize(() => {
       db.run('BEGIN TRANSACTION');
       const stmt = db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
-      
+
       for (const [key, value] of Object.entries(settings)) {
         stmt.run(key, String(value));
       }
-      
+
       stmt.finalize();
       db.run('COMMIT', (err) => {
         if (err) {

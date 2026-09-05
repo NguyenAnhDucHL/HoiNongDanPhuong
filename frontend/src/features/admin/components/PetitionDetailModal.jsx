@@ -24,7 +24,7 @@ export default function PetitionDetailModal({
   return (
     <div className="admin-modal-overlay" onClick={() => setSelectedPetition(null)}>
       <div className="admin-modal" onClick={e => e.stopPropagation()}>
-        
+
         {/* Header */}
         <div className="admin-modal-header">
           <div>
@@ -64,8 +64,8 @@ export default function PetitionDetailModal({
               {/* Content */}
               <div style={{ marginBottom: '24px' }}>
                 <div style={{ fontSize: '13px', color: 'var(--admin-text-muted)', fontWeight: 600, marginBottom: '8px', textTransform: 'uppercase' }}>📝 Nội dung phản ánh</div>
-                <div style={{ 
-                  background: '#f8fafc', borderRadius: '8px', padding: '16px', 
+                <div style={{
+                  background: '#f8fafc', borderRadius: '8px', padding: '16px',
                   fontSize: '15px', lineHeight: 1.6, border: '1px solid var(--admin-border)',
                   color: 'var(--admin-text)'
                 }}>
@@ -121,8 +121,8 @@ export default function PetitionDetailModal({
                 )}
                 <button
                   className="btn btn-sm"
-                  style={{ 
-                    marginTop: '16px', background: '#fff', border: '1px solid var(--admin-primary)', 
+                  style={{
+                    marginTop: '16px', background: '#fff', border: '1px solid var(--admin-primary)',
                     color: 'var(--admin-primary)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '8px'
                   }}
                   onClick={handleAIAnalyze}
@@ -137,7 +137,7 @@ export default function PetitionDetailModal({
               {/* Status Update */}
               <div className="admin-card" style={{ marginBottom: '8px' }}>
                 <h4 className="admin-card-title">⚙️ Cập nhật tiến độ xử lý</h4>
-                
+
                 <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
                   {['pending', 'processing', 'resolved', 'rejected'].map(s => (
                     <button
@@ -160,8 +160,8 @@ export default function PetitionDetailModal({
                   value={adminNotes}
                   onChange={e => setAdminNotes(e.target.value)}
                   placeholder="Nhập phản hồi, kết quả giải quyết, hoặc lý do từ chối..."
-                  style={{ 
-                    width: '100%', padding: '12px', border: '1px solid var(--admin-border)', 
+                  style={{
+                    width: '100%', padding: '12px', border: '1px solid var(--admin-border)',
                     borderRadius: '8px', fontSize: '14px', minHeight: '100px', resize: 'vertical',
                     outline: 'none', fontFamily: 'inherit'
                   }}
@@ -177,9 +177,9 @@ export default function PetitionDetailModal({
                   <div style={{ position: 'relative', paddingLeft: '16px', borderLeft: '2px solid var(--admin-border)', marginLeft: '8px' }}>
                     {selectedPetition.logs.map((log, i) => (
                       <div key={i} style={{ position: 'relative', marginBottom: i === selectedPetition.logs.length - 1 ? 0 : '20px' }}>
-                        <div style={{ 
-                          position: 'absolute', left: '-22px', top: '2px', width: '10px', height: '10px', 
-                          borderRadius: '50%', background: 'var(--admin-primary)', border: '2px solid #fff' 
+                        <div style={{
+                          position: 'absolute', left: '-22px', top: '2px', width: '10px', height: '10px',
+                          borderRadius: '50%', background: 'var(--admin-primary)', border: '2px solid #fff'
                         }} />
                         <div style={{ fontWeight: 600, fontSize: '14px', color: 'var(--admin-text)' }}>{log.action}</div>
                         {log.notes && <div style={{ fontSize: '14px', color: 'var(--admin-text-muted)', marginTop: '4px', background: '#f8fafc', padding: '8px 12px', borderRadius: '6px' }}>{log.notes}</div>}
@@ -195,24 +195,24 @@ export default function PetitionDetailModal({
 
         {/* Footer */}
         <div className="admin-modal-footer">
-          <button 
-            className="btn btn-danger" 
+          <button
+            className="btn btn-danger"
             style={{ marginRight: 'auto', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444' }}
             onClick={() => handleDeletePetition(selectedPetition.id)}
           >
             🗑️ Xóa
           </button>
-          
-          <button 
-            className="btn btn-secondary" 
+
+          <button
+            className="btn btn-secondary"
             onClick={() => setSelectedPetition(null)}
           >
             Đóng
           </button>
-          
-          <button 
-            className="btn btn-primary" 
-            onClick={handleUpdateStatus} 
+
+          <button
+            className="btn btn-primary"
+            onClick={handleUpdateStatus}
             disabled={updating || detailLoading}
           >
             {updating ? 'Đang lưu...' : '💾 Cập nhật'}
