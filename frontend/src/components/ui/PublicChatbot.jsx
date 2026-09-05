@@ -50,15 +50,30 @@ const PublicChatbot = () => {
     }
   };
 
+  const dragStartPos = useRef({ x: 0, y: 0 });
+
   if (!isVisible) return null;
 
   return (
     <>
       {/* Draggable Floating Chat Button */}
-      <Draggable bounds="body">
+      <Draggable 
+        bounds="body" 
+        cancel=".close-btn"
+        onStart={(e, data) => {
+          dragStartPos.current = { x: data.x, y: data.y };
+        }}
+        onStop={(e, data) => {
+          const dx = Math.abs(data.x - dragStartPos.current.x);
+          const dy = Math.abs(data.y - dragStartPos.current.y);
+          // If the drag distance is very small, treat it as a click
+          if (dx < 5 && dy < 5) {
+            setIsOpen(!isOpen);
+          }
+        }}
+      >
         <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999, touchAction: 'none' }}>
           <button
-            onClick={() => setIsOpen(!isOpen)}
             style={{
               width: 60,
               height: 60,
@@ -83,6 +98,7 @@ const PublicChatbot = () => {
           {/* Close button for the widget */}
           {!isOpen && (
             <button
+              className="close-btn"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsVisible(false);
