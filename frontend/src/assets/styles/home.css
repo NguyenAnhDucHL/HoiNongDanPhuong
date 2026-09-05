@@ -537,6 +537,8 @@ footer {
   .brand {
     text-align: center;
     align-items: center;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .actions {
@@ -586,30 +588,34 @@ footer {
 
 @media(max-width:768px) {
   .logo {
-    width: 60px;
-    height: 60px
+    width: 50px;
+    height: 50px
   }
 
   .header-inner {
-    gap: 12px;
+    gap: 10px;
   }
 
   .brand h1 {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .brand .subtitle {
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .actions {
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
+    gap: 8px;
   }
 
   .action {
-    width: 100%;
+    flex: 1;
     min-width: unset;
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 8px;
   }
 
   .stats-grid,
