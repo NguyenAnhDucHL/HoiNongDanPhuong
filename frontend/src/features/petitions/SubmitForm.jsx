@@ -105,7 +105,7 @@ export default function SubmitForm() {
           borderRadius: 'var(--radius)', padding: '20px', marginBottom: 24,
         }}>
           <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 8 }}>Mã tra cứu của bạn:</p>
-          <p style={{ fontSize: 28, fontWeight: 800, color: 'var(--green-dark)', letterSpacing: 2 }}>
+          <p style={{ fontSize: 28, fontWeight: 800, color: '#d32f2f', letterSpacing: 2 }}>
             {success.trackingCode}
           </p>
           <p style={{ fontSize: 13, color: 'var(--muted)', marginTop: 8 }}>

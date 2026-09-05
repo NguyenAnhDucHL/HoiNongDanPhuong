@@ -170,7 +170,7 @@ export default function AdminDashboard() {
   };
 
   const getTabTitle = () => {
-    switch(tab) {
+    switch (tab) {
       case 'dashboard': return 'Tổng quan';
       case 'petitions': return 'Danh sách phản ánh';
       case 'news': return 'Quản lý Tin tức';
@@ -213,15 +213,15 @@ export default function AdminDashboard() {
         {/* Dynamic Content */}
         <div style={{ flex: 1, overflowY: 'auto', background: 'var(--admin-bg)' }}>
           {tab === 'dashboard' && (
-            <AdminOverview 
-              stats={stats} 
-              onNavigateToPetitions={() => setTab('petitions')} 
-              onOpenDetail={openDetail} 
+            <AdminOverview
+              stats={stats}
+              onNavigateToPetitions={() => setTab('petitions')}
+              onOpenDetail={openDetail}
             />
           )}
-          
+
           {tab === 'petitions' && (
-            <AdminPetitions 
+            <AdminPetitions
               petitions={petitions}
               total={total}
               page={page}
@@ -268,7 +268,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Petition Detail Modal */}
-      <PetitionDetailModal 
+      <PetitionDetailModal
         selectedPetition={selectedPetition}
         setSelectedPetition={setSelectedPetition}
         detailLoading={detailLoading}
