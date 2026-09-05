@@ -27,7 +27,10 @@ export default function CategoryManager() {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!newName.trim()) return;
+    if (!newName.trim()) {
+      setError('Vui lòng nhập tên lĩnh vực');
+      return;
+    }
     setError('');
     try {
       const added = await fetchApi('/categories', {
@@ -36,6 +39,7 @@ export default function CategoryManager() {
       });
       setCategories([...categories, added]);
       setNewName('');
+      alert('Thêm lĩnh vực thành công!');
     } catch (e) {
       setError(e.message || 'Lỗi thêm mới');
     }

@@ -27,15 +27,19 @@ export default function WardManager() {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!newName.trim()) return;
+    if (!newName.trim()) {
+      setError('Vui lòng nhập tên khu phố');
+      return;
+    }
     setError('');
     try {
       const added = await fetchApi('/wards', {
         method: 'POST',
         body: JSON.stringify({ name: newName.trim() }),
       });
-      setCategories([...wards, added]);
+      setWards([...wards, added]);
       setNewName('');
+      alert('Thêm khu phố thành công!');
     } catch (e) {
       setError(e.message || 'Lỗi thêm mới');
     }
