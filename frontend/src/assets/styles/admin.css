@@ -294,7 +294,7 @@ body.admin-mode {
   width: auto;
 }
 
-.admin-filter-bar .btn {
+.admin-content .btn, .admin-filter-bar .btn {
   width: auto;
   margin-top: 0;
 }
