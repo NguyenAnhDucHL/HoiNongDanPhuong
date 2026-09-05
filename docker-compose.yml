@@ -23,6 +23,10 @@ services:
     networks:
       - hnd_network
       - proxy_network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   frontend:
     build: 
@@ -41,6 +45,10 @@ services:
     networks:
       - hnd_network
       - proxy_network
+    deploy:
+      resources:
+        limits:
+          memory: 128M
 
 networks:
   hnd_network:
