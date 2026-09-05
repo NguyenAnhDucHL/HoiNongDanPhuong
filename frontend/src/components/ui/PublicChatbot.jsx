@@ -6,9 +6,17 @@ const PublicChatbot = () => {
   const [messages, setMessages] = useState([
     { role: 'assistant', content: 'Chào bạn, tôi là trợ lý ảo của Hội Nông Dân Phường. Tôi có thể giúp gì cho bạn?' }
   ]);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  const INITIAL_MESSAGE = { role: 'assistant', content: 'Chào bạn, tôi là trợ lý ảo của Hội Nông Dân Phường. Tôi có thể giúp gì cho bạn?' };
+
+  const handleClear = () => {
+    setMessages([INITIAL_MESSAGE]);
+    setInput('');
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -110,16 +118,59 @@ const PublicChatbot = () => {
               <div style={{ fontSize: 12, opacity: 0.8 }}>Hội Nông Dân Phường</div>
             </div>
           </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: 4 }}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {/* Nút xóa hội thoại */}
+            <button
+              onClick={() => setShowClearConfirm(true)}
+              title="Xóa hội thoại"
+              style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', cursor: 'pointer', padding: 6, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+              </svg>
+            </button>
+            {/* Nút đóng */}
+            <button
+              onClick={() => setIsOpen(false)}
+              title="Đóng"
+              style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: 4 }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {/* Confirm xóa hội thoại */}
+        {showClearConfirm && (
+          <div style={{
+            position: 'fixed', bottom: 440, right: 24, width: 350, zIndex: 10001,
+            backgroundColor: 'white', borderBottom: '1px solid #e2e8f0',
+            padding: '12px 16px', display: 'flex', alignItems: 'center',
+            justifyContent: 'space-between', gap: 8,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }}>
+            <span style={{ fontSize: 13, color: '#475569' }}>Xóa toàn bộ hội thoại?</span>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button
+                onClick={() => { handleClear(); setShowClearConfirm(false); }}
+                style={{ padding: '4px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 500 }}
+              >Xóa</button>
+              <button
+                onClick={() => setShowClearConfirm(false)}
+                style={{ padding: '4px 12px', backgroundColor: '#f1f5f9', color: '#475569', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}
+              >Hủy</button>
+            </div>
+          </div>
+        )}
 
         {/* Messages */}
         <div style={{ flex: 1, overflowY: 'auto', padding: 20, backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -150,12 +201,12 @@ const PublicChatbot = () => {
               </div>
             </div>
           ))}
-          
+
           {isLoading && (
             <div style={{ display: 'flex', gap: 8, alignSelf: 'flex-start' }}>
-               <div style={{ width: 28, height: 28, borderRadius: '50%', backgroundColor: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 12 }}>
-                  🤖
-                </div>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', backgroundColor: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 12 }}>
+                🤖
+              </div>
               <div style={{
                 backgroundColor: 'white',
                 padding: '12px 16px',
