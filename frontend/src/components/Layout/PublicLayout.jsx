@@ -18,7 +18,7 @@ const PublicLayout = ({ children }) => {
           .brand { gap: 8px !important; flex: 1 !important; min-width: 0 !important; }
           .logo { width: 44px !important; height: 44px !important; flex-shrink: 0 !important; }
           .brand-text { gap: 2px !important; flex: 1 !important; min-width: 0 !important; }
-          .brand h1 { font-size: 13.5px !important; margin: 0 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; text-align: left !important; }
+          .brand h1 { font-size: 13.5px !important; margin: 0 !important; text-align: left !important; line-height: 1.2 !important; }
           .brand .subtitle { display: block !important; font-size: 10px !important; line-height: 1.25 !important; white-space: normal !important; opacity: 0.9 !important; margin: 0 !important; text-align: left !important; }
           .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; flex-shrink: 0 !important; }
           .action { padding: 5px !important; min-width: auto !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 8px !important; }
