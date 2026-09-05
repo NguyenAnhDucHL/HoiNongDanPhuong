@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Draggable from 'react-draggable';
 import { fetchApi } from '../../lib/api';
 
 const PublicChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [messages, setMessages] = useState([
     { role: 'assistant', content: 'Chào bạn, tôi là trợ lý ảo của Hội Nông Dân Phường. Tôi có thể giúp gì cho bạn?' }
   ]);
@@ -48,35 +50,71 @@ const PublicChatbot = () => {
     }
   };
 
+  if (!isVisible) return null;
+
   return (
     <>
-      {/* Floating Chat Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          width: 60,
-          height: 60,
-          borderRadius: '50%',
-          backgroundColor: '#ff8a00',
-          color: 'white',
-          border: 'none',
-          boxShadow: '0 4px 15px rgba(255, 138, 0, 0.3)',
-          cursor: 'pointer',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'transform 0.3s ease',
-          transform: isOpen ? 'scale(0)' : 'scale(1)',
-        }}
-      >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-        </svg>
-      </button>
+      {/* Draggable Floating Chat Button */}
+      <Draggable bounds="body">
+        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999, touchAction: 'none' }}>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              backgroundColor: '#ff8a00',
+              color: 'white',
+              border: 'none',
+              boxShadow: '0 4px 15px rgba(255, 138, 0, 0.3)',
+              cursor: 'move',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 0.3s ease',
+              transform: isOpen ? 'scale(0)' : 'scale(1)',
+            }}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </button>
+
+          {/* Close button for the widget */}
+          {!isOpen && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsVisible(false);
+              }}
+              title="Ẩn chatbot"
+              style={{
+                position: 'absolute',
+                top: -5,
+                right: -5,
+                width: 22,
+                height: 22,
+                borderRadius: '50%',
+                backgroundColor: '#ef4444',
+                color: 'white',
+                border: '2px solid white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+                zIndex: 10000,
+                padding: 0
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
+        </div>
+      </Draggable>
 
       {/* Chat Window */}
       <div
