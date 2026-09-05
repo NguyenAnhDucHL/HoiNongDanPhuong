@@ -14,7 +14,7 @@ const PublicLayout = ({ children }) => {
         
         /* Mobile */
         @media (max-width: 900px) {
-          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; }
+          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; min-height: auto !important; }
           .brand { gap: 8px !important; flex: 1 !important; min-width: 0 !important; }
           .logo { width: 44px !important; height: 44px !important; flex-shrink: 0 !important; }
           .brand-text { gap: 2px !important; flex: 1 !important; min-width: 0 !important; }
