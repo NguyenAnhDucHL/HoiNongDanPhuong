@@ -62,15 +62,44 @@ export default function PostDetail() {
 
                   {imagesList.length > 0 && (
                     <div style={{ marginTop: 40 }}>
-                      <h3 style={{ marginBottom: 20, fontSize: 18, color: 'var(--green-dark)' }}>Hình ảnh đính kèm</h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                      <h3 style={{ marginBottom: 20, fontSize: 18, color: 'var(--green-dark)', borderBottom: '2px solid var(--green-light)', paddingBottom: 8, display: 'inline-block' }}>Hình ảnh đính kèm</h3>
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: imagesList.length === 1 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))', 
+                        gap: 24 
+                      }}>
                         {imagesList.map((img, idx) => (
-                          <img
-                            key={idx}
-                            src={`/uploads/${img}`}
-                            alt=""
-                            style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid #eee' }}
-                          />
+                          <div key={idx} style={{ 
+                            position: 'relative', 
+                            overflow: 'hidden', 
+                            borderRadius: 12, 
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.08)',
+                            aspectRatio: imagesList.length === 1 ? 'auto' : '4/3',
+                            transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'translateY(-4px)';
+                            e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.12)';
+                            e.currentTarget.querySelector('img').style.transform = 'scale(1.03)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'translateY(0)';
+                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.08)';
+                            e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+                          }}
+                          >
+                            <img
+                              src={`/uploads/${img}`}
+                              alt={`Đính kèm ${idx + 1}`}
+                              style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                objectFit: imagesList.length === 1 ? 'contain' : 'cover',
+                                display: 'block',
+                                transition: 'transform 0.5s ease'
+                              }}
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
