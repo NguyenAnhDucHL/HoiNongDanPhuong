@@ -26,7 +26,8 @@ jobs:
           sshpass -p "$VNPT_PASS" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 $VNPT_USER@$VNPT_HOST << 'EOF'
             set -e
             cd /root/HoiNongDanPhuong
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             docker rm -f 9813f87c32c17bf5bb372a801c6156080ca53bd5244775d942697ef1d2b3f5f5 || true
             docker rm -f 3bd51cd8dce8_hnd_backend || true
             docker compose build --no-cache && docker compose up -d --force-recreate
