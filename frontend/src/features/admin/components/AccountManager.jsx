@@ -5,6 +5,9 @@ export default function AccountManager() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
@@ -68,35 +71,65 @@ export default function AccountManager() {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
           <div>
             <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Mật khẩu hiện tại</label>
-            <input
-              type="password"
-              className="form-control"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Nhập mật khẩu hiện tại"
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showCurrent ? "text" : "password"}
+                className="form-control"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Nhập mật khẩu hiện tại"
+                style={{ paddingRight: 40 }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrent(!showCurrent)}
+                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+              >
+                {showCurrent ? '👁️' : '🙈'}
+              </button>
+            </div>
           </div>
 
           <div>
             <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Mật khẩu mới</label>
-            <input
-              type="password"
-              className="form-control"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Nhập mật khẩu mới"
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showNew ? "text" : "password"}
+                className="form-control"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Nhập mật khẩu mới"
+                style={{ paddingRight: 40 }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+              >
+                {showNew ? '👁️' : '🙈'}
+              </button>
+            </div>
           </div>
 
           <div>
             <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Nhập lại mật khẩu mới</label>
-            <input
-              type="password"
-              className="form-control"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Xác nhận mật khẩu mới"
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showConfirm ? "text" : "password"}
+                className="form-control"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Xác nhận mật khẩu mới"
+                style={{ paddingRight: 40 }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+              >
+                {showConfirm ? '👁️' : '🙈'}
+              </button>
+            </div>
           </div>
 
           <div style={{ marginTop: 10 }}>
