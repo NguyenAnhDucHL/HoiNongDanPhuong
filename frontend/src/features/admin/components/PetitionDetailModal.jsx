@@ -86,22 +86,63 @@ export default function PetitionDetailModal({
               {selectedPetition.imagePaths && (
                 <div style={{ marginBottom: 24 }}>
                   <h4 style={{ fontSize: 14, fontWeight: 600, color: '#334155', marginBottom: 12 }}>Tệp đính kèm</h4>
-                  <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                    {selectedPetition.imagePaths.split(',').filter(Boolean).map((img, i) => (
-                      <a key={i} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{
-                        display: 'block', borderRadius: 10, overflow: 'hidden', border: '1px solid #e2e8f0',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)', transition: 'transform 0.2s, box-shadow 0.2s'
-                      }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)'; }}
-                      >
-                        <img
-                          src={`/uploads/${img}`} alt={`Ảnh ${i + 1}`}
-                          style={{ width: 120, height: 120, objectFit: 'cover', display: 'block' }}
-                        />
-                      </a>
-                    ))}
-                  </div>
+                  {(() => {
+                    const imagesList = selectedPetition.imagePaths.split(',').filter(Boolean);
+                    if (imagesList.length === 0) return null;
+                    return (
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: imagesList.length === 1 ? '1fr' : 'repeat(2, 1fr)', 
+                        gap: 4, 
+                        borderRadius: 12, 
+                        overflow: 'hidden',
+                        border: '1px solid #e2e8f0'
+                      }}>
+                        {imagesList.map((img, idx) => {
+                          let gridStyle = {};
+                          const count = imagesList.length;
+                          
+                          if (count === 1) {
+                            gridStyle = { gridColumn: '1 / -1', maxHeight: 400 };
+                          } else if (count === 3 && idx === 0) {
+                            gridStyle = { gridColumn: '1 / -1', height: 250 };
+                          } else if (count === 3 && idx > 0) {
+                            gridStyle = { height: 150 };
+                          } else if (count >= 4) {
+                            gridStyle = { height: 150 };
+                          } else {
+                            // count === 2
+                            gridStyle = { height: 200 };
+                          }
+
+                          return (
+                            <a key={idx} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{ 
+                              position: 'relative', 
+                              width: '100%', 
+                              ...gridStyle,
+                              overflow: 'hidden',
+                              display: 'block'
+                            }}>
+                              <img
+                                src={`/uploads/${img}`}
+                                alt=""
+                                style={{ 
+                                  width: '100%', 
+                                  height: '100%', 
+                                  objectFit: count === 1 ? 'contain' : 'cover',
+                                  display: 'block',
+                                  background: '#f8fafc',
+                                  transition: 'transform 0.3s ease'
+                                }}
+                                onMouseEnter={e => e.currentTarget.style.transform = count === 1 ? 'none' : 'scale(1.03)'}
+                                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                              />
+                            </a>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 
