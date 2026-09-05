@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../../lib/api';
+import ConfirmModal from '../../../components/ui/ConfirmModal';
 
 export default function CategoryManager() {
   const [categories, setCategories] = useState([]);
@@ -8,6 +9,7 @@ export default function CategoryManager() {
   const [editName, setEditName] = useState('');
   const [newName, setNewName] = useState('');
   const [error, setError] = useState('');
+  const [deleteId, setDeleteId] = useState(null);
 
   const loadCategories = async () => {
     setLoading(true);
@@ -61,13 +63,19 @@ export default function CategoryManager() {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Bạn có chắc muốn xóa lĩnh vực này?')) return;
+    setDeleteId(id);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
     setError('');
     try {
-      await fetchApi(`/categories/${id}`, { method: 'DELETE' });
-      setCategories(categories.filter(c => c.id !== id));
+      await fetchApi(`/categories/${deleteId}`, { method: 'DELETE' });
+      setCategories(categories.filter(c => c.id !== deleteId));
+      setDeleteId(null);
     } catch (e) {
       setError(e.message || 'Lỗi xóa');
+      setDeleteId(null);
     }
   };
 
@@ -154,6 +162,15 @@ export default function CategoryManager() {
           </tbody>
         </table>
       )}
+
+      <ConfirmModal
+        isOpen={!!deleteId}
+        title="Xác nhận xóa"
+        message="Bạn có chắc chắn muốn xóa lĩnh vực này không? Hành động này không thể hoàn tác."
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteId(null)}
+        confirmText="Xóa"
+      />
     </div>
   );
 }

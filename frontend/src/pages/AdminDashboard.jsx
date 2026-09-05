@@ -12,6 +12,7 @@ import AdminSidebar from '../features/admin/components/AdminSidebar';
 import AdminOverview from '../features/admin/components/AdminOverview';
 import AdminPetitions from '../features/admin/components/AdminPetitions';
 import PetitionDetailModal from '../features/admin/components/PetitionDetailModal';
+import ConfirmModal from '../components/ui/ConfirmModal';
 
 const STATUS_OPTIONS = [
   { value: 'all', label: 'Tất cả trạng thái' },
@@ -48,6 +49,7 @@ export default function AdminDashboard() {
   const [updating, setUpdating] = useState(false);
   const [analyzingAI, setAnalyzingAI] = useState(false);
   const [aiResult, setAiResult] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
   const LIMIT = 20;
 
@@ -166,14 +168,22 @@ export default function AdminDashboard() {
   };
 
   const handleDeletePetition = async (id) => {
-    if (!confirm('Bạn có chắc muốn xóa phản ánh này?')) return;
+    setDeleteId(id);
+  };
+
+  const confirmDeletePetition = async () => {
+    if (!deleteId) return;
     try {
-      await fetchApi(`/admin/petitions/${id}`, { method: 'DELETE' });
-      setSelectedPetition(null);
+      await fetchApi(`/admin/petitions/${deleteId}`, { method: 'DELETE' });
+      if (selectedPetition && selectedPetition.id === deleteId) {
+        setSelectedPetition(null);
+      }
       loadPetitions();
       if (tab === 'dashboard') loadDashboard();
+      setDeleteId(null);
     } catch (e) {
       alert('❌ Lỗi xóa: ' + e.message);
+      setDeleteId(null);
     }
   };
 
@@ -311,6 +321,15 @@ export default function AdminDashboard() {
 
       {/* AI Floating Button */}
       <AIAssistant />
+
+      <ConfirmModal
+        isOpen={!!deleteId}
+        title="Xác nhận xóa"
+        message="Bạn có chắc chắn muốn xóa phản ánh này không? Hành động này không thể hoàn tác."
+        onConfirm={confirmDeletePetition}
+        onCancel={() => setDeleteId(null)}
+        confirmText="Xóa"
+      />
     </div>
   );
 }

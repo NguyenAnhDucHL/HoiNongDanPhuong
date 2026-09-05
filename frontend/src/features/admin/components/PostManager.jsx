@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchApi } from '../../../lib/api';
+import ConfirmModal from '../../../components/ui/ConfirmModal';
 
 export default function PostManager({ type, title }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
 
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
@@ -78,12 +80,18 @@ export default function PostManager({ type, title }) {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Bạn có chắc muốn xóa?')) return;
+    setDeleteId(id);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
     try {
-      await fetchApi(`/posts/${id}`, { method: 'DELETE' });
+      await fetchApi(`/posts/${deleteId}`, { method: 'DELETE' });
       loadPosts();
+      setDeleteId(null);
     } catch (e) {
       alert('Lỗi xóa: ' + e.message);
+      setDeleteId(null);
     }
   };
 
@@ -151,6 +159,15 @@ export default function PostManager({ type, title }) {
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={!!deleteId}
+        title="Xác nhận xóa"
+        message="Bạn có chắc chắn muốn xóa bài viết này không? Hành động này không thể hoàn tác."
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteId(null)}
+        confirmText="Xóa"
+      />
     </div>
   );
 }
