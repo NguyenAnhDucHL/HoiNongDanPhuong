@@ -89,7 +89,7 @@ export default function WardManager() {
           placeholder="Tên khu phố mới..."
           style={{ flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid #ccc' }}
         />
-        <button type="submit" className="admin-btn primary" disabled={loading}>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
           ➕ Thêm mới
         </button>
       </form>
@@ -128,13 +128,13 @@ export default function WardManager() {
                 <td style={{ textAlign: 'right' }}>
                   {editingId === c.id ? (
                     <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-                      <button className="admin-btn primary" onClick={() => handleUpdate(c.id)} style={{ padding: '6px 12px' }}>Lưu</button>
-                      <button className="admin-btn" onClick={() => setEditingId(null)} style={{ padding: '6px 12px' }}>Hủy</button>
+                      <button className="btn btn-primary" onClick={() => handleUpdate(c.id)} style={{ padding: '6px 12px' }}>Lưu</button>
+                      <button className="btn btn-secondary" onClick={() => setEditingId(null)} style={{ padding: '6px 12px' }}>Hủy</button>
                     </div>
                   ) : (
                     <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-                      <button className="admin-btn" onClick={() => startEdit(c)} style={{ padding: '6px 12px' }}>Sửa</button>
-                      <button className="admin-btn danger" onClick={() => handleDelete(c.id)} style={{ padding: '6px 12px' }}>Xóa</button>
+                      <button className="btn btn-secondary" onClick={() => startEdit(c)} style={{ padding: '6px 12px' }}>Sửa</button>
+                      <button className="btn btn-danger" onClick={() => handleDelete(c.id)} style={{ padding: '6px 12px' }}>Xóa</button>
                     </div>
                   )}
                 </td>

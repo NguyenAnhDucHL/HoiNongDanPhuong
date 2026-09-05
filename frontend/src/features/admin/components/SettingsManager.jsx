@@ -48,15 +48,15 @@ export default function SettingsManager() {
   return (
     <div style={{ maxWidth: 800 }}>
       <h3 style={{ color: 'var(--green-dark)', fontWeight: 800, marginBottom: 20 }}>⚙️ Cấu hình Giới thiệu chung</h3>
-      
+
       <div className="card">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
             <label style={{ fontWeight: 600, display: 'block', marginBottom: 8 }}>Tiêu đề phần Giới thiệu (trên trang chủ)</label>
-            <input 
-              type="text" 
-              value={settings.intro_title} 
-              onChange={e => setSettings({...settings, intro_title: e.target.value})}
+            <input
+              type="text"
+              value={settings.intro_title}
+              onChange={e => setSettings({ ...settings, intro_title: e.target.value })}
               style={{ width: '100%', padding: 10, border: '1px solid #ddd', borderRadius: 8 }}
               placeholder="VD: Hội Nông Dân Phường Cẩm Phả..."
             />
@@ -64,10 +64,10 @@ export default function SettingsManager() {
 
           <div>
             <label style={{ fontWeight: 600, display: 'block', marginBottom: 8 }}>Nội dung Giới thiệu</label>
-            <textarea 
+            <textarea
               rows={8}
-              value={settings.intro_content} 
-              onChange={e => setSettings({...settings, intro_content: e.target.value})}
+              value={settings.intro_content}
+              onChange={e => setSettings({ ...settings, intro_content: e.target.value })}
               style={{ width: '100%', padding: 10, border: '1px solid #ddd', borderRadius: 8, lineHeight: 1.6 }}
               placeholder="Nhập nội dung giới thiệu sẽ hiển thị trên trang chủ..."
             />
