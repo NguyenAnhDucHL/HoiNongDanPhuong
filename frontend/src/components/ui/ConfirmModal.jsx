@@ -1,7 +1,7 @@
 import React from 'react';
 import './ConfirmModal.css';
 
-export default function ConfirmModal({ isOpen, title, message, onConfirm, onCancel, confirmText = 'OK', cancelText = 'Hủy' }) {
+export default function ConfirmModal({ isOpen, title, message, onConfirm, onCancel, confirmText = 'OK', cancelText = 'Hủy', isAlert = false }) {
   if (!isOpen) return null;
 
   return (
@@ -10,8 +10,10 @@ export default function ConfirmModal({ isOpen, title, message, onConfirm, onCanc
         <h3 className="custom-modal-title">{title}</h3>
         <p className="custom-modal-message">{message}</p>
         <div className="custom-modal-actions">
-          <button className="btn btn-secondary" onClick={onCancel}>{cancelText}</button>
-          <button className="btn btn-danger" onClick={onConfirm}>{confirmText}</button>
+          {!isAlert && (
+            <button className="btn btn-secondary" onClick={onCancel}>{cancelText}</button>
+          )}
+          <button className={`btn ${isAlert ? 'btn-primary' : 'btn-danger'}`} onClick={onConfirm}>{confirmText}</button>
         </div>
       </div>
     </div>

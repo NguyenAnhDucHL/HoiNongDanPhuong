@@ -8,6 +8,7 @@ export default function PostManager({ type, title }) {
   const [showModal, setShowModal] = useState(false);
   const [currentPost, setCurrentPost] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [alertMsg, setAlertMsg] = useState('');
 
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
@@ -19,7 +20,7 @@ export default function PostManager({ type, title }) {
       const res = await fetchApi(`/posts?type=${type}&limit=100`);
       setPosts(res.data || []);
     } catch (e) {
-      alert('Lỗi tải dữ liệu: ' + e.message);
+      setAlertMsg('Lỗi tải dữ liệu: ' + e.message);
     } finally {
       setLoading(false);
     }
@@ -50,7 +51,10 @@ export default function PostManager({ type, title }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!postTitle || !postContent) return alert('Vui lòng nhập tiêu đề và nội dung');
+    if (!postTitle || !postContent) {
+      setAlertMsg('Vui lòng nhập tiêu đề và nội dung');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('type', type);
@@ -73,9 +77,9 @@ export default function PostManager({ type, title }) {
 
       setShowModal(false);
       loadPosts();
-      alert('Lưu thành công!');
+      setAlertMsg('Lưu thành công!');
     } catch (e) {
-      alert('Lỗi lưu dữ liệu: ' + e.message);
+      setAlertMsg('Lỗi lưu dữ liệu: ' + e.message);
     }
   };
 
@@ -90,7 +94,7 @@ export default function PostManager({ type, title }) {
       loadPosts();
       setDeleteId(null);
     } catch (e) {
-      alert('Lỗi xóa: ' + e.message);
+      setAlertMsg('Lỗi xóa: ' + e.message);
       setDeleteId(null);
     }
   };
@@ -167,6 +171,14 @@ export default function PostManager({ type, title }) {
         onConfirm={confirmDelete}
         onCancel={() => setDeleteId(null)}
         confirmText="Xóa"
+      />
+
+      <ConfirmModal
+        isOpen={!!alertMsg}
+        title="Thông báo"
+        message={alertMsg}
+        onConfirm={() => setAlertMsg('')}
+        isAlert={true}
       />
     </div>
   );

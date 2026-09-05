@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../../lib/api';
+import ConfirmModal from '../../../components/ui/ConfirmModal';
 
 export default function SettingsManager() {
   const [settings, setSettings] = useState({
@@ -8,6 +9,7 @@ export default function SettingsManager() {
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [alertMsg, setAlertMsg] = useState('');
 
   useEffect(() => {
     loadSettings();
@@ -35,9 +37,9 @@ export default function SettingsManager() {
         method: 'PUT',
         body: JSON.stringify(settings)
       });
-      alert('✅ Lưu cấu hình thành công!');
+      setAlertMsg('✅ Lưu cấu hình thành công!');
     } catch (e) {
-      alert('❌ Lỗi lưu cấu hình: ' + e.message);
+      setAlertMsg('❌ Lỗi lưu cấu hình: ' + e.message);
     } finally {
       setSaving(false);
     }
@@ -80,6 +82,14 @@ export default function SettingsManager() {
           </div>
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={!!alertMsg}
+        title="Thông báo"
+        message={alertMsg}
+        onConfirm={() => setAlertMsg('')}
+        isAlert={true}
+      />
     </div>
   );
 }

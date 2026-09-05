@@ -10,6 +10,7 @@ export default function CategoryManager() {
   const [newName, setNewName] = useState('');
   const [error, setError] = useState('');
   const [deleteId, setDeleteId] = useState(null);
+  const [alertMsg, setAlertMsg] = useState('');
 
   const loadCategories = async () => {
     setLoading(true);
@@ -41,7 +42,7 @@ export default function CategoryManager() {
       });
       setCategories([...categories, added]);
       setNewName('');
-      alert('Thêm lĩnh vực thành công!');
+      setAlertMsg('Thêm lĩnh vực thành công!');
     } catch (e) {
       setError(e.message || 'Lỗi thêm mới');
     }
@@ -170,6 +171,14 @@ export default function CategoryManager() {
         onConfirm={confirmDelete}
         onCancel={() => setDeleteId(null)}
         confirmText="Xóa"
+      />
+
+      <ConfirmModal
+        isOpen={!!alertMsg}
+        title="Thông báo"
+        message={alertMsg}
+        onConfirm={() => setAlertMsg('')}
+        isAlert={true}
       />
     </div>
   );

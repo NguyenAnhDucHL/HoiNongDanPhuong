@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [analyzingAI, setAnalyzingAI] = useState(false);
   const [aiResult, setAiResult] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
+  const [alertMsg, setAlertMsg] = useState('');
 
   const LIMIT = 20;
 
@@ -120,7 +121,7 @@ export default function AdminDashboard() {
       setUpdateStatus(p.status);
       setAdminNotes(p.adminNotes || '');
     } catch (e) {
-      alert('Không thể tải chi tiết.');
+      setAlertMsg('Không thể tải chi tiết.');
     } finally {
       setDetailLoading(false);
     }
@@ -137,9 +138,9 @@ export default function AdminDashboard() {
       setSelectedPetition(prev => ({ ...prev, status: updateStatus, adminNotes }));
       loadPetitions();
       if (tab === 'dashboard') loadDashboard();
-      alert('✅ Cập nhật thành công!');
+      setAlertMsg('✅ Cập nhật thành công!');
     } catch (e) {
-      alert('❌ Lỗi: ' + e.message);
+      setAlertMsg('❌ Lỗi: ' + e.message);
     } finally {
       setUpdating(false);
     }
@@ -161,7 +162,7 @@ export default function AdminDashboard() {
       }));
       loadPetitions();
     } catch (e) {
-      alert('❌ AI lỗi: ' + e.message);
+      setAlertMsg('❌ AI lỗi: ' + e.message);
     } finally {
       setAnalyzingAI(false);
     }
@@ -182,7 +183,7 @@ export default function AdminDashboard() {
       if (tab === 'dashboard') loadDashboard();
       setDeleteId(null);
     } catch (e) {
-      alert('❌ Lỗi xóa: ' + e.message);
+      setAlertMsg('❌ Lỗi xóa: ' + e.message);
       setDeleteId(null);
     }
   };
@@ -329,6 +330,14 @@ export default function AdminDashboard() {
         onConfirm={confirmDeletePetition}
         onCancel={() => setDeleteId(null)}
         confirmText="Xóa"
+      />
+
+      <ConfirmModal
+        isOpen={!!alertMsg}
+        title="Thông báo"
+        message={alertMsg}
+        onConfirm={() => setAlertMsg('')}
+        isAlert={true}
       />
     </div>
   );
