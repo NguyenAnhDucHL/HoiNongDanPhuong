@@ -30,4 +30,6 @@ jobs:
             docker rm -f 9813f87c32c17bf5bb372a801c6156080ca53bd5244775d942697ef1d2b3f5f5 || true
             docker rm -f 3bd51cd8dce8_hnd_backend || true
             docker compose up -d --build
+            # Dọn dẹp các image cũ/lỗi thời để giải phóng dung lượng
+            docker image prune -f
           EOF
