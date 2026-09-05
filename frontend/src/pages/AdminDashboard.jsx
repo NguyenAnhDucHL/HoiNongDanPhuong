@@ -53,7 +53,7 @@ export default function AdminDashboard() {
   const [deleteId, setDeleteId] = useState(null);
   const [alertMsg, setAlertMsg] = useState('');
 
-  const LIMIT = 20;
+  const LIMIT = 10;
 
   const [categories, setCategories] = useState(['all']);
 

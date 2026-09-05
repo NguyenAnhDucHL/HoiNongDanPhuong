@@ -197,7 +197,7 @@ export default function PetitionDetailModal({
         <div className="admin-modal-footer">
           <button
             className="btn btn-danger"
-            style={{ marginRight: 'auto', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444' }}
+            style={{ width: 'auto', marginRight: 'auto', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', padding: '10px 20px' }}
             onClick={() => handleDeletePetition(selectedPetition.id)}
           >
             🗑️ Xóa
@@ -205,6 +205,7 @@ export default function PetitionDetailModal({
 
           <button
             className="btn btn-secondary"
+            style={{ width: 'auto', padding: '10px 20px' }}
             onClick={() => setSelectedPetition(null)}
           >
             Đóng
@@ -212,6 +213,7 @@ export default function PetitionDetailModal({
 
           <button
             className="btn btn-primary"
+            style={{ width: 'auto', padding: '10px 24px' }}
             onClick={handleUpdateStatus}
             disabled={updating || detailLoading}
           >

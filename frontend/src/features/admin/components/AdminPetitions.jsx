@@ -143,7 +143,7 @@ export default function AdminPetitions({
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {totalPages > 0 && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '24px' }}>
           <button
             disabled={page === 1}
