@@ -26,7 +26,7 @@ export default function AdminSidebar({ currentTab, onTabChange }) {
             onClick={() => onTabChange(item.id)}
           >
             <span className="admin-sidebar-icon">{item.icon}</span>
-            {item.label}
+            <span className="admin-sidebar-label">{item.label}</span>
           </button>
         ))}
       </div>
