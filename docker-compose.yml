@@ -18,6 +18,8 @@ services:
     environment:
       - DB_PATH=/app/data/database.sqlite
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - hnd_network
 
