@@ -11,28 +11,32 @@ const MENU_ITEMS = [
   { id: 'account', label: 'Tài khoản', icon: '👤' },
 ];
 
-export default function AdminSidebar({ currentTab, onTabChange }) {
+export default function AdminSidebar({ currentTab, onTabChange, isOpen, onClose }) {
   return (
-    <div className="admin-sidebar">
-      <div className="admin-sidebar-header">
-        <img src="/logo.png" alt="Logo" />
-        <h2>Hội Nông Dân Cẩm Phả</h2>
+    <>
+      <div className={`admin-sidebar-overlay ${isOpen ? 'active' : ''}`} onClick={onClose}></div>
+      <div className={`admin-sidebar ${isOpen ? 'active' : ''}`}>
+        <div className="admin-sidebar-header">
+          <img src="/logo.png" alt="Logo" />
+          <h2>Hội Nông Dân Cẩm Phả</h2>
+          <button className="admin-sidebar-close" onClick={onClose}>✕</button>
+        </div>
+        <div className="admin-sidebar-menu">
+          {MENU_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              className={`admin-sidebar-item ${currentTab === item.id ? 'active' : ''}`}
+              onClick={() => onTabChange(item.id)}
+            >
+              <span className="admin-sidebar-icon">{item.icon}</span>
+              <span className="admin-sidebar-label">{item.label}</span>
+            </button>
+          ))}
+        </div>
+        <div style={{ padding: '20px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
+          v1.0.0 &copy; 2026
+        </div>
       </div>
-      <div className="admin-sidebar-menu">
-        {MENU_ITEMS.map((item) => (
-          <button
-            key={item.id}
-            className={`admin-sidebar-item ${currentTab === item.id ? 'active' : ''}`}
-            onClick={() => onTabChange(item.id)}
-          >
-            <span className="admin-sidebar-icon">{item.icon}</span>
-            <span className="admin-sidebar-label">{item.label}</span>
-          </button>
-        ))}
-      </div>
-      <div style={{ padding: '20px', fontSize: '12px', color: 'rgba(255,255,255,0.4)', textAlign: 'center' }}>
-        v1.0.0 &copy; 2026
-      </div>
-    </div>
+    </>
   );
 }

@@ -35,6 +35,7 @@ export default function AdminDashboard() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loadingList, setLoadingList] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Filters
   const [filterStatus, setFilterStatus] = useState('all');
@@ -205,12 +206,15 @@ export default function AdminDashboard() {
   return (
     <div className="admin-layout">
       {/* Sidebar */}
-      <AdminSidebar currentTab={tab} onTabChange={setTab} />
+      <AdminSidebar currentTab={tab} onTabChange={(t) => { setTab(t); setSidebarOpen(false); }} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="admin-main-wrapper">
         {/* Top Bar */}
         <div className="admin-topbar">
           <div className="admin-topbar-left">
+            <button className="admin-hamburger" onClick={() => setSidebarOpen(true)}>
+              ☰
+            </button>
             <h1 className="admin-topbar-title">{getTabTitle()}</h1>
           </div>
           <div className="admin-topbar-right">

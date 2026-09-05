@@ -510,46 +510,66 @@ body.admin-mode {
   font-weight: 600;
 }
 
+/* Sidebar Drawer styles */
+.admin-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--admin-text);
+  padding: 0;
+  margin-right: 12px;
+}
+
+.admin-sidebar-close {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.admin-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 95;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
 /* ========================================= */
 /* Responsive Admin Layout (Mobile/Tablet) */
 /* ========================================= */
 @media (max-width: 900px) {
+  .admin-hamburger { display: block; }
+  .admin-sidebar-close { display: block; }
+  
   .admin-sidebar {
-    width: 60px; /* Collapse sidebar to icon-only */
-  }
-
-  .admin-sidebar-header h2 {
-    display: none; /* Hide text */
-  }
-  
-  .admin-sidebar-header img {
-    margin-right: 0;
-    width: 32px;
-    height: 32px;
-  }
-
-  .admin-sidebar-item {
-    justify-content: center;
-    padding: 12px 0;
-  }
-
-  .admin-sidebar-icon {
-    margin-right: 0;
-    font-size: 20px;
+    position: fixed;
+    top: 0;
+    left: -260px; /* Hide off-screen by default */
+    width: 260px !important;
+    height: 100vh;
+    z-index: 100;
   }
   
-  /* Hide labels */
-  .admin-sidebar-label {
-    display: none;
-  }
-
-  .admin-topbar-title {
-    font-size: 16px;
+  .admin-sidebar.active {
+    left: 0;
   }
   
-  .admin-user-info span {
-    display: none; /* Hide admin name on mobile to save space */
+  .admin-sidebar-overlay.active {
+    display: block;
+    opacity: 1;
   }
+
+  .admin-topbar { padding: 0 16px; }
+  .admin-topbar-title { font-size: 16px; }
+  .admin-user-info span { display: none; }
 }
 
 @media (max-width: 768px) {
