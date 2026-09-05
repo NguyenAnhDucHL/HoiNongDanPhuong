@@ -32,7 +32,8 @@ async function askOllama(prompt, systemPrompt = "") {
   });
 
   if (!response.ok) {
-    throw new Error(`Ollama API error: ${response.statusText}`);
+    const errText = await response.text();
+    throw new Error(`Ollama API error (${response.status}): ${response.statusText}. Response: ${errText}`);
   }
 
   const data = await response.json();
@@ -122,7 +123,7 @@ Hãy trả lời ngắn gọn, súc tích và thân thiện. Trả về dưới 
 
   } catch (error) {
     console.error("AI Chat Error:", error);
-    return { reply: "Xin lỗi, đã xảy ra lỗi trong quá trình xử lý câu hỏi của bạn. Hệ thống AI có thể đang bận." };
+    return { reply: `Lỗi hệ thống AI: ${error.message}` };
   }
 }
 
