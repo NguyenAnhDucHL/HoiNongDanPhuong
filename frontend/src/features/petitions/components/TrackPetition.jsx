@@ -3,10 +3,10 @@ import { fetchApi } from '../../../lib/api';
 
 const StatusBadge = ({ status }) => {
   const statusMap = {
-    'PENDING': { label: 'Đang chờ', type: 'pending' },
-    'IN_PROGRESS': { label: 'Đang xử lý', type: 'processing' },
-    'RESOLVED': { label: 'Đã hoàn thành', type: 'resolved' },
-    'REJECTED': { label: 'Từ chối', type: 'rejected' }
+    'pending': { label: 'Đang chờ', type: 'pending' },
+    'processing': { label: 'Đang xử lý', type: 'processing' },
+    'resolved': { label: 'Đã hoàn thành', type: 'resolved' },
+    'rejected': { label: 'Từ chối', type: 'rejected' }
   };
 
   const mapped = statusMap[status] || { label: status, type: 'pending' };
