@@ -18,8 +18,12 @@ const PublicLayout = ({ children }) => {
             </div>
           </div>
           <div className="actions">
-            <div className="action" onClick={() => window.location.href = '/admin/login'} style={{ cursor: 'pointer' }}>👤 &nbsp;ĐĂNG NHẬP</div>
-            <div className="action hotline">☎ &nbsp;ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</div>
+            <div className="action" onClick={() => window.location.href = '/admin/login'} style={{ cursor: 'pointer' }}>
+              <span className="icon">👤</span><span className="action-text">&nbsp;ĐĂNG NHẬP</span>
+            </div>
+            <div className="action hotline">
+              <span className="icon">☎</span><span className="action-text">&nbsp;ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</span>
+            </div>
           </div>
         </div>
       </header>
