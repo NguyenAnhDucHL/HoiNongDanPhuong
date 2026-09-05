@@ -9,12 +9,12 @@ const PublicLayout = ({ children }) => {
     <div className="home-container">
       <style>{`
         @media (max-width: 900px) {
-          .header-inner { flex-direction: row !important; padding: 10px 15px !important; gap: 10px !important; }
-          .brand { flex-direction: column !important; align-items: flex-start !important; gap: 2px !important; }
-          .brand-top { flex-direction: row !important; align-items: center !important; gap: 8px !important; }
-          .logo { width: 44px !important; height: 44px !important; }
-          .brand h1 { font-size: 14px !important; margin: 0 !important; }
-          .brand .subtitle { display: block !important; font-size: 11px !important; line-height: 1.2 !important; max-width: 220px !important; opacity: 0.9 !important; }
+          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; }
+          .brand { display: grid !important; grid-template-columns: auto 1fr !important; grid-template-rows: auto auto !important; column-gap: 8px !important; align-items: center !important; flex: 1 !important; }
+          .brand-top { display: contents !important; }
+          .logo { grid-column: 1 / 2 !important; grid-row: 1 / 3 !important; width: 44px !important; height: 44px !important; align-self: center !important; }
+          .brand h1 { grid-column: 2 / 3 !important; grid-row: 1 / 2 !important; font-size: 13px !important; margin: 0 !important; align-self: end !important; padding-top: 2px !important; }
+          .brand .subtitle { display: block !important; grid-column: 2 / 3 !important; grid-row: 2 / 3 !important; font-size: 9.5px !important; line-height: 1.2 !important; white-space: normal !important; opacity: 0.9 !important; align-self: start !important; max-width: 200px !important; }
           .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; }
           .action { padding: 5px !important; min-width: auto !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 8px !important; }
           .action-text { display: none !important; }
