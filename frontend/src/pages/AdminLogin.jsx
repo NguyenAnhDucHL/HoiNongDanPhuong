@@ -15,8 +15,10 @@ export default function AdminLogin() {
     const params = new URLSearchParams(location.search);
 
     if (params.get('logout') === 'success') {
-      setSuccess('Bạn đã đăng xuất thành công khỏi hệ thống!');
+      setSuccess('Hẹn gặp lại!');
       navigate('/admin/login', { replace: true });
+      // Tự động ẩn toast sau 4 giây
+      setTimeout(() => setSuccess(''), 4000);
     } else if (params.get('error') === 'kicked_out') {
       setError('Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác. Bạn đã bị đăng xuất khỏi hệ thống!');
       navigate('/admin/login', { replace: true });
@@ -57,28 +59,40 @@ export default function AdminLogin() {
 
   return (
     <div className="login-page">
-      {/* Floating Success Toast */}
+      {/* Toast đăng xuất — góc trên phải, nhỏ gọn */}
       {success && (
         <div style={{
           position: 'fixed',
-          top: 24,
-          left: '50%',
-          transform: 'translateX(-50%)',
+          top: 20,
+          right: 20,
           zIndex: 9999,
-          backgroundColor: '#e6f4ea',
-          color: '#137333',
-          padding: '12px 24px',
+          backgroundColor: '#ffffff',
+          color: '#1e7e34',
+          padding: '10px 14px 10px 12px',
           borderRadius: '8px',
-          border: '1px solid #ceead6',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          border: '1px solid #d4edda',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          fontSize: '15px',
+          fontSize: '14px',
           fontWeight: '500',
-          animation: 'slideDown 0.3s ease-out'
+          minWidth: 160,
+          maxWidth: 280,
+          animation: 'slideInRight 0.3s ease-out',
         }}>
-          ✅ {success}
+          <span style={{
+            width: 20, height: 20, borderRadius: '50%',
+            backgroundColor: '#28a745', color: 'white',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 12, flexShrink: 0, fontWeight: 'bold'
+          }}>✓</span>
+          <span style={{ flex: 1 }}>{success}</span>
+          <button
+            onClick={() => setSuccess('')}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6c757d', fontSize: 16, lineHeight: 1, padding: '0 0 0 4px', flexShrink: 0 }}
+            title="Đóng"
+          >×</button>
         </div>
       )}
       <div className="login-card">

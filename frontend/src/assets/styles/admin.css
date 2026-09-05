@@ -488,6 +488,17 @@ body.admin-mode {
   }
 }
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Misc */
 .admin-badge {
   display: inline-flex;
