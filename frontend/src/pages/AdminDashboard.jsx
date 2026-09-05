@@ -5,6 +5,7 @@ import AIAssistant from '../components/ui/AIAssistant';
 import PostManager from '../features/admin/components/PostManager';
 import SettingsManager from '../features/admin/components/SettingsManager';
 import CategoryManager from '../features/admin/components/CategoryManager';
+import WardManager from '../features/admin/components/WardManager';
 
 import '../assets/styles/admin.css';
 import AdminSidebar from '../features/admin/components/AdminSidebar';
@@ -181,6 +182,7 @@ export default function AdminDashboard() {
       case 'dashboard': return 'Tổng quan';
       case 'petitions': return 'Danh sách phản ánh';
       case 'categories': return 'Quản lý Lĩnh vực';
+      case 'wards': return 'Quản lý Khu phố';
       case 'news': return 'Quản lý Tin tức';
       case 'guides': return 'Quản lý Hướng dẫn';
       case 'settings': return 'Cài đặt hệ thống';
@@ -261,6 +263,14 @@ export default function AdminDashboard() {
             <div className="admin-content">
               <div className="admin-card">
                 <CategoryManager />
+              </div>
+            </div>
+          )}
+
+          {tab === 'wards' && (
+            <div className="admin-content">
+              <div className="admin-card">
+                <WardManager />
               </div>
             </div>
           )}

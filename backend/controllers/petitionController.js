@@ -55,16 +55,10 @@ const recordVisit = asyncHandler(async (req, res) => {
   res.json({ success: true });
 });
 
-const getWards = asyncHandler(async (req, res) => {
-  const wards = await petitionService.getWards();
-  res.json(wards);
-});
-
 module.exports = {
   createPetition,
   getPublicPetitions,
   trackPetition,
   getStats,
-  getWards,
   recordVisit,
 };

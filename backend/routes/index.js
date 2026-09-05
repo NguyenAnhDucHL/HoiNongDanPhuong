@@ -9,6 +9,7 @@ const aiRoutes = require('./aiRoutes');
 const settingRoutes = require('./settingRoutes');
 const postRoutes = require('./postRoutes');
 const categoryRoutes = require('./categoryRoutes');
+const wardRoutes = require('./wardRoutes');
 
 router.use('/petitions', petitionRoutes);
 router.use('/auth', authRoutes);
@@ -17,6 +18,7 @@ router.use('/ai', aiRoutes);
 router.use('/settings', settingRoutes);
 router.use('/posts', postRoutes);
 router.use('/categories', categoryRoutes);
+router.use('/wards', wardRoutes);
 
 // Health check
 router.get('/health', (req, res) => {

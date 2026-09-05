@@ -32,9 +32,6 @@ router.get('/stats', petitionController.getStats);
 // Record visit
 router.post('/visit', petitionController.recordVisit);
 
-// Get wards list for dropdown
-router.get('/wards', petitionController.getWards);
-
 // Track petition by code
 router.get('/track/:code', petitionController.trackPetition);
 

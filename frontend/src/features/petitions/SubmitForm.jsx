@@ -21,7 +21,7 @@ export default function SubmitForm() {
   const [customCategory, setCustomCategory] = useState('');
 
   useEffect(() => {
-    fetchApi('/petitions/wards')
+    fetchApi('/wards')
       .then(data => setWards(data))
       .catch(() => { });
       

@@ -140,18 +140,10 @@ const getStats = async () => {
   };
 };
 
-/**
- * Get all wards
- */
-const getWards = async () => {
-  return await allAsync('SELECT id, name FROM wards ORDER BY id ASC');
-};
-
 module.exports = {
   createPetition,
   getPublicPetitions,
   trackPetition,
   getStats,
-  getWards,
   recordVisit,
 };
