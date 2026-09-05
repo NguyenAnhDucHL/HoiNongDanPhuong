@@ -125,9 +125,7 @@ export default function AdminLogin() {
           <a href="/" style={{ color: 'var(--muted)', fontSize: 13 }}>← Quay về trang chính</a>
         </div>
 
-        <div className="alert alert-info" style={{ marginTop: 20, fontSize: 13 }}>
-          💡 <strong>Mặc định:</strong> admin / hnd2026 (đổi ngay sau khi đăng nhập)
-        </div>
+
       </div>
     </div>
   );
