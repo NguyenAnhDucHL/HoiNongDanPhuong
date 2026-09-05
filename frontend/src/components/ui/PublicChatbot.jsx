@@ -6,7 +6,6 @@ const PublicChatbot = () => {
   const [messages, setMessages] = useState([
     { role: 'assistant', content: 'Chào bạn, tôi là trợ lý ảo của Hội Nông Dân Phường. Tôi có thể giúp gì cho bạn?' }
   ]);
-  const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -121,7 +120,7 @@ const PublicChatbot = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             {/* Nút xóa hội thoại */}
             <button
-              onClick={() => setShowClearConfirm(true)}
+              onClick={handleClear}
               title="Xóa hội thoại"
               style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', cursor: 'pointer', padding: 6, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
@@ -149,28 +148,7 @@ const PublicChatbot = () => {
           </div>
         </div>
 
-        {/* Confirm xóa hội thoại */}
-        {showClearConfirm && (
-          <div style={{
-            position: 'fixed', bottom: 80, right: 24, width: 350, zIndex: 10001,
-            backgroundColor: 'white', borderBottom: '1px solid #e2e8f0',
-            padding: '12px 16px', display: 'flex', alignItems: 'center',
-            justifyContent: 'space-between', gap: 8,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-          }}>
-            <span style={{ fontSize: 13, color: '#475569' }}>Xóa toàn bộ hội thoại?</span>
-            <div style={{ display: 'flex', gap: 8 }}>
-              <button
-                onClick={() => { handleClear(); setShowClearConfirm(false); }}
-                style={{ padding: '4px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 500 }}
-              >Xóa</button>
-              <button
-                onClick={() => setShowClearConfirm(false)}
-                style={{ padding: '4px 12px', backgroundColor: '#f1f5f9', color: '#475569', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}
-              >Hủy</button>
-            </div>
-          </div>
-        )}
+
 
         {/* Messages */}
         <div style={{ flex: 1, overflowY: 'auto', padding: 20, backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: 16 }}>
