@@ -8,6 +8,7 @@ const MENU_ITEMS = [
   { id: 'news', label: 'Tin tức', icon: '📰' },
   { id: 'guides', label: 'Hướng dẫn', icon: '📖' },
   { id: 'settings', label: 'Cài đặt hệ thống', icon: '⚙️' },
+  { id: 'account', label: 'Tài khoản', icon: '👤' },
 ];
 
 export default function AdminSidebar({ currentTab, onTabChange }) {

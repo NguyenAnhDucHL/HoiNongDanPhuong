@@ -10,4 +10,7 @@ router.post('/login', loginLimiter, authController.login);
 // Verify token (protected)
 router.get('/verify', auth, authController.verifyToken);
 
+// Change password (protected)
+router.put('/change-password', auth, authController.changePassword);
+
 module.exports = router;

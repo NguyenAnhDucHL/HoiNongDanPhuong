@@ -6,6 +6,7 @@ import PostManager from '../features/admin/components/PostManager';
 import SettingsManager from '../features/admin/components/SettingsManager';
 import CategoryManager from '../features/admin/components/CategoryManager';
 import WardManager from '../features/admin/components/WardManager';
+import AccountManager from '../features/admin/components/AccountManager';
 
 import '../assets/styles/admin.css';
 import AdminSidebar from '../features/admin/components/AdminSidebar';
@@ -299,6 +300,12 @@ export default function AdminDashboard() {
               <div className="admin-card">
                 <SettingsManager />
               </div>
+            </div>
+          )}
+
+          {tab === 'account' && (
+            <div className="admin-content">
+              <AccountManager />
             </div>
           )}
         </div>

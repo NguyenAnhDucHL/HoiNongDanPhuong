@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { getAsync } = require('../utils/db-promise');
+const { getAsync, runAsync } = require('../utils/db-promise');
 const config = require('../config/config');
 const asyncHandler = require('../middlewares/asyncHandler');
 
@@ -46,4 +46,32 @@ const verifyToken = asyncHandler(async (req, res) => {
   res.json({ valid: true, admin: req.admin });
 });
 
-module.exports = { login, verifyToken };
+const changePassword = asyncHandler(async (req, res) => {
+  const adminId = req.admin.id;
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Vui lòng nhập đầy đủ mật khẩu cũ và mật khẩu mới.' });
+  }
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'Mật khẩu mới phải có ít nhất 6 ký tự.' });
+  }
+
+  const admin = await getAsync('SELECT password FROM admins WHERE id = ?', [adminId]);
+  if (!admin) {
+    return res.status(404).json({ error: 'Không tìm thấy tài khoản.' });
+  }
+
+  const isMatch = await bcrypt.compare(currentPassword, admin.password);
+  if (!isMatch) {
+    return res.status(401).json({ error: 'Mật khẩu hiện tại không đúng.' });
+  }
+
+  const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+  await runAsync('UPDATE admins SET password = ? WHERE id = ?', [hashedNewPassword, adminId]);
+
+  res.json({ message: 'Đổi mật khẩu thành công.' });
+});
+
+module.exports = { login, verifyToken, changePassword };
+
