@@ -529,19 +529,30 @@ footer {
 @media(max-width:900px) {
   .header-inner {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 18px 0
+    align-items: center;
+    padding: 15px 0;
+    gap: 15px;
+  }
+
+  .brand {
+    text-align: center;
+    align-items: center;
   }
 
   .actions {
     width: 100%;
     flex-direction: row;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 
   .action {
     flex: 1;
-    min-width: 190px
+    min-width: 160px;
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: center;
   }
 
   .hero-grid,
@@ -555,30 +566,50 @@ footer {
   }
 
   .brand h1 {
-    font-size: 26px
+    font-size: 24px;
+    text-align: center;
   }
 
   .brand .subtitle {
-    font-size: 17px
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .hero-inner {
+    padding: 40px 20px;
+  }
+
+  .hero h2 {
+    font-size: 30px;
   }
 }
 
-@media(max-width:600px) {
+@media(max-width:768px) {
   .logo {
-    width: 88px;
-    height: 88px
+    width: 60px;
+    height: 60px
   }
 
-  .brand {
-    align-items: flex-start
+  .header-inner {
+    gap: 12px;
   }
 
   .brand h1 {
-    font-size: 22px
+    font-size: 20px;
   }
 
   .brand .subtitle {
-    font-size: 15px
+    font-size: 13px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .action {
+    width: 100%;
+    min-width: unset;
   }
 
   .stats-grid,
@@ -590,8 +621,37 @@ footer {
     grid-column: auto
   }
 
+  .nav-inner {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 5px;
+    /* give some room for horizontal scroll */
+  }
+
+  .nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
   .nav a {
-    padding: 13px 12px;
-    font-size: 14px
+    padding: 12px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .hero-inner {
+    padding: 30px 15px;
+  }
+
+  .hero h2 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .form-container {
+    padding: 20px 15px;
   }
 }
