@@ -106,28 +106,30 @@ export default function PostManager({ type, title }) {
         <button className="btn btn-primary" onClick={() => openForm()}>+ Thêm mới</button>
       </div>
 
-      <div className="petition-table">
+      <div style={{ marginTop: 20 }}>
         {loading ? <p>Đang tải...</p> : (
-          <table>
+          <table className="admin-table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Ảnh</th>
+                <th style={{ width: 60 }}>ID</th>
+                <th style={{ width: 100 }}>Ảnh</th>
                 <th>Tiêu đề</th>
-                <th>Ngày tạo</th>
-                <th>Thao tác</th>
+                <th style={{ width: 120 }}>Ngày tạo</th>
+                <th style={{ width: 160, textAlign: 'right' }}>Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {posts.map(p => (
                 <tr key={p.id}>
-                  <td>{p.id}</td>
-                  <td>{p.image ? <img src={`/api/uploads/${p.image}`} width="50" height="50" style={{ objectFit: 'cover', borderRadius: 4 }} alt="" /> : '-'}</td>
+                  <td>#{p.id}</td>
+                  <td>{p.image ? <img src={`/uploads/${p.image}`} width="50" height="50" style={{ objectFit: 'cover', borderRadius: 4, display: 'block' }} alt="" /> : <span style={{ color: '#ccc' }}>-</span>}</td>
                   <td style={{ fontWeight: 600 }}>{p.title}</td>
                   <td>{new Date(p.createdAt).toLocaleDateString('vi-VN')}</td>
-                  <td>
-                    <button className="btn btn-secondary btn-sm" onClick={() => openForm(p)} style={{ marginRight: 8 }}>✏️ Sửa</button>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p.id)}>🗑️ Xóa</button>
+                  <td style={{ textAlign: 'right' }}>
+                    <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
+                      <button className="btn btn-secondary" onClick={() => openForm(p)} style={{ padding: '6px 12px' }}>Sửa</button>
+                      <button className="btn btn-danger" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px' }}>Xóa</button>
+                    </div>
                   </td>
                 </tr>
               ))}
