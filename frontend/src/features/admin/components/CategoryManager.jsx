@@ -12,6 +12,9 @@ export default function CategoryManager() {
   const [deleteId, setDeleteId] = useState(null);
   const [alertMsg, setAlertMsg] = useState('');
 
+  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
+
   const loadCategories = async () => {
     setLoading(true);
     try {
@@ -85,9 +88,12 @@ export default function CategoryManager() {
     setEditName(cat.name);
   };
 
+  const totalPages = Math.ceil(categories.length / ITEMS_PER_PAGE) || 1;
+  const paginatedCategories = categories.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+
   return (
-    <div style={{ padding: 20 }}>
-      <h2 style={{ color: 'var(--green-dark)', marginBottom: 20 }}>Quản lý Lĩnh vực Phản ánh</h2>
+    <div>
+      <h3 style={{ color: 'var(--green-dark)', fontWeight: 800, marginBottom: 20 }}>Quản lý Lĩnh vực Phản ánh</h3>
 
       {error && (
         <div style={{ padding: 12, background: '#fef2f2', color: '#991b1b', borderRadius: 8, marginBottom: 20, border: '1px solid #fecaca' }}>
@@ -119,7 +125,7 @@ export default function CategoryManager() {
             </tr>
           </thead>
           <tbody>
-            {categories.map(c => (
+            {paginatedCategories.map(c => (
               <tr key={c.id}>
                 <td>#{c.id}</td>
                 <td>
@@ -162,6 +168,36 @@ export default function CategoryManager() {
             )}
           </tbody>
         </table>
+      )}
+
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '20px', gap: '15px' }}>
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(p => p - 1)}
+            style={{
+              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
+              background: page === 1 ? '#f8fafc' : '#fff', color: page === 1 ? '#cbd5e1' : 'var(--admin-text)',
+              cursor: page === 1 ? 'not-allowed' : 'pointer', fontWeight: 500
+            }}
+          >
+            ← Trước
+          </button>
+          <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--admin-text-muted)' }}>
+            Trang {page} / {totalPages}
+          </div>
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(p => p + 1)}
+            style={{
+              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
+              background: page === totalPages ? '#f8fafc' : '#fff', color: page === totalPages ? '#cbd5e1' : 'var(--admin-text)',
+              cursor: page === totalPages ? 'not-allowed' : 'pointer', fontWeight: 500
+            }}
+          >
+            Sau →
+          </button>
+        </div>
       )}
 
       <ConfirmModal
