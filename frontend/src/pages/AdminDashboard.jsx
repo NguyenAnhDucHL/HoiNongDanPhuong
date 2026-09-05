@@ -60,7 +60,7 @@ export default function AdminDashboard() {
   const logout = () => {
     localStorage.removeItem('hnd_admin_token');
     localStorage.removeItem('hnd_admin_info');
-    navigate('/admin/login');
+    navigate('/admin/login?logout=success');
   };
 
   const loadCategories = useCallback(async () => {

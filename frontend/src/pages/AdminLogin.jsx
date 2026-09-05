@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchApi } from '../lib/api';
 
 export default function AdminLogin() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [form, setForm] = useState({ username: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('logout') === 'success') {
+      setSuccess('Bạn đã đăng xuất thành công khỏi hệ thống!');
+      // Remove query param to clean up URL
+      navigate('/admin/login', { replace: true });
+    }
+
     // Already logged in?
     const token = localStorage.getItem('hnd_admin_token');
     if (token) navigate('/admin');
@@ -107,6 +116,12 @@ export default function AdminLogin() {
           {error && (
             <div className="alert alert-error" style={{ marginBottom: 16 }}>
               ❌ {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="alert alert-success" style={{ marginBottom: 16, backgroundColor: '#dcfce7', color: '#166534', padding: '12px 16px', borderRadius: '8px', border: '1px solid #bbf7d0', fontSize: '14px' }}>
+              ✅ {success}
             </div>
           )}
 
