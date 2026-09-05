@@ -8,14 +8,19 @@ const PublicLayout = ({ children }) => {
   return (
     <div className="home-container">
       <style>{`
+        /* Desktop + Global Overrides */
+        .brand { flex-direction: row !important; align-items: center !important; gap: 15px !important; }
+        .brand-text { display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+        
+        /* Mobile */
         @media (max-width: 900px) {
           .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; }
-          .brand { display: grid !important; grid-template-columns: auto 1fr !important; grid-template-rows: auto auto !important; column-gap: 8px !important; align-items: center !important; flex: 1 !important; }
-          .brand-top { display: contents !important; }
-          .logo { grid-column: 1 / 2 !important; grid-row: 1 / 3 !important; width: 44px !important; height: 44px !important; align-self: center !important; }
-          .brand h1 { grid-column: 2 / 3 !important; grid-row: 1 / 2 !important; font-size: 13px !important; margin: 0 !important; align-self: end !important; padding-top: 2px !important; }
-          .brand .subtitle { display: block !important; grid-column: 2 / 3 !important; grid-row: 2 / 3 !important; font-size: 9.5px !important; line-height: 1.2 !important; white-space: normal !important; opacity: 0.9 !important; align-self: start !important; max-width: 200px !important; }
-          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; }
+          .brand { gap: 8px !important; flex: 1 !important; min-width: 0 !important; }
+          .logo { width: 44px !important; height: 44px !important; flex-shrink: 0 !important; }
+          .brand-text { gap: 2px !important; flex: 1 !important; min-width: 0 !important; }
+          .brand h1 { font-size: 13.5px !important; margin: 0 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; text-align: left !important; }
+          .brand .subtitle { display: block !important; font-size: 10px !important; line-height: 1.25 !important; white-space: normal !important; opacity: 0.9 !important; margin: 0 !important; text-align: left !important; }
+          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; flex-shrink: 0 !important; }
           .action { padding: 5px !important; min-width: auto !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 8px !important; }
           .action-text { display: none !important; }
         }
@@ -24,11 +29,11 @@ const PublicLayout = ({ children }) => {
       <header className="header">
         <div className="container header-inner">
           <div className="brand">
-            <div className="brand-top">
-              <img src="/logo.png" alt="Hội Nông Dân" className="logo" />
+            <img src="/logo.png" alt="Hội Nông Dân" className="logo" />
+            <div className="brand-text">
               <h1>HỘI NÔNG DÂN CẨM PHẢ</h1>
+              <div className="subtitle">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
             </div>
-            <div className="subtitle">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
           </div>
           <div className="actions">
             <div className="action hotline" onClick={() => alert('Đường dây nóng:\n0363.789.100\n0838.911.445')} style={{ cursor: 'pointer' }}>
