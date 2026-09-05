@@ -72,7 +72,7 @@ const InfoSection = () => {
               {news.map(n => (
                 <li key={n.id} style={{ display: 'flex', flexDirection: 'column', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
                   <div style={{ display: 'flex', gap: 10 }}>
-                    {n.image && <img src={`/api/uploads/${n.image}`} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }} />}
+                    {n.image && <img src={`/uploads/${n.image}`} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }} />}
                     <div>
                       <span style={{ fontWeight: 600, display: 'block', fontSize: 14 }}>{n.title}</span>
                       <small style={{ color: 'var(--muted)', fontSize: 12 }}>{new Date(n.createdAt).toLocaleDateString('vi-VN')}</small>
