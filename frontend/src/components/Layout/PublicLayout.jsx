@@ -14,10 +14,10 @@ const PublicLayout = ({ children }) => {
         
         /* Mobile */
         @media (max-width: 900px) {
-          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; min-height: auto !important; }
-          .brand { gap: 8px !important; flex: 1 !important; min-width: 0 !important; }
+          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; min-height: auto !important; justify-content: center !important; gap: 20px !important; }
+          .brand { gap: 8px !important; flex: 0 1 auto !important; min-width: 0 !important; }
           .logo { width: 44px !important; height: 44px !important; flex-shrink: 0 !important; }
-          .brand-text { gap: 2px !important; flex: 1 !important; min-width: 0 !important; }
+          .brand-text { gap: 2px !important; flex: 0 1 auto !important; min-width: 0 !important; }
           .brand h1 { font-size: 13.5px !important; margin: 0 !important; text-align: left !important; line-height: 1.2 !important; }
           .brand .subtitle { display: block !important; font-size: 10px !important; line-height: 1.25 !important; white-space: normal !important; opacity: 0.9 !important; margin: 0 !important; text-align: left !important; }
           .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; flex-shrink: 0 !important; }
