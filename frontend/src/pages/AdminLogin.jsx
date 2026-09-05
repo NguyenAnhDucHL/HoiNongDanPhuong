@@ -13,7 +13,7 @@ export default function AdminLogin() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    
+
     if (params.get('logout') === 'success') {
       setSuccess('Bạn đã đăng xuất thành công khỏi hệ thống!');
       navigate('/admin/login', { replace: true });
@@ -57,6 +57,30 @@ export default function AdminLogin() {
 
   return (
     <div className="login-page">
+      {/* Floating Success Toast */}
+      {success && (
+        <div style={{
+          position: 'fixed',
+          top: 24,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          backgroundColor: '#e6f4ea',
+          color: '#137333',
+          padding: '12px 24px',
+          borderRadius: '8px',
+          border: '1px solid #ceead6',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '15px',
+          fontWeight: '500',
+          animation: 'slideDown 0.3s ease-out'
+        }}>
+          ✅ {success}
+        </div>
+      )}
       <div className="login-card">
         <div className="login-logo">
           <img src="/logo.png" alt="Logo" className="login-logo-img" />
@@ -122,11 +146,6 @@ export default function AdminLogin() {
             </div>
           )}
 
-          {success && (
-            <div className="alert alert-success" style={{ marginBottom: 16, backgroundColor: '#dcfce7', color: '#166534', padding: '12px 16px', borderRadius: '8px', border: '1px solid #bbf7d0', fontSize: '14px' }}>
-              ✅ {success}
-            </div>
-          )}
 
           <button
             type="submit"
