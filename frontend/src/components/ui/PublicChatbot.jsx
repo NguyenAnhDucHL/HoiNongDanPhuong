@@ -152,7 +152,7 @@ const PublicChatbot = () => {
         {/* Confirm xóa hội thoại */}
         {showClearConfirm && (
           <div style={{
-            position: 'fixed', bottom: 440, right: 24, width: 350, zIndex: 10001,
+            position: 'fixed', bottom: 80, right: 24, width: 350, zIndex: 10001,
             backgroundColor: 'white', borderBottom: '1px solid #e2e8f0',
             padding: '12px 16px', display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', gap: 8,
