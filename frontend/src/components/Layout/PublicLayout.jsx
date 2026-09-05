@@ -9,14 +9,14 @@ const PublicLayout = ({ children }) => {
     <div className="home-container">
       <style>{`
         @media (max-width: 900px) {
-          .header-inner { flex-direction: row !important; padding: 10px 15px !important; }
-          .brand { flex-direction: row !important; align-items: center !important; }
-          .brand-top { gap: 5px !important; }
+          .header-inner { flex-direction: row !important; padding: 10px 15px !important; gap: 10px !important; }
+          .brand { flex-direction: column !important; align-items: flex-start !important; gap: 2px !important; }
+          .brand-top { flex-direction: row !important; align-items: center !important; gap: 8px !important; }
           .logo { width: 44px !important; height: 44px !important; }
-          .brand h1 { font-size: 14px !important; }
-          .brand .subtitle { display: none !important; }
-          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; }
-          .action { padding: 5px !important; min-width: auto !important; }
+          .brand h1 { font-size: 14px !important; margin: 0 !important; }
+          .brand .subtitle { display: block !important; font-size: 11px !important; line-height: 1.2 !important; max-width: 220px !important; opacity: 0.9 !important; }
+          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; }
+          .action { padding: 5px !important; min-width: auto !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 8px !important; }
           .action-text { display: none !important; }
         }
       `}</style>
