@@ -7,6 +7,19 @@ const PublicLayout = ({ children }) => {
 
   return (
     <div className="home-container">
+      <style>{`
+        @media (max-width: 900px) {
+          .header-inner { flex-direction: row !important; padding: 10px 15px !important; }
+          .brand { flex-direction: row !important; align-items: center !important; }
+          .brand-top { gap: 5px !important; }
+          .logo { width: 44px !important; height: 44px !important; }
+          .brand h1 { font-size: 14px !important; }
+          .brand .subtitle { display: none !important; }
+          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; }
+          .action { padding: 5px !important; min-width: auto !important; }
+          .action-text { display: none !important; }
+        }
+      `}</style>
       {/* ====== HEADER ====== */}
       <header className="header">
         <div className="container header-inner">
