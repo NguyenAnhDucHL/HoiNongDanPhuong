@@ -49,9 +49,9 @@ export default function PetitionDetailModal({
           ) : (
             <>
               {/* Info Grid */}
-              <div style={{ 
-                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, 
-                marginBottom: 24, padding: 20, background: '#f8fafc', borderRadius: 12, border: '1px solid #e2e8f0' 
+              <div style={{
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16,
+                marginBottom: 24, padding: 20, background: '#f8fafc', borderRadius: 12, border: '1px solid #e2e8f0'
               }}>
                 {[
                   ['Họ tên', selectedPetition.fullName, '👤'],
@@ -88,12 +88,12 @@ export default function PetitionDetailModal({
                   <h4 style={{ fontSize: 14, fontWeight: 600, color: '#334155', marginBottom: 12 }}>Tệp đính kèm</h4>
                   <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                     {selectedPetition.imagePaths.split(',').filter(Boolean).map((img, i) => (
-                      <a key={i} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{ 
+                      <a key={i} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{
                         display: 'block', borderRadius: 10, overflow: 'hidden', border: '1px solid #e2e8f0',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.05)', transition: 'transform 0.2s, box-shadow 0.2s'
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'; }}
-                      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)'; }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)'; }}
                       >
                         <img
                           src={`/uploads/${img}`} alt={`Ảnh ${i + 1}`}
@@ -106,8 +106,8 @@ export default function PetitionDetailModal({
               )}
 
               {/* AI Analysis */}
-              <div style={{ 
-                marginBottom: 24, padding: 24, background: 'linear-gradient(145deg, #f0fdfa 0%, #ffffff 100%)', 
+              <div style={{
+                marginBottom: 24, padding: 24, background: 'linear-gradient(145deg, #f0fdfa 0%, #ffffff 100%)',
                 borderRadius: 12, border: '1px solid #a7f3d0', position: 'relative', overflow: 'hidden',
                 boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.05)'
               }}>
@@ -209,9 +209,9 @@ export default function PetitionDetailModal({
                         <div style={{ fontWeight: 600, fontSize: 14, color: i === 0 ? '#0f172a' : '#475569' }}>{log.action}</div>
                         <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{formatDate(log.createdAt)}</div>
                         {log.notes && (
-                          <div style={{ 
-                            fontSize: 14, color: '#334155', marginTop: 8, background: '#fff', 
-                            padding: '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0' 
+                          <div style={{
+                            fontSize: 14, color: '#334155', marginTop: 8, background: '#fff',
+                            padding: '10px 14px', borderRadius: 8, border: '1px solid #e2e8f0'
                           }}>
                             {log.notes}
                           </div>
