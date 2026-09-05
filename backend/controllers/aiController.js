@@ -59,9 +59,15 @@ const publicChatWithAI = asyncHandler(async (req, res) => {
 
   // Provide public context instead of sensitive admin stats
   const context = {
-    organization: "Hội Nông Dân Phường",
+    organization: "Hội Nông Dân Phường Cẩm Phả",
     purpose: "Hỗ trợ người dân nộp phản ánh, kiến nghị liên quan đến nông nghiệp, đất đai, thủ tục hành chính.",
-    instructions: "Nếu người dân cần nộp phản ánh, hãy hướng dẫn họ vào phần 'Gửi phản ánh mới' trên trang chủ."
+    navigation: {
+      submitPetition: "Để gửi phản ánh, kiến nghị: nhấn vào mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' trên thanh điều hướng hoặc kéo xuống phần form trên trang chủ.",
+      trackPetition: "Để tra cứu kết quả xử lý: nhấn vào mục 'TRA CỨU KẾT QUẢ' trên thanh điều hướng và nhập mã tra cứu được cấp sau khi gửi.",
+      contact: "Đường dây nóng: 0363789100 / 0838911445",
+      categories: "Các lĩnh vực có thể phản ánh: Trồng trọt, Chăn nuôi, Thủy sản, Đất đai - Thủy lợi, Phân bón - Thuốc BVTV, Vay vốn - Hỗ trợ, Thiên tai - Dịch bệnh, Thủ tục hành chính, Vệ sinh môi trường, và các lĩnh vực khác."
+    },
+    instructions: "Trả lời ngắn gọn, thân thiện bằng tiếng Việt. Khi hướng dẫn người dân gửi phản ánh, hãy dùng ĐÚNG tên mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' (không được gọi là 'Gửi phản ánh mới' hay tên khác)."
   };
 
   const result = await aiService.chatWithAI(message.trim(), context);
