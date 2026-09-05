@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchApi } from '../../lib/api';
+import { fetchApi } from '../../../lib/api';
 
 export default function WardManager() {
   const [wards, setCategories] = useState([]);
