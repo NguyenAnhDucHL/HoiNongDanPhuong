@@ -170,35 +170,33 @@ export default function CategoryManager() {
         </table>
       )}
 
-      {totalPages > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '20px', gap: '15px' }}>
-          <button
-            disabled={page === 1}
-            onClick={() => setPage(p => p - 1)}
-            style={{
-              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
-              background: page === 1 ? '#f8fafc' : '#fff', color: page === 1 ? '#cbd5e1' : 'var(--admin-text)',
-              cursor: page === 1 ? 'not-allowed' : 'pointer', fontWeight: 500
-            }}
-          >
-            ← Trước
-          </button>
-          <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--admin-text-muted)' }}>
-            Trang {page} / {totalPages}
-          </div>
-          <button
-            disabled={page === totalPages}
-            onClick={() => setPage(p => p + 1)}
-            style={{
-              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
-              background: page === totalPages ? '#f8fafc' : '#fff', color: page === totalPages ? '#cbd5e1' : 'var(--admin-text)',
-              cursor: page === totalPages ? 'not-allowed' : 'pointer', fontWeight: 500
-            }}
-          >
-            Sau →
-          </button>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: '20px', gap: '15px' }}>
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(p => p - 1)}
+          style={{
+            padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
+            background: page === 1 ? '#f8fafc' : '#fff', color: page === 1 ? '#cbd5e1' : 'var(--admin-text)',
+            cursor: page === 1 ? 'not-allowed' : 'pointer', fontWeight: 500
+          }}
+        >
+          ← Trước
+        </button>
+        <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--admin-text-muted)' }}>
+          Trang {page} / {totalPages}
         </div>
-      )}
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(p => p + 1)}
+          style={{
+            padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
+            background: page === totalPages ? '#f8fafc' : '#fff', color: page === totalPages ? '#cbd5e1' : 'var(--admin-text)',
+            cursor: page === totalPages ? 'not-allowed' : 'pointer', fontWeight: 500
+          }}
+        >
+          Sau →
+        </button>
+      </div>
 
       <ConfirmModal
         isOpen={!!deleteId}
