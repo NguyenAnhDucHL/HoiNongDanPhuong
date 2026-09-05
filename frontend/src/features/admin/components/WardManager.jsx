@@ -3,7 +3,7 @@ import { fetchApi } from '../../../lib/api';
 import ConfirmModal from '../../../components/ui/ConfirmModal';
 
 export default function WardManager() {
-  const [wards, setCategories] = useState([]);
+  const [wards, setWards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState('');
@@ -12,11 +12,11 @@ export default function WardManager() {
   const [deleteId, setDeleteId] = useState(null);
   const [alertMsg, setAlertMsg] = useState('');
 
-  const loadCategories = async () => {
+  const loadWards = async () => {
     setLoading(true);
     try {
       const data = await fetchApi('/wards');
-      setCategories(data);
+      setWards(data);
     } catch (e) {
       setError('Lỗi tải danh sách: ' + e.message);
     } finally {
@@ -25,7 +25,7 @@ export default function WardManager() {
   };
 
   useEffect(() => {
-    loadCategories();
+    loadWards();
   }, []);
 
   const handleAdd = async (e) => {
@@ -56,7 +56,7 @@ export default function WardManager() {
         method: 'PUT',
         body: JSON.stringify({ name: editName.trim() }),
       });
-      setCategories(wards.map(c => c.id === id ? { ...c, name: editName.trim() } : c));
+      setWards(wards.map(c => c.id === id ? { ...c, name: editName.trim() } : c));
       setEditingId(null);
     } catch (e) {
       setError(e.message || 'Lỗi cập nhật');
@@ -72,7 +72,7 @@ export default function WardManager() {
     setError('');
     try {
       await fetchApi(`/wards/${deleteId}`, { method: 'DELETE' });
-      setCategories(wards.filter(w => w.id !== deleteId));
+      setWards(wards.filter(w => w.id !== deleteId));
       setDeleteId(null);
     } catch (e) {
       setError(e.message || 'Lỗi xóa');
