@@ -77,8 +77,14 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
       responseText = result.response.text();
     }
 
-    // Clean up markdown syntax if AI still returns it
-    responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    // Clean up markdown syntax and extract JSON block robustly
+    const jsonStart = responseText.indexOf('{');
+    const jsonEnd = responseText.lastIndexOf('}');
+
+    if (jsonStart !== -1 && jsonEnd !== -1) {
+      responseText = responseText.substring(jsonStart, jsonEnd + 1);
+    }
+
     return JSON.parse(responseText);
 
   } catch (error) {
@@ -86,7 +92,7 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
     return {
       category: "Khác",
       priority: "Thấp",
-      summary: "Phân tích tự động thất bại do lỗi hệ thống/mạng.",
+      summary: `Phân tích thất bại: ${error.message}`,
       suggestion: "Cần cán bộ kiểm tra thủ công."
     };
   }
