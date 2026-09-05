@@ -291,6 +291,12 @@ body.admin-mode {
   outline: none;
   background: #fff;
   min-width: 160px;
+  width: auto;
+}
+
+.admin-filter-bar .btn {
+  width: auto;
+  margin-top: 0;
 }
 
 .admin-filter-input:focus, .admin-filter-select:focus {
