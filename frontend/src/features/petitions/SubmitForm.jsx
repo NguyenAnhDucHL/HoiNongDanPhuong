@@ -309,25 +309,43 @@ export default function SubmitForm({ selectedCategory = '' }) {
         </div>
       )}
 
-      <div style={{ marginTop: 24, display: 'flex', gap: 12, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
+      <div style={{ marginTop: 32, display: 'flex', gap: 16, flexDirection: 'row', alignItems: 'center' }}>
         <button
           type="button"
-          className="btn btn-secondary"
           onClick={() => { setForm(initialForm); setFiles([]); setErrors({}); setSubmitError(''); }}
-          style={{ width: 'auto', minWidth: 140, padding: '12px 24px', background: 'var(--green-light)', color: 'var(--green-dark)' }}
+          style={{ 
+            background: 'transparent', 
+            border: 'none', 
+            color: '#64748b', 
+            padding: '12px 16px', 
+            cursor: 'pointer',
+            fontSize: '15px',
+            fontWeight: 500,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            borderRadius: '8px'
+          }}
+          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
         >
-          🗑️ Xóa form
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+          Làm mới
         </button>
+        
         <button
           type="submit"
           className="btn btn-primary"
           disabled={loading}
-          style={{ width: 'auto', minWidth: 200, padding: '12px 32px' }}
+          style={{ flex: 1, padding: '14px 24px', fontSize: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
         >
           {loading ? (
-            <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Đang gửi...</>
+            <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Đang xử lý...</>
           ) : (
-            '📤 Gửi phản ánh'
+            <>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              GỬI PHẢN ÁNH
+            </>
           )}
         </button>
       </div>
