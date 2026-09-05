@@ -74,7 +74,13 @@ const InfoSection = ({ onSelectCategory }) => {
         <div className="card">
           <h3>DANH MỤC PHẢN ÁNH, KIẾN NGHỊ</h3>
           {categories.length > 0 ? (
-            <ul className="list">
+            <ul className="list" style={{
+              maxHeight: 280,
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              scrollbarWidth: 'thin',
+              scrollbarColor: '#c8e6c9 transparent',
+            }}>
               {categories.map(c => (
                 <li
                   key={c.id}
@@ -125,7 +131,7 @@ const InfoSection = ({ onSelectCategory }) => {
                   try {
                     const parsed = JSON.parse(n.images);
                     if (parsed.length > 0) thumb = parsed[0];
-                  } catch(e) {}
+                  } catch (e) { }
                 }
                 return (
                   <li key={n.id} onClick={() => navigate(`/post/${n.id}`)} style={{ display: 'flex', flexDirection: 'column', padding: '10px 0', borderBottom: '1px solid #f0f0f0', cursor: 'pointer' }}>
