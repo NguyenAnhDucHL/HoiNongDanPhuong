@@ -13,7 +13,7 @@ export default function CategoryManager() {
   const [alertMsg, setAlertMsg] = useState('');
 
   const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 10;
 
   const loadCategories = async () => {
     setLoading(true);

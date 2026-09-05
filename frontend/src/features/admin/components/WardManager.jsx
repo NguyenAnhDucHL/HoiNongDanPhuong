@@ -13,7 +13,7 @@ export default function WardManager() {
   const [alertMsg, setAlertMsg] = useState('');
 
   const [page, setPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 10;
 
   const loadWards = async () => {
     setLoading(true);
