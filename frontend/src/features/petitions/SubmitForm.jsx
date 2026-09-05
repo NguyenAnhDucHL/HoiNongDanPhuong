@@ -8,7 +8,7 @@ const initialForm = {
   title: '', category: '', content: '',
 };
 
-export default function SubmitForm() {
+export default function SubmitForm({ selectedCategory = '' }) {
   const [form, setForm] = useState(initialForm);
   const [files, setFiles] = useState([]);
   const [wards, setWards] = useState([]);
@@ -29,6 +29,14 @@ export default function SubmitForm() {
       .then(data => setCategories(data))
       .catch(() => { });
   }, []);
+
+  // Khi người dùng click danh mục từ InfoSection → tự điền vào dropdown
+  useEffect(() => {
+    if (selectedCategory) {
+      setForm(prev => ({ ...prev, category: selectedCategory }));
+      setErrors(prev => ({ ...prev, category: '' }));
+    }
+  }, [selectedCategory]);
 
   const validate = () => {
     const errs = {};

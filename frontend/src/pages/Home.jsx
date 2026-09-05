@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../assets/styles/home.css';
 import PublicLayout from '../components/Layout/PublicLayout';
 import HeroSection from '../features/misc/components/HeroSection';
@@ -8,11 +8,13 @@ import TrackPetition from '../features/petitions/components/TrackPetition';
 import SubmitForm from '../features/petitions/SubmitForm';
 
 const Home = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   return (
     <PublicLayout>
       <HeroSection />
       <StatsSection />
-      <InfoSection />
+      <InfoSection onSelectCategory={setSelectedCategory} />
 
       <section className="form-section" id="gui-phan-anh">
         <div className="container">
@@ -21,7 +23,7 @@ const Home = () => {
             <p style={{ color: 'var(--muted)', marginBottom: 18 }}>
               Vui lòng cung cấp đầy đủ thông tin để phản ánh được tiếp nhận và xử lý nhanh chóng.
             </p>
-            <SubmitForm />
+            <SubmitForm selectedCategory={selectedCategory} />
           </div>
         </div>
       </section>
