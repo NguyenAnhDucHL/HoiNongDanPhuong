@@ -28,7 +28,7 @@ Bạn là **AI Agent** đang làm việc trong dự án **Hội Nông Dân Phư�
 |---|---|---|
 | **Backend** | Node.js, Express 5 | Middleware phân tầng rõ ràng |
 | **Database** | SQLite3 | Truy vấn an toàn, không query injection |
-| **Frontend** | React 18 + Vite | Vanilla CSS, không dùng thư viện component ngoài nếu không được phép |
+| **Frontend** | React 18 + Vite | Khuyến khích dùng TailwindCSS và thư viện UI (như shadcn/ui, Radix, Antd) để code nhanh và chuẩn responsive. Hạn chế viết tay Vanilla CSS. |
 | **Security** | Helmet, HPP, express-rate-limit, bcrypt | Bảo vệ API, chống bruteforce |
 | **AI Integration**| Google Generative AI (Gemini) | Dùng `@google/generative-ai` trong `aiService.js` |
 | **Deployment** | Docker, Nginx, Github Actions | Deploy tự động lên server VNPT |
@@ -81,7 +81,7 @@ HoiNongDanPhuong/
 |---|---|
 | Refactor React components | Tuân theo chuẩn bulletproof-react, tách file, không phá CSS |
 | Thêm thư viện mới | Giải thích lý do và hỏi Developer trước khi `npm install` |
-| Sửa lỗi UI | Đối chiếu với file HTML gốc, KHÔNG dùng inline-style tràn lan |
+| Sửa lỗi UI | Có thể cài đặt thư viện FE (Tailwind, shadcn, icon) để xử lý nhanh responsive, không cần cố chấp dùng inline-style hay Vanilla CSS. |
 | Commit code | Dùng lệnh `git add` & `git commit` rõ ràng, sau đó `git push` để trigger deploy |
 
 **Status:** ACTIVE — HỘI NÔNG DÂN PHƯỜNG PROJECT RULES

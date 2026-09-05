@@ -33,4 +33,34 @@ const aiLimiter = rateLimit({
   },
 });
 
-module.exports = { petitionLimiter, loginLimiter, aiLimiter };
+// GLOBAL AI Concurrency Limiter (Protect CPU Server)
+let activeAiRequests = 0;
+const MAX_CONCURRENT_AI = 3;
+
+const globalAiConcurrencyLimiter = (req, res, next) => {
+  if (activeAiRequests >= MAX_CONCURRENT_AI) {
+    // Return both 'error' and 'reply' to handle different frontend expectations
+    // (chat UI expects 'reply', admin UI expects 'error')
+    return res.status(429).json({
+      error: 'AI đang bận phục vụ người khác, vui lòng thử lại sau.',
+      reply: 'AI đang bận phục vụ người khác, vui lòng thử lại sau ít phút nhé!'
+    });
+  }
+
+  activeAiRequests++;
+  let isFinished = false;
+
+  const decrementCount = () => {
+    if (!isFinished) {
+      activeAiRequests--;
+      isFinished = true;
+    }
+  };
+
+  res.on('finish', decrementCount);
+  res.on('close', decrementCount);
+
+  next();
+};
+
+module.exports = { petitionLimiter, loginLimiter, aiLimiter, globalAiConcurrencyLimiter };

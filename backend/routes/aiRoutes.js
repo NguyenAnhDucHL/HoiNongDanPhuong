@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const aiController = require('../controllers/aiController');
 const auth = require('../middlewares/auth');
-const { aiLimiter } = require('../middlewares/rateLimit');
+const { aiLimiter, globalAiConcurrencyLimiter } = require('../middlewares/rateLimit');
+
+// Apply Global Concurrency Limiter to ALL AI routes
+router.use(globalAiConcurrencyLimiter);
 
 // Public Chat with AI (citizens) - Requires rate limiting but NO auth
 router.post('/chat/public', aiLimiter, aiController.publicChatWithAI);

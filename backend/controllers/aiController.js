@@ -47,10 +47,6 @@ const chatWithAI = asyncHandler(async (req, res) => {
   res.json(result);
 });
 
-// Biến toàn cục để theo dõi số lượng người đang chat đồng thời
-let activeChatRequests = 0;
-const MAX_CONCURRENT_CHATS = 5;
-
 /**
  * Public Chat with AI agent for citizens
  */
@@ -61,35 +57,21 @@ const publicChatWithAI = asyncHandler(async (req, res) => {
     return res.status(400).json({ error: 'Tin nhắn không được để trống.' });
   }
 
-  // Kiểm tra giới hạn số người dùng đồng thời để chống sập server
-  if (activeChatRequests >= MAX_CONCURRENT_CHATS) {
-    return res.json({
-      reply: "AI đang bận phục vụ nhiều người khác cùng lúc, vui lòng thử lại sau ít phút nhé!"
-    });
-  }
+  // Provide public context instead of sensitive admin stats
+  const context = {
+    organization: "Hội Nông Dân Phường Cẩm Phả",
+    purpose: "Hỗ trợ người dân nộp phản ánh, kiến nghị liên quan đến nông nghiệp, đất đai, thủ tục hành chính.",
+    navigation: {
+      submitPetition: "Để gửi phản ánh, kiến nghị: nhấn vào mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' trên thanh điều hướng hoặc kéo xuống phần form trên trang chủ.",
+      trackPetition: "Để tra cứu kết quả xử lý: nhấn vào mục 'TRA CỨU KẾT QUẢ' trên thanh điều hướng và nhập mã tra cứu được cấp sau khi gửi.",
+      contact: "Đường dây nóng: 0363789100 / 0838911445",
+      categories: "Các lĩnh vực có thể phản ánh: Trồng trọt, Chăn nuôi, Thủy sản, Đất đai - Thủy lợi, Phân bón - Thuốc BVTV, Vay vốn - Hỗ trợ, Thiên tai - Dịch bệnh, Thủ tục hành chính, Vệ sinh môi trường, và các lĩnh vực khác."
+    },
+    instructions: "Trả lời ngắn gọn, thân thiện bằng tiếng Việt. Khi hướng dẫn người dân gửi phản ánh, hãy dùng ĐÚNG tên mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' (không được gọi là 'Gửi phản ánh mới' hay tên khác)."
+  };
 
-  activeChatRequests++;
-
-  try {
-    // Provide public context instead of sensitive admin stats
-    const context = {
-      organization: "Hội Nông Dân Phường Cẩm Phả",
-      purpose: "Hỗ trợ người dân nộp phản ánh, kiến nghị liên quan đến nông nghiệp, đất đai, thủ tục hành chính.",
-      navigation: {
-        submitPetition: "Để gửi phản ánh, kiến nghị: nhấn vào mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' trên thanh điều hướng hoặc kéo xuống phần form trên trang chủ.",
-        trackPetition: "Để tra cứu kết quả xử lý: nhấn vào mục 'TRA CỨU KẾT QUẢ' trên thanh điều hướng và nhập mã tra cứu được cấp sau khi gửi.",
-        contact: "Đường dây nóng: 0363789100 / 0838911445",
-        categories: "Các lĩnh vực có thể phản ánh: Trồng trọt, Chăn nuôi, Thủy sản, Đất đai - Thủy lợi, Phân bón - Thuốc BVTV, Vay vốn - Hỗ trợ, Thiên tai - Dịch bệnh, Thủ tục hành chính, Vệ sinh môi trường, và các lĩnh vực khác."
-      },
-      instructions: "Trả lời ngắn gọn, thân thiện bằng tiếng Việt. Khi hướng dẫn người dân gửi phản ánh, hãy dùng ĐÚNG tên mục 'GỬI PHẢN ÁNH, KIẾN NGHỊ' (không được gọi là 'Gửi phản ánh mới' hay tên khác)."
-    };
-
-    const result = await aiService.chatWithAI(message.trim(), context);
-    res.json(result);
-  } finally {
-    // Luôn luôn giảm biến đếm dù API thành công hay thất bại
-    activeChatRequests--;
-  }
+  const result = await aiService.chatWithAI(message.trim(), context);
+  res.json(result);
 });
 
 /**
