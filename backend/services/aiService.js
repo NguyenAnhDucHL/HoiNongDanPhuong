@@ -1,8 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const fetch = require('node-fetch'); // Ensure node-fetch is available or use built-in fetch if Node >= 18
 
-// Node 18+ has built-in fetch. If running on older node, might need require('node-fetch')
-const _fetch = typeof fetch !== 'undefined' ? fetch : require('node-fetch');
+// Node 18+ has built-in fetch.
+const _fetch = fetch;
 
 function isOllamaAvailable() {
   return !!process.env.OLLAMA_API_URL;
