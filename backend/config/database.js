@@ -11,6 +11,17 @@ const WARDS = [
   'Khu phố 11', 'Khu phố 12', 'Khu phố 13', 'Khu phố 14', 'Khu phố 15',
 ];
 
+const DEFAULT_CATEGORIES = [
+  'Trồng trọt',
+  'Chăn nuôi',
+  'Thủy sản',
+  'Đất đai - Thủy lợi',
+  'Phân bón - Thuốc BVTV',
+  'Vay vốn - Hỗ trợ',
+  'Thiên tai - Dịch bệnh',
+  'Khác',
+];
+
 const initDB = () => {
   db.run('PRAGMA journal_mode = WAL;');
   db.serialize(() => {
@@ -85,6 +96,24 @@ const initDB = () => {
           if (!err && row && row.count === 0) {
             const stmt = db.prepare('INSERT OR IGNORE INTO wards (name) VALUES (?)');
             WARDS.forEach(name => stmt.run(name));
+            stmt.finalize();
+          }
+        });
+      }
+    });
+
+    // 4b. Categories table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS categories (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT UNIQUE NOT NULL
+      )
+    `, (err) => {
+      if (!err) {
+        db.get('SELECT COUNT(*) as count FROM categories', (err, row) => {
+          if (!err && row && row.count === 0) {
+            const stmt = db.prepare('INSERT OR IGNORE INTO categories (name) VALUES (?)');
+            DEFAULT_CATEGORIES.forEach(name => stmt.run(name));
             stmt.finalize();
           }
         });

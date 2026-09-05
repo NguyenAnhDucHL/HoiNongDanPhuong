@@ -4,6 +4,7 @@ import { fetchApi } from '../lib/api';
 import AIAssistant from '../components/ui/AIAssistant';
 import PostManager from '../features/admin/components/PostManager';
 import SettingsManager from '../features/admin/components/SettingsManager';
+import CategoryManager from '../features/admin/components/CategoryManager';
 
 import '../assets/styles/admin.css';
 import AdminSidebar from '../features/admin/components/AdminSidebar';
@@ -17,12 +18,6 @@ const STATUS_OPTIONS = [
   { value: 'processing', label: '🔄 Đang xử lý' },
   { value: 'resolved', label: '✅ Đã giải quyết' },
   { value: 'rejected', label: '❌ Từ chối' },
-];
-
-const CATEGORIES = [
-  'all', 'Trồng trọt', 'Chăn nuôi', 'Thủy sản',
-  'Đất đai - Thủy lợi', 'Phân bón - Thuốc BVTV',
-  'Vay vốn - Hỗ trợ', 'Thiên tai - Dịch bệnh', 'Khác',
 ];
 
 export default function AdminDashboard() {
@@ -55,11 +50,22 @@ export default function AdminDashboard() {
 
   const LIMIT = 20;
 
+  const [categories, setCategories] = useState(['all']);
+
   const logout = () => {
     localStorage.removeItem('hnd_admin_token');
     localStorage.removeItem('hnd_admin_info');
     navigate('/admin/login');
   };
+
+  const loadCategories = useCallback(async () => {
+    try {
+      const res = await fetchApi('/categories');
+      setCategories(['all', ...res.map(c => c.name)]);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const loadDashboard = useCallback(async () => {
     try {
@@ -92,6 +98,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     document.body.classList.add('admin-mode');
     loadDashboard();
+    loadCategories();
     return () => {
       document.body.classList.remove('admin-mode');
     };
@@ -173,6 +180,7 @@ export default function AdminDashboard() {
     switch (tab) {
       case 'dashboard': return 'Tổng quan';
       case 'petitions': return 'Danh sách phản ánh';
+      case 'categories': return 'Quản lý Lĩnh vực';
       case 'news': return 'Quản lý Tin tức';
       case 'guides': return 'Quản lý Hướng dẫn';
       case 'settings': return 'Cài đặt hệ thống';
@@ -236,7 +244,7 @@ export default function AdminDashboard() {
               setSearchInput={setSearchInput}
               setSearch={setSearch}
               statusOptions={STATUS_OPTIONS}
-              categories={CATEGORIES}
+              categories={categories}
               onOpenDetail={openDetail}
             />
           )}
@@ -245,6 +253,14 @@ export default function AdminDashboard() {
             <div className="admin-content">
               <div className="admin-card">
                 <PostManager type="news" title="Tin tức" />
+              </div>
+            </div>
+          )}
+
+          {tab === 'categories' && (
+            <div className="admin-content">
+              <div className="admin-card">
+                <CategoryManager />
               </div>
             </div>
           )}

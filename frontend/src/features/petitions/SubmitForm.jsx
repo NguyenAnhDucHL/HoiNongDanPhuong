@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { postFormData, fetchApi } from '../../lib/api';
 
-const CATEGORIES = [
-  'Trồng trọt',
-  'Chăn nuôi',
-  'Thủy sản',
-  'Đất đai - Thủy lợi',
-  'Phân bón - Thuốc BVTV',
-  'Vay vốn - Hỗ trợ',
-  'Thiên tai - Dịch bệnh',
-  'Khác',
-];
+
 
 const initialForm = {
   fullName: '', phone: '', cccd: '', ward: '', address: '',
@@ -26,9 +17,16 @@ export default function SubmitForm() {
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState('');
 
+  const [categories, setCategories] = useState([]);
+  const [customCategory, setCustomCategory] = useState('');
+
   useEffect(() => {
     fetchApi('/petitions/wards')
       .then(data => setWards(data))
+      .catch(() => { });
+      
+    fetchApi('/categories')
+      .then(data => setCategories(data))
       .catch(() => { });
   }, []);
 
@@ -37,6 +35,7 @@ export default function SubmitForm() {
     if (!form.fullName.trim()) errs.fullName = 'Họ tên là bắt buộc';
     if (!form.title.trim()) errs.title = 'Tiêu đề là bắt buộc';
     if (!form.category) errs.category = 'Vui lòng chọn lĩnh vực';
+    if (form.category === 'Khác' && !customCategory.trim()) errs.customCategory = 'Vui lòng nhập chi tiết lĩnh vực';
     if (!form.content.trim()) errs.content = 'Nội dung phản ánh là bắt buộc';
     if (form.content.trim().length < 20) errs.content = 'Nội dung quá ngắn (tối thiểu 20 ký tự)';
     if (form.phone && !/^0\d{9}$/.test(form.phone.replace(/\s/g, ''))) {
@@ -76,12 +75,19 @@ export default function SubmitForm() {
     setLoading(true);
     try {
       const fd = new FormData();
-      Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+      Object.entries(form).forEach(([k, v]) => {
+        if (k === 'category' && v === 'Khác') {
+          fd.append(k, `Khác - ${customCategory.trim()}`);
+        } else {
+          fd.append(k, v);
+        }
+      });
       files.forEach(f => fd.append('images', f));
 
       const res = await postFormData('/petitions', fd);
       setSuccess({ trackingCode: res.trackingCode });
       setForm(initialForm);
+      setCustomCategory('');
       setFiles([]);
     } catch (err) {
       setSubmitError(err.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
@@ -188,15 +194,31 @@ export default function SubmitForm() {
         </div>
 
         {/* Lĩnh vực */}
-        <div className="form-group">
+        <div className="form-group" style={{ gridColumn: form.category === 'Khác' ? '1 / -1' : 'auto' }}>
           <label>Lĩnh vực <span className="required">*</span></label>
           <select name="category" value={form.category} onChange={handleChange}>
             <option value="">-- Chọn lĩnh vực --</option>
-            {CATEGORIES.map(c => (
-              <option key={c} value={c}>{c}</option>
+            {categories.map(c => (
+              <option key={c.id} value={c.name}>{c.name}</option>
             ))}
           </select>
           {errors.category && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.category}</span>}
+          
+          {form.category === 'Khác' && (
+            <div style={{ marginTop: 12 }}>
+              <label>Nhập lĩnh vực phản ánh <span className="required">*</span></label>
+              <textarea
+                value={customCategory}
+                onChange={e => {
+                  setCustomCategory(e.target.value);
+                  if (errors.customCategory) setErrors(prev => ({ ...prev, customCategory: '' }));
+                }}
+                placeholder="VD: Cấp phép xây dựng, tranh chấp lối đi chung..."
+                style={{ minHeight: 60 }}
+              />
+              {errors.customCategory && <span style={{ color: '#ef4444', fontSize: 13, display: 'block' }}>{errors.customCategory}</span>}
+            </div>
+          )}
         </div>
 
         {/* Tiêu đề */}

@@ -3,6 +3,7 @@ import React from 'react';
 const MENU_ITEMS = [
   { id: 'dashboard', label: 'Tổng quan', icon: '📊' },
   { id: 'petitions', label: 'Danh sách phản ánh', icon: '📋' },
+  { id: 'categories', label: 'Lĩnh vực', icon: '📑' },
   { id: 'news', label: 'Tin tức', icon: '📰' },
   { id: 'guides', label: 'Hướng dẫn', icon: '📖' },
   { id: 'settings', label: 'Cài đặt hệ thống', icon: '⚙️' },
