@@ -4,7 +4,10 @@ const aiController = require('../controllers/aiController');
 const auth = require('../middlewares/auth');
 const { aiLimiter } = require('../middlewares/rateLimit');
 
-// All AI routes require authentication + rate limiting
+// Public Chat with AI (citizens) - Requires rate limiting but NO auth
+router.post('/chat/public', aiLimiter, aiController.publicChatWithAI);
+
+// All admin AI routes require authentication + rate limiting
 router.use(auth);
 router.use(aiLimiter);
 

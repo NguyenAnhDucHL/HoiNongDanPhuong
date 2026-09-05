@@ -90,18 +90,18 @@ export default function PetitionDetailModal({
                     const imagesList = selectedPetition.imagePaths.split(',').filter(Boolean);
                     if (imagesList.length === 0) return null;
                     return (
-                      <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: imagesList.length === 1 ? '1fr' : 'repeat(2, 1fr)', 
-                        gap: 4, 
-                        borderRadius: 12, 
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: imagesList.length === 1 ? '1fr' : 'repeat(2, 1fr)',
+                        gap: 4,
+                        borderRadius: 12,
                         overflow: 'hidden',
                         border: '1px solid #e2e8f0'
                       }}>
                         {imagesList.map((img, idx) => {
                           let gridStyle = {};
                           const count = imagesList.length;
-                          
+
                           if (count === 1) {
                             gridStyle = { gridColumn: '1 / -1', maxHeight: 400 };
                           } else if (count === 3 && idx === 0) {
@@ -116,9 +116,9 @@ export default function PetitionDetailModal({
                           }
 
                           return (
-                            <a key={idx} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{ 
-                              position: 'relative', 
-                              width: '100%', 
+                            <a key={idx} href={`/uploads/${img}`} target="_blank" rel="noreferrer" style={{
+                              position: 'relative',
+                              width: '100%',
                               ...gridStyle,
                               overflow: 'hidden',
                               display: 'block'
@@ -126,9 +126,9 @@ export default function PetitionDetailModal({
                               <img
                                 src={`/uploads/${img}`}
                                 alt=""
-                                style={{ 
-                                  width: '100%', 
-                                  height: '100%', 
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
                                   objectFit: count === 1 ? 'contain' : 'cover',
                                   display: 'block',
                                   background: '#f8fafc',

@@ -1167,3 +1167,15 @@ textarea {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Chatbot Typing Indicator */
+.dot-typing {
+  position: relative;
+  animation: typing 1.5s infinite linear;
+}
+@keyframes typing {
+  0% { content: "Đang gõ."; }
+  33% { content: "Đang gõ.."; }
+  66% { content: "Đang gõ..."; }
+  100% { content: "Đang gõ..."; }
+}
+

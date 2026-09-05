@@ -48,6 +48,27 @@ const chatWithAI = asyncHandler(async (req, res) => {
 });
 
 /**
+ * Public Chat with AI agent for citizens
+ */
+const publicChatWithAI = asyncHandler(async (req, res) => {
+  const { message } = req.body;
+
+  if (!message?.trim()) {
+    return res.status(400).json({ error: 'Tin nhắn không được để trống.' });
+  }
+
+  // Provide public context instead of sensitive admin stats
+  const context = {
+    organization: "Hội Nông Dân Phường",
+    purpose: "Hỗ trợ người dân nộp phản ánh, kiến nghị liên quan đến nông nghiệp, đất đai, thủ tục hành chính.",
+    instructions: "Nếu người dân cần nộp phản ánh, hãy hướng dẫn họ vào phần 'Gửi phản ánh mới' trên trang chủ."
+  };
+
+  const result = await aiService.chatWithAI(message.trim(), context);
+  res.json(result);
+});
+
+/**
  * Check if AI is available (has valid API key)
  */
 const checkAIStatus = asyncHandler(async (req, res) => {
@@ -56,12 +77,13 @@ const checkAIStatus = asyncHandler(async (req, res) => {
     available,
     message: available
       ? 'AI Agent đang hoạt động bình thường.'
-      : 'AI Agent chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY vào file .env.',
+      : 'AI Agent chưa được cấu hình. Vui lòng thêm OLLAMA_API_URL hoặc GEMINI_API_KEY vào file .env.',
   });
 });
 
 module.exports = {
   analyzePetition,
   chatWithAI,
+  publicChatWithAI,
   checkAIStatus,
 };

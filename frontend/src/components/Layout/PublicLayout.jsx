@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import PublicChatbot from '../ui/PublicChatbot';
 
 const PublicLayout = ({ children }) => {
   const [tab, setTab] = useState('home');
@@ -64,6 +66,9 @@ const PublicLayout = ({ children }) => {
           <div className="footer-bottom">© 2026 HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ. Bản quyền thuộc về UBND phường Cẩm Phả</div>
         </div>
       </footer>
+
+      {/* Floating Chatbot */}
+      <PublicChatbot />
     </div>
   );
 };
