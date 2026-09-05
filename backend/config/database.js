@@ -32,9 +32,13 @@ const initDB = () => {
         username TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
         fullName TEXT,
+        sessionToken TEXT,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Handle migrations for admins table
+    db.run(`ALTER TABLE admins ADD COLUMN sessionToken TEXT`, () => { });
 
     // 2. Petitions table - extended for Hội Nông Dân with AI fields
     db.run(`

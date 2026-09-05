@@ -13,16 +13,19 @@ export default function AdminLogin() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    
     if (params.get('logout') === 'success') {
       setSuccess('Bạn đã đăng xuất thành công khỏi hệ thống!');
-      // Remove query param to clean up URL
+      navigate('/admin/login', { replace: true });
+    } else if (params.get('error') === 'kicked_out') {
+      setError('Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác. Bạn đã bị đăng xuất khỏi hệ thống!');
       navigate('/admin/login', { replace: true });
     }
 
     // Already logged in?
     const token = localStorage.getItem('hnd_admin_token');
-    if (token) navigate('/admin');
-  }, []);
+    if (token && !params.get('error')) navigate('/admin');
+  }, [location.search, navigate]);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));

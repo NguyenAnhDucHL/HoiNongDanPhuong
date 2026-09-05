@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { getAsync, runAsync } = require('../utils/db-promise');
 const config = require('../config/config');
 const asyncHandler = require('../middlewares/asyncHandler');
@@ -25,8 +26,17 @@ const login = asyncHandler(async (req, res) => {
     return res.status(401).json({ error: 'Tên đăng nhập hoặc mật khẩu không đúng.' });
   }
 
+  // Generate a random session token
+  const sessionToken = crypto.randomBytes(16).toString('hex');
+  await runAsync('UPDATE admins SET sessionToken = ? WHERE id = ?', [sessionToken, admin.id]);
+
   const token = jwt.sign(
-    { id: admin.id, username: admin.username, fullName: admin.fullName },
+    {
+      id: admin.id,
+      username: admin.username,
+      fullName: admin.fullName,
+      sessionToken
+    },
     config.jwtSecret,
     { expiresIn: '8h' }
   );

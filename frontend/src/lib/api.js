@@ -24,6 +24,13 @@ export const fetchApi = async (path, options = {}) => {
   const data = await res.json();
 
   if (!res.ok) {
+    if (res.status === 401 && data.error === 'kicked_out') {
+      localStorage.removeItem('hnd_admin_token');
+      localStorage.removeItem('hnd_admin_info');
+      window.location.href = '/admin/login?error=kicked_out';
+      return;
+    }
+
     const err = new Error(data.error || `HTTP ${res.status}`);
     err.status = res.status;
     throw err;
@@ -45,6 +52,13 @@ export const postFormData = async (path, formData) => {
 
   const data = await res.json();
   if (!res.ok) {
+    if (res.status === 401 && data.error === 'kicked_out') {
+      localStorage.removeItem('hnd_admin_token');
+      localStorage.removeItem('hnd_admin_info');
+      window.location.href = '/admin/login?error=kicked_out';
+      return;
+    }
+
     const err = new Error(data.error || `HTTP ${res.status}`);
     err.status = res.status;
     throw err;
