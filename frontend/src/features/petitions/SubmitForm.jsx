@@ -140,8 +140,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px]">
         {/* Họ tên */}
         <div>
-          <label className="font-semibold text-[14px] mb-[5px] block">Họ và tên <span className="text-[#ef4444]">*</span></label>
+          <label htmlFor="fullName" className="font-semibold text-[14px] mb-[5px] block">Họ và tên <span className="text-[#ef4444]">*</span></label>
           <input
+            id="fullName"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="fullName"
@@ -154,8 +155,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Số điện thoại */}
         <div>
-          <label className="font-semibold text-[14px] mb-[5px] block">Số điện thoại</label>
+          <label htmlFor="phone" className="font-semibold text-[14px] mb-[5px] block">Số điện thoại</label>
           <input
+            id="phone"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="tel"
             name="phone"
@@ -168,8 +170,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* CCCD */}
         <div>
-          <label className="font-semibold text-[14px] mb-[5px] block">Số CCCD / CMND</label>
+          <label htmlFor="cccd" className="font-semibold text-[14px] mb-[5px] block">Số CCCD / CMND</label>
           <input
+            id="cccd"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="cccd"
@@ -181,8 +184,8 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Khu phố */}
         <div>
-          <label className="font-semibold text-[14px] mb-[5px] block">Khu phố</label>
-          <select className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="ward" value={form.ward} onChange={handleChange}>
+          <label htmlFor="ward" className="font-semibold text-[14px] mb-[5px] block">Khu phố</label>
+          <select id="ward" className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="ward" value={form.ward} onChange={handleChange}>
             <option value="">-- Chọn khu phố --</option>
             {wards.map(w => (
               <option key={w.id} value={w.name}>{w.name}</option>
@@ -192,8 +195,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Địa chỉ */}
         <div className="col-span-1 md:col-span-2">
-          <label className="font-semibold text-[14px] mb-[5px] block">Địa chỉ cụ thể</label>
+          <label htmlFor="address" className="font-semibold text-[14px] mb-[5px] block">Địa chỉ cụ thể</label>
           <input
+            id="address"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="address"
@@ -205,8 +209,8 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Lĩnh vực */}
         <div className={form.category === 'Khác' ? 'col-span-1 md:col-span-2' : ''}>
-          <label className="font-semibold text-[14px] mb-[5px] block">Lĩnh vực <span className="text-[#ef4444]">*</span></label>
-          <select className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="category" value={form.category} onChange={handleChange}>
+          <label htmlFor="category" className="font-semibold text-[14px] mb-[5px] block">Lĩnh vực <span className="text-[#ef4444]">*</span></label>
+          <select id="category" className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="category" value={form.category} onChange={handleChange}>
             <option value="">-- Chọn lĩnh vực --</option>
             {categories.map(c => (
               <option key={c.id} value={c.name}>{c.name}</option>
@@ -216,8 +220,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
           {form.category === 'Khác' && (
             <div className="mt-[12px]">
-              <label className="font-semibold text-[14px] mb-[5px] block">Nhập lĩnh vực phản ánh <span className="text-[#ef4444]">*</span></label>
+              <label htmlFor="customCategory" className="font-semibold text-[14px] mb-[5px] block">Nhập lĩnh vực phản ánh <span className="text-[#ef4444]">*</span></label>
               <textarea
+                id="customCategory"
                 className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors min-h-[60px]"
                 value={customCategory}
                 onChange={e => {
@@ -233,8 +238,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Tiêu đề */}
         <div>
-          <label className="font-semibold text-[14px] mb-[5px] block">Tiêu đề phản ánh <span className="text-[#ef4444]">*</span></label>
+          <label htmlFor="title" className="font-semibold text-[14px] mb-[5px] block">Tiêu đề phản ánh <span className="text-[#ef4444]">*</span></label>
           <input
+            id="title"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="title"
@@ -247,8 +253,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
         {/* Nội dung */}
         <div className="col-span-1 md:col-span-2">
-          <label className="font-semibold text-[14px] mb-[5px] block">Nội dung chi tiết <span className="text-[#ef4444]">*</span></label>
+          <label htmlFor="content" className="font-semibold text-[14px] mb-[5px] block">Nội dung chi tiết <span className="text-[#ef4444]">*</span></label>
           <textarea
+            id="content"
             className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors min-h-[150px]"
             name="content"
             value={form.content}

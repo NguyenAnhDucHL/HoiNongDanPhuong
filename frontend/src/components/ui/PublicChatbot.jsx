@@ -74,6 +74,7 @@ const PublicChatbot = () => {
       >
         <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999, touchAction: 'none' }}>
           <button
+            aria-label="Mở / Đóng trợ lý ảo"
             style={{
               width: 60,
               height: 60,
@@ -103,6 +104,7 @@ const PublicChatbot = () => {
                 e.stopPropagation();
                 setIsVisible(false);
               }}
+              aria-label="Ẩn chatbot"
               title="Ẩn chatbot"
               style={{
                 position: 'absolute',
@@ -281,6 +283,7 @@ const PublicChatbot = () => {
             />
             <button
               onClick={handleSend}
+              aria-label="Gửi tin nhắn"
               disabled={isLoading || !input.trim()}
               style={{
                 width: 36,
