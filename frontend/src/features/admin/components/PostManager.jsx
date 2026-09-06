@@ -10,6 +10,10 @@ export default function PostManager({ type, title }) {
   const [deleteId, setDeleteId] = useState(null);
   const [alertMsg, setAlertMsg] = useState('');
 
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const limit = 10;
+
   const [postTitle, setPostTitle] = useState('');
   const [postContent, setPostContent] = useState('');
   const [existingImages, setExistingImages] = useState([]);
@@ -18,14 +22,15 @@ export default function PostManager({ type, title }) {
   const loadPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetchApi(`/posts?type=${type}&limit=100`);
+      const res = await fetchApi(`/posts?type=${type}&page=${page}&limit=${limit}`);
       setPosts(res.data || []);
+      setTotal(res.total || 0);
     } catch (e) {
       setAlertMsg('Lỗi tải dữ liệu: ' + e.message);
     } finally {
       setLoading(false);
     }
-  }, [type]);
+  }, [type, page]);
 
   useEffect(() => {
     loadPosts();
@@ -166,6 +171,28 @@ export default function PostManager({ type, title }) {
           </div>
         )}
       </div>
+
+      {Math.ceil(total / limit) > 0 && (
+        <div className="flex justify-center items-center gap-[16px] mt-[24px]">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(p => p - 1)}
+            className={`px-[16px] py-[8px] rounded-[6px] border border-[#e2e8f0] font-medium transition-colors ${page === 1 ? 'bg-[#f8fafc] text-[#cbd5e1] cursor-not-allowed' : 'bg-white text-[#2d3748] hover:bg-[#f8fafc] cursor-pointer'}`}
+          >
+            ← Trước
+          </button>
+          <div className="text-[14px] font-medium text-[#718096]">
+            Trang {page} / {Math.ceil(total / limit)}
+          </div>
+          <button
+            disabled={page === Math.ceil(total / limit)}
+            onClick={() => setPage(p => p + 1)}
+            className={`px-[16px] py-[8px] rounded-[6px] border border-[#e2e8f0] font-medium transition-colors ${page === Math.ceil(total / limit) ? 'bg-[#f8fafc] text-[#cbd5e1] cursor-not-allowed' : 'bg-white text-[#2d3748] hover:bg-[#f8fafc] cursor-pointer'}`}
+          >
+            Sau →
+          </button>
+        </div>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 z-[200] flex items-center justify-center p-[16px]">
