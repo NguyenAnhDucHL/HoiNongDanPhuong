@@ -26,7 +26,7 @@ export default function AdminPetitions({
     <div className="flex-1 overflow-y-auto p-[24px]">
       {/* Filter Bar */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-3 mb-[20px] bg-white p-[16px] rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0]">
-        
+
         {/* Search Input */}
         <div className="md:col-span-4 relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -163,7 +163,7 @@ export default function AdminPetitions({
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {totalPages > 0 && (
         <div className="flex justify-center items-center gap-[16px] mt-[24px]">
           <button
             disabled={page === 1}
