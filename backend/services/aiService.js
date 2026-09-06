@@ -57,7 +57,6 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
   const systemPrompt = "Bạn là trợ lý AI của Hệ thống quản lý phản ánh Hội Nông Dân. Chỉ trả về JSON hợp lệ.";
 
   try {
-    let responseText = "";
 
     if (!isOllamaAvailable()) {
       throw new Error("Ollama is not configured.");
