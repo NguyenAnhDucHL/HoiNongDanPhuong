@@ -7,7 +7,7 @@ const PublicLayout = ({ children }) => {
 
   return (
     <div className="home-container">
-      <style>{`
+
       {/* ====== HEADER ====== */}
       <header className="relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #079323 0%, #0b7d20 65%, #075f19 100%)' }}>
         {/* Background circle decoration */}
