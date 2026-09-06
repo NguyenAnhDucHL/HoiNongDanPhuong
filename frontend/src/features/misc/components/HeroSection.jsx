@@ -2,7 +2,11 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-cover bg-center min-h-[365px] py-12 bg-[url('/bg.jpg')]" id="trang-chu" style={{ backgroundImage: "url('https://hoinongdan.tphcm.gov.vn/uploads/hoinongdan/hoinongdan.tphcm.gov.vn/slider/3_2.jpg')" }}>
+    <section 
+      className="relative overflow-hidden bg-cover bg-center min-h-[365px] py-12" 
+      id="trang-chu" 
+      style={{ backgroundImage: "linear-gradient(rgba(238, 248, 239, 0.18), rgba(238, 248, 239, 0.18)), url('/bg-ha-long.jpg')" }}
+    >
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-12 gap-7 items-center max-w-5xl">
         <div className="md:col-span-7 bg-white/90 backdrop-blur-sm p-7 rounded-2xl border border-white/95">
           <h2 className="text-[#087c20] text-2xl md:text-[26px] font-bold leading-tight mb-4">
