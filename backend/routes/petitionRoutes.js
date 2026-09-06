@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const petitionController = require('../controllers/petitionController');
 const { petitionLimiter } = require('../middlewares/rateLimit');
+const { checkDuplicatePetition } = require('../middlewares/validate');
 const upload = require('../config/upload');
 const multer = require('multer');
 
@@ -9,6 +10,7 @@ const multer = require('multer');
 router.post(
   '/',
   petitionLimiter,
+  checkDuplicatePetition,
   (req, res, next) => {
     const uploadMiddleware = upload.array('images', 10);
     uploadMiddleware(req, res, function (err) {
