@@ -48,7 +48,7 @@ export default function AdminOverview({ stats, onNavigateToPetitions, onOpenDeta
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+      <div className="admin-overview-bottom">
         {/* By Category */}
         <div className="admin-card">
           <h3 className="admin-card-title">🏷️ Phân loại theo lĩnh vực</h3>

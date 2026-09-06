@@ -604,3 +604,31 @@ body.admin-mode {
     width: 100%;
   }
 }
+/* Fix Overview Layout on Mobile */
+.admin-overview-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .admin-overview-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Fix Topbar squishing on Mobile */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .show-on-mobile {
+    display: inline-block !important;
+  }
+  .admin-topbar-right {
+    gap: 8px;
+  }
+  .admin-logout-btn {
+    padding: 6px 10px;
+  }
+}

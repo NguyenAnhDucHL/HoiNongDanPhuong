@@ -227,11 +227,12 @@ export default function AdminDashboard() {
               </span>
             </div>
             <div style={{ width: '1px', height: '24px', background: 'var(--admin-border)' }}></div>
-            <a href="/" target="_blank" rel="noreferrer" style={{ color: 'var(--admin-primary)', fontSize: '13px', textDecoration: 'none', fontWeight: 500 }}>
-              Mở trang chủ ↗
+            <a href="/" target="_blank" rel="noreferrer" className="admin-topbar-link" style={{ color: 'var(--admin-primary)', fontSize: '13px', textDecoration: 'none', fontWeight: 500 }}>
+              <span className="hide-on-mobile">Mở trang chủ ↗</span>
+              <span className="show-on-mobile" style={{ display: 'none' }}>🏠</span>
             </a>
             <button className="admin-logout-btn" onClick={logout}>
-              🚪 Đăng xuất
+              🚪 <span className="hide-on-mobile">Đăng xuất</span>
             </button>
           </div>
         </div>
