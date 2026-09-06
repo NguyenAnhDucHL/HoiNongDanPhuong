@@ -58,53 +58,30 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="login-page">
-      {/* Toast đăng xuất — góc trên phải, nhỏ gọn */}
+    <div className="min-h-screen bg-gradient-to-br from-[#0a8c24] to-[#075f19] flex items-center justify-center p-4">
+      {/* Toast đăng xuất */}
       {success && (
-        <div style={{
-          position: 'fixed',
-          top: 20,
-          right: 20,
-          zIndex: 9999,
-          backgroundColor: '#ffffff',
-          color: '#1e7e34',
-          padding: '10px 14px 10px 12px',
-          borderRadius: '8px',
-          border: '1px solid #d4edda',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontSize: '14px',
-          fontWeight: '500',
-          minWidth: 160,
-          maxWidth: 280,
-          animation: 'slideInRight 0.3s ease-out',
-        }}>
-          <span style={{
-            width: 20, height: 20, borderRadius: '50%',
-            backgroundColor: '#28a745', color: 'white',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 12, flexShrink: 0, fontWeight: 'bold'
-          }}>✓</span>
-          <span style={{ flex: 1 }}>{success}</span>
+        <div className="fixed top-5 right-5 z-[9999] bg-white text-[#1e7e34] py-2.5 px-3 rounded-lg border border-[#d4edda] shadow-[0_4px_16px_rgba(0,0,0,0.12)] flex items-center gap-2 text-sm font-medium min-w-[160px] max-w-[280px] animate-[slideInRight_0.3s_ease-out]">
+          <span className="w-5 h-5 rounded-full bg-[#28a745] text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">✓</span>
+          <span className="flex-1">{success}</span>
           <button
             onClick={() => setSuccess('')}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#6c757d', fontSize: 16, lineHeight: 1, padding: '0 0 0 4px', flexShrink: 0 }}
+            className="bg-transparent border-none cursor-pointer text-[#6c757d] text-base leading-none pl-1 flex-shrink-0"
             title="Đóng"
           >×</button>
         </div>
       )}
-      <div className="login-card">
-        <div className="login-logo">
-          <img src="/logo.png" alt="Logo" className="login-logo-img" />
-          <h2>HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h2>
-          <p>Cổng quản trị - Dành cho cán bộ</p>
+
+      <div className="bg-white rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.2)] w-full max-w-[440px] p-8 md:p-10">
+        <div className="flex flex-col items-center mb-8 text-center">
+          <img src="/logo.png" alt="Logo" className="w-[72px] h-[72px] mb-3" />
+          <h2 className="text-[18px] md:text-[20px] font-extrabold text-[#087c20] uppercase leading-tight">HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h2>
+          <p className="text-[13px] text-[#6b7280] mt-1 font-medium">Cổng quản trị - Dành cho cán bộ</p>
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
-          <div className="form-group" style={{ marginBottom: 16 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>
+          <div className="mb-4">
+            <label className="block text-[14px] font-bold text-[#18301e] mb-1.5">
               Tên đăng nhập
             </label>
             <input
@@ -115,14 +92,15 @@ export default function AdminLogin() {
               placeholder="Nhập tên đăng nhập"
               autoComplete="username"
               autoFocus
+              className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             />
           </div>
 
-          <div className="form-group" style={{ marginBottom: 20 }}>
-            <label style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>
+          <div className="mb-5">
+            <label className="block text-[14px] font-bold text-[#18301e] mb-1.5">
               Mật khẩu
             </label>
-            <div style={{ position: 'relative' }}>
+            <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -130,23 +108,12 @@ export default function AdminLogin() {
                 onChange={handleChange}
                 placeholder="Nhập mật khẩu"
                 autoComplete="current-password"
-                style={{ paddingRight: 40 }}
+                className="w-full p-[11px_12px] pr-10 border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                style={{
-                  position: 'absolute',
-                  right: 10,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: 16,
-                  color: 'var(--muted)',
-                  padding: 4
-                }}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-transparent border-none cursor-pointer text-base text-[#9ca3af] p-1 hover:text-[#4b5563] transition-colors"
                 title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
                 {showPassword ? '👁️‍🗨️' : '👁️'}
@@ -155,28 +122,33 @@ export default function AdminLogin() {
           </div>
 
           {error && (
-            <div className="alert alert-error" style={{ marginBottom: 16 }}>
+            <div className="mb-4 bg-[#fef2f2] border border-[#fecaca] text-[#ef4444] rounded-[8px] p-[10px_14px] text-[14px] font-medium flex items-center gap-2">
               ❌ {error}
             </div>
           )}
 
-
           <button
             type="submit"
-            className="btn btn-primary btn-full"
+            className="w-full bg-[#149b2f] hover:bg-[#087c20] text-white font-bold py-[12px] rounded-[8px] transition-colors flex justify-center items-center gap-2 shadow-[0_4px_10px_rgba(20,155,47,0.3)] hover:shadow-[0_6px_15px_rgba(20,155,47,0.4)] disabled:opacity-70 disabled:cursor-not-allowed"
             disabled={loading}
           >
             {loading ? (
-              <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Đang đăng nhập...</>
-            ) : '🔑 Đăng nhập'}
+              <>
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Đang đăng nhập...
+              </>
+            ) : (
+              '🔑 Đăng nhập'
+            )}
           </button>
         </form>
 
-        <div style={{ marginTop: 20, textAlign: 'center' }}>
-          <a href="/" style={{ color: 'var(--muted)', fontSize: 13 }}>← Quay về trang chính</a>
+        <div className="mt-6 text-center">
+          <a href="/" className="text-[#6b7280] text-[13px] hover:text-[#149b2f] transition-colors font-medium">← Quay về trang chính</a>
         </div>
-
-
       </div>
     </div>
   );
