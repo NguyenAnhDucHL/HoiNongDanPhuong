@@ -226,7 +226,7 @@ export default function AdminDashboard() {
               </span>
             </div>
             <div className="w-[1px] h-[24px] bg-[#e2e8f0]"></div>
-            <a href="/" target="_blank" rel="noreferrer" className="text-[#0a8c24] text-[13px] no-underline font-medium hover:opacity-80 transition-opacity">
+            <a href="/" className="text-[#0a8c24] text-[13px] no-underline font-medium hover:opacity-80 transition-opacity">
               <span className="hidden md:inline">Mở trang chủ ↗</span>
               <span className="md:hidden">🏠</span>
             </a>

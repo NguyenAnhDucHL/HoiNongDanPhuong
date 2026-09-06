@@ -4,6 +4,7 @@ import PublicChatbot from '../ui/PublicChatbot';
 
 const PublicLayout = ({ children }) => {
   const [tab, setTab] = useState('home');
+  const isAdminLoggedIn = !!localStorage.getItem('hnd_admin_token');
 
   return (
     <div className="home-container">
@@ -35,12 +36,12 @@ const PublicLayout = ({ children }) => {
             </div>
             <div
               className="flex items-center p-2 md:py-[10px] md:px-[35px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
-              onClick={() => window.location.href = '/admin/login'}
+              onClick={() => window.location.href = isAdminLoggedIn ? '/admin' : '/admin/login'}
             >
               <span className="flex-shrink-0">
                 <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </span>
-              <span className="hidden md:block ml-[9px] text-[14px] font-bold tracking-wider">ĐĂNG NHẬP</span>
+              <span className="hidden md:block ml-[9px] text-[14px] font-bold tracking-wider">{isAdminLoggedIn ? 'TRANG QUẢN TRỊ' : 'ĐĂNG NHẬP'}</span>
             </div>
           </div>
 
