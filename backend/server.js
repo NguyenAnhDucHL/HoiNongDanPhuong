@@ -10,6 +10,9 @@ const config = require('./config/config');
 // Initialize database (runs schema migrations + seed data)
 require('./config/database');
 
+// Initialize backup service
+require('./services/backupService');
+
 const apiRoutes = require('./routes/index');
 
 const app = express();
