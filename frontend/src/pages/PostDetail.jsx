@@ -96,7 +96,7 @@ export default function PostDetail() {
                           }}>
                             <img
                               src={`/uploads/${img}`}
-                              alt=""
+                              alt={post.title}
                               style={{
                                 width: '100%',
                                 height: '100%',

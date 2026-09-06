@@ -294,6 +294,7 @@ export default function SubmitForm({ selectedCategory = '' }) {
                   <button
                     type="button"
                     onClick={() => removeFile(i)}
+                    aria-label={`Xóa ảnh ${f.name}`}
                     className="absolute -top-[8px] -right-[8px] bg-[#ef4444] text-white border-none rounded-full w-[22px] h-[22px] cursor-pointer flex items-center justify-center text-[12px] font-bold z-10"
                   >×</button>
                 </div>
