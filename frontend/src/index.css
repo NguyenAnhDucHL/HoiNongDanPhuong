@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* =============================================
    HND Cẩm Phả - Design System
    Theme: Xanh Lá Nông Nghiệp
