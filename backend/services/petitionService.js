@@ -15,9 +15,6 @@ const createPetition = async (petitionData) => {
   const dateStr = new Date().toISOString().slice(2, 10).replace(/-/g, '');
   const trackingCode = `HND-${dateStr}-${randomStr}`;
 
-  // Analyze petition with AI
-  const analysis = await aiService.analyzePetition({ title, content });
-
   const result = await runAsync(
     `INSERT INTO petitions 
       (fullName, phone, cccd, ward, address, title, category, content, imagePaths, trackingCode, aiSummary, aiPriority, aiSuggestion, aiCategory)
@@ -33,12 +30,30 @@ const createPetition = async (petitionData) => {
       content?.trim() || '',
       imagePaths || '',
       trackingCode,
-      analysis.summary || '',
-      analysis.priority || 'Thấp',
-      analysis.suggestion || '',
-      analysis.category || 'Khác'
+      '',
+      '',
+      '',
+      ''
     ]
   );
+
+  // Analyze petition with AI asynchronously in the background
+  aiService.analyzePetition({ title, content })
+    .then(async (analysis) => {
+      await runAsync(
+        `UPDATE petitions SET aiSummary = ?, aiPriority = ?, aiSuggestion = ?, aiCategory = ? WHERE id = ?`,
+        [
+          analysis.summary || '',
+          analysis.priority || 'Thấp',
+          analysis.suggestion || '',
+          analysis.category || 'Khác',
+          result.lastID
+        ]
+      );
+    })
+    .catch(err => {
+      console.error('Background AI analysis failed:', err);
+    });
 
   // Create initial tracking log
   await runAsync(
