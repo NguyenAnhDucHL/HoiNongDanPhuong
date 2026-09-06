@@ -9,68 +9,63 @@ export default function AdminOverview({ stats, onNavigateToPetitions, onOpenDeta
   }) : '';
 
   return (
-    <div className="admin-content">
-      <div className="admin-stats-grid">
-        <div className="admin-stat-card primary">
-          <div className="admin-stat-icon">📋</div>
-          <div className="admin-stat-value">{stats.overview?.total || 0}</div>
-          <div className="admin-stat-label">Tổng phản ánh</div>
+    <div className="flex-1 overflow-y-auto p-[24px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] mb-[24px]">
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#0a8c24] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">📋</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.total || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Tổng phản ánh</div>
         </div>
-        <div className="admin-stat-card warning">
-          <div className="admin-stat-icon">⏳</div>
-          <div className="admin-stat-value">{stats.overview?.pending || 0}</div>
-          <div className="admin-stat-label">Chờ xử lý</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#f59e0b] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">⏳</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.pending || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Chờ xử lý</div>
         </div>
-        <div className="admin-stat-card info">
-          <div className="admin-stat-icon">🔄</div>
-          <div className="admin-stat-value">{stats.overview?.processing || 0}</div>
-          <div className="admin-stat-label">Đang xử lý</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#3b82f6] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">🔄</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.processing || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Đang xử lý</div>
         </div>
-        <div className="admin-stat-card success">
-          <div className="admin-stat-icon">✅</div>
-          <div className="admin-stat-value">{stats.overview?.resolved || 0}</div>
-          <div className="admin-stat-label">Đã giải quyết</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#10b981] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">✅</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.resolved || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Đã giải quyết</div>
         </div>
-        <div className="admin-stat-card danger">
-          <div className="admin-stat-icon">❌</div>
-          <div className="admin-stat-value">{stats.overview?.rejected || 0}</div>
-          <div className="admin-stat-label">Từ chối</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#ef4444] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">❌</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.rejected || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Từ chối</div>
         </div>
-        <div className="admin-stat-card danger">
-          <div className="admin-stat-icon">🔴</div>
-          <div className="admin-stat-value">{stats.overview?.highPriority || 0}</div>
-          <div className="admin-stat-label">Ưu tiên cao</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] border-l-[4px] border-l-[#ef4444] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">🔴</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.highPriority || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Ưu tiên cao</div>
         </div>
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon">📅</div>
-          <div className="admin-stat-value">{stats.overview?.today || 0}</div>
-          <div className="admin-stat-label">Nhận hôm nay</div>
+        <div className="bg-white rounded-[12px] p-[20px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] flex flex-col relative overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+          <div className="absolute -top-[10px] -right-[10px] text-[64px] opacity-5">📅</div>
+          <div className="text-[32px] font-bold text-[#2d3748] mb-[4px]">{stats.overview?.today || 0}</div>
+          <div className="text-[14px] color-[#718096] font-medium text-[#718096]">Nhận hôm nay</div>
         </div>
       </div>
 
-      <div className="admin-overview-bottom">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-[24px]">
         {/* By Category */}
-        <div className="admin-card">
-          <h3 className="admin-card-title">🏷️ Phân loại theo lĩnh vực</h3>
-          <div style={{ marginTop: '20px' }}>
+        <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px] flex flex-col">
+          <h3 className="text-[16px] font-bold text-[#2d3748] m-0 pb-[16px] border-b border-[#e2e8f0]">🏷️ Phân loại theo lĩnh vực</h3>
+          <div className="mt-[20px]">
             {(stats.byCategory || []).map(c => (
-              <div key={c.category} style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                padding: '12px 0', borderBottom: '1px solid var(--admin-border)', fontSize: '14px',
-              }}>
-                <span style={{ fontWeight: 500 }}>{c.category}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{
-                    height: '8px', borderRadius: '999px', background: 'var(--admin-primary)',
-                    width: `${Math.min(100, (c.count / (stats.overview?.total || 1)) * 180)}px`,
-                    opacity: 0.8,
+              <div key={c.category} className="flex justify-between items-center py-[12px] border-b border-[#e2e8f0] text-[14px]">
+                <span className="font-medium">{c.category}</span>
+                <div className="flex items-center gap-[12px]">
+                  <div className="h-[8px] rounded-full bg-[#0a8c24] opacity-80" style={{
+                    width: `${Math.min(100, (c.count / (stats.overview?.total || 1)) * 180)}px`
                   }} />
-                  <strong style={{ minWidth: '24px', textAlign: 'right' }}>{c.count}</strong>
+                  <strong className="min-w-[24px] text-right">{c.count}</strong>
                 </div>
               </div>
             ))}
             {(!stats.byCategory || stats.byCategory.length === 0) && (
-              <p style={{ color: 'var(--admin-text-muted)', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
+              <p className="text-[#718096] text-[14px] text-center py-[20px]">
                 Chưa có dữ liệu
               </p>
             )}
@@ -78,42 +73,37 @@ export default function AdminOverview({ stats, onNavigateToPetitions, onOpenDeta
         </div>
 
         {/* Recent */}
-        <div className="admin-card">
-          <h3 className="admin-card-title">
-            <span style={{ flex: 1 }}>🕐 Phản ánh mới nhất</span>
+        <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px] flex flex-col">
+          <h3 className="text-[16px] font-bold text-[#2d3748] m-0 pb-[16px] border-b border-[#e2e8f0] flex items-center">
+            <span className="flex-1">🕐 Phản ánh mới nhất</span>
             <button
               onClick={onNavigateToPetitions}
-              style={{ background: 'none', border: 'none', color: 'var(--admin-primary)', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}
+              className="bg-transparent border-none text-[#0a8c24] cursor-pointer text-[14px] font-semibold"
             >
               Xem tất cả →
             </button>
           </h3>
-          <div style={{ marginTop: '10px' }}>
+          <div className="mt-[10px]">
             {(stats.recentPetitions || []).map(p => (
-              <div key={p.id} style={{
-                display: 'flex', gap: '12px', padding: '14px 12px', borderBottom: '1px solid var(--admin-border)',
-                cursor: 'pointer', transition: 'background 0.2s', borderRadius: '8px'
-              }}
+              <div key={p.id} className="flex gap-[12px] py-[14px] px-[12px] border-b border-[#e2e8f0] cursor-pointer transition-colors duration-200 rounded-[8px] hover:bg-[#f8fafc]"
                 onClick={() => onOpenDetail(p.id)}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
               >
-                <div style={{ flex: 1, overflow: 'hidden' }}>
-                  <div style={{ fontWeight: 600, fontSize: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--admin-text)' }}>
+                <div className="flex-1 overflow-hidden">
+                  <div className="font-semibold text-[14px] truncate text-[#2d3748]">
                     {p.title}
                   </div>
-                  <div style={{ fontSize: '12px', color: 'var(--admin-text-muted)', marginTop: '4px' }}>
+                  <div className="text-[12px] text-[#718096] mt-[4px]">
                     {p.category} &bull; {formatDate(p.createdAt)}
                   </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-end' }}>
+                <div className="flex flex-col gap-[6px] items-end shrink-0">
                   <StatusBadge status={p.status} />
                   {p.aiPriority && <PriorityBadge priority={p.aiPriority} />}
                 </div>
               </div>
             ))}
             {(!stats.recentPetitions || stats.recentPetitions.length === 0) && (
-              <p style={{ color: 'var(--admin-text-muted)', fontSize: '14px', textAlign: 'center', padding: '20px 0' }}>
+              <p className="text-[#718096] text-[14px] text-center py-[20px]">
                 Chưa có phản ánh nào
               </p>
             )}

@@ -23,41 +23,39 @@ export default function AdminPetitions({
   const formatDate = (d) => d ? new Date(d).toLocaleDateString('vi-VN') : '';
 
   return (
-    <div className="admin-content">
+    <div className="flex-1 overflow-y-auto p-[24px]">
       {/* Filter Bar */}
-      <div className="admin-filter-bar">
+      <div className="flex gap-[12px] mb-[20px] flex-wrap items-center bg-white p-[16px] rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0]">
         <input
           type="text"
-          className="admin-filter-input"
+          className="px-[12px] py-[8px] border border-[#e2e8f0] rounded-[6px] text-[14px] outline-none bg-white min-w-[160px] w-auto focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24]"
           placeholder="🔍 Tìm kiếm theo tên, tiêu đề, mã, SĐT..."
           value={searchInput}
           onChange={e => setSearchInput(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') { setSearch(searchInput); setPage(1); } }}
         />
         <select
-          className="admin-filter-select"
+          className="px-[12px] py-[8px] border border-[#e2e8f0] rounded-[6px] text-[14px] outline-none bg-white min-w-[160px] w-auto focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24]"
           value={filterStatus}
           onChange={e => { setFilterStatus(e.target.value); setPage(1); }}
         >
           {statusOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
         <select
-          className="admin-filter-select"
+          className="px-[12px] py-[8px] border border-[#e2e8f0] rounded-[6px] text-[14px] outline-none bg-white min-w-[160px] w-auto focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24]"
           value={filterCategory}
           onChange={e => { setFilterCategory(e.target.value); setPage(1); }}
         >
           {categories.map(c => <option key={c} value={c}>{c === 'all' ? 'Tất cả lĩnh vực' : c}</option>)}
         </select>
         <button
-          className="btn btn-primary btn-sm"
-          style={{ padding: '8px 16px', borderRadius: '6px' }}
+          className="bg-[#0a8c24] hover:bg-[#07701c] text-white px-[16px] py-[8px] rounded-[6px] font-medium text-[14px] transition-colors shadow-sm"
           onClick={() => { setSearch(searchInput); setPage(1); }}
         >
           Tìm kiếm
         </button>
         <button
-          className="btn btn-secondary btn-sm"
-          style={{ padding: '8px 16px', borderRadius: '6px' }}
+          className="bg-white hover:bg-[#f8fafc] text-[#475569] border border-[#cbd5e1] px-[16px] py-[8px] rounded-[6px] font-medium text-[14px] transition-colors shadow-sm"
           onClick={() => {
             setSearchInput(''); setSearch('');
             setFilterStatus('all'); setFilterCategory('all'); setPage(1);
@@ -67,70 +65,64 @@ export default function AdminPetitions({
         </button>
       </div>
 
-      <div style={{ marginBottom: '16px', color: 'var(--admin-text-muted)', fontSize: '14px', fontWeight: 500 }}>
-        Tổng cộng: <strong style={{ color: 'var(--admin-text)' }}>{total}</strong> phản ánh, kiến nghị
+      <div className="mb-[16px] text-[#718096] text-[14px] font-medium">
+        Tổng cộng: <strong className="text-[#2d3748]">{total}</strong> phản ánh, kiến nghị
       </div>
 
       {/* Table */}
-      <div className="admin-table-container">
+      <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] overflow-x-auto">
         {loadingList ? (
-          <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--admin-text-muted)' }}>
-            <div className="spinner" style={{ margin: '0 auto 12px' }} />
+          <div className="py-[60px] text-center text-[#718096]">
+            <div className="w-[30px] h-[30px] border-[3px] border-[#e2e8f0] border-t-[#0a8c24] rounded-full animate-spin mx-auto mb-[12px]" />
             <div>Đang tải dữ liệu...</div>
           </div>
         ) : petitions.length === 0 ? (
-          <div style={{ padding: '60px 0', textAlign: 'center' }}>
-            <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px', opacity: 0.5 }}>📭</span>
-            <h3 style={{ color: 'var(--admin-text-muted)', fontWeight: 500 }}>Không tìm thấy phản ánh nào</h3>
+          <div className="py-[60px] text-center">
+            <span className="text-[48px] block mb-[16px] opacity-50">📭</span>
+            <h3 className="text-[#718096] font-medium">Không tìm thấy phản ánh nào</h3>
           </div>
         ) : (
-          <table className="admin-table">
+          <table className="w-full min-w-[800px] border-collapse text-left">
             <thead>
               <tr>
-                <th>Mã tra cứu</th>
-                <th>Người gửi</th>
-                <th>Khu phố</th>
-                <th>Tiêu đề</th>
-                <th>Lĩnh vực</th>
-                <th>Trạng thái</th>
-                <th>Phân tích AI</th>
-                <th>Ngày gửi</th>
-                <th>Thao tác</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Mã tra cứu</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Người gửi</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Khu phố</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Tiêu đề</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Lĩnh vực</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Trạng thái</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Phân tích AI</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Ngày gửi</th>
+                <th className="px-[16px] py-[14px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {petitions.map(p => (
-                <tr key={p.id}>
-                  <td style={{ fontFamily: 'monospace', fontWeight: 600, color: 'var(--admin-primary)' }}>
+                <tr key={p.id} className="hover:bg-[#f8fafc] transition-colors">
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] font-mono font-semibold text-[#0a8c24]">
                     {p.trackingCode}
                   </td>
-                  <td style={{ fontWeight: 600 }}>{p.fullName}</td>
-                  <td>{p.ward || '-'}</td>
-                  <td style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={p.title}>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] font-semibold text-[#2d3748]">{p.fullName}</td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] text-[#2d3748]">{p.ward || '-'}</td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] text-[#2d3748] max-w-[220px] truncate" title={p.title}>
                     {p.title}
                   </td>
-                  <td>{p.category}</td>
-                  <td><StatusBadge status={p.status} /></td>
-                  <td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] text-[#2d3748]">{p.category}</td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0]"><StatusBadge status={p.status} /></td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0]">
                     {p.aiPriority ? (
                       <PriorityBadge priority={p.aiPriority} />
                     ) : (
-                      <span style={{ color: 'var(--admin-text-muted)', fontSize: '12px' }}>-</span>
+                      <span className="text-[#718096] text-[12px]">-</span>
                     )}
                   </td>
-                  <td style={{ whiteSpace: 'nowrap' }}>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[14px] text-[#2d3748] whitespace-nowrap">
                     {formatDate(p.createdAt)}
                   </td>
-                  <td>
+                  <td className="px-[16px] py-[14px] border-b border-[#e2e8f0]">
                     <button
                       onClick={() => onOpenDetail(p.id)}
-                      style={{
-                        background: '#f1f5f9', color: '#0f172a', border: 'none',
-                        padding: '6px 12px', borderRadius: '6px', fontSize: '13px',
-                        fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s'
-                      }}
-                      onMouseEnter={(e) => e.target.style.background = '#e2e8f0'}
-                      onMouseLeave={(e) => e.target.style.background = '#f1f5f9'}
+                      className="bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#0f172a] border-none px-[12px] py-[6px] rounded-[6px] text-[13px] font-semibold cursor-pointer transition-colors"
                     >
                       Chi tiết
                     </button>
@@ -144,29 +136,21 @@ export default function AdminPetitions({
 
       {/* Pagination */}
       {totalPages > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px', marginTop: '24px' }}>
+        <div className="flex justify-center items-center gap-[16px] mt-[24px]">
           <button
             disabled={page === 1}
             onClick={() => setPage(p => p - 1)}
-            style={{
-              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
-              background: page === 1 ? '#f8fafc' : '#fff', color: page === 1 ? '#cbd5e1' : 'var(--admin-text)',
-              cursor: page === 1 ? 'not-allowed' : 'pointer', fontWeight: 500
-            }}
+            className={`px-[16px] py-[8px] rounded-[6px] border border-[#e2e8f0] font-medium transition-colors ${page === 1 ? 'bg-[#f8fafc] text-[#cbd5e1] cursor-not-allowed' : 'bg-white text-[#2d3748] hover:bg-[#f8fafc] cursor-pointer'}`}
           >
             ← Trước
           </button>
-          <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--admin-text-muted)' }}>
+          <div className="text-[14px] font-medium text-[#718096]">
             Trang {page} / {totalPages}
           </div>
           <button
             disabled={page === totalPages}
             onClick={() => setPage(p => p + 1)}
-            style={{
-              padding: '8px 16px', borderRadius: '6px', border: '1px solid var(--admin-border)',
-              background: page === totalPages ? '#f8fafc' : '#fff', color: page === totalPages ? '#cbd5e1' : 'var(--admin-text)',
-              cursor: page === totalPages ? 'not-allowed' : 'pointer', fontWeight: 500
-            }}
+            className={`px-[16px] py-[8px] rounded-[6px] border border-[#e2e8f0] font-medium transition-colors ${page === totalPages ? 'bg-[#f8fafc] text-[#cbd5e1] cursor-not-allowed' : 'bg-white text-[#2d3748] hover:bg-[#f8fafc] cursor-pointer'}`}
           >
             Sau →
           </button>

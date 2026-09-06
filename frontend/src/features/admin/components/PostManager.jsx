@@ -116,93 +116,93 @@ export default function PostManager({ type, title }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <h3 style={{ color: 'var(--green-dark)', fontWeight: 800 }}>Quản lý {title}</h3>
-        <button className="btn btn-primary" onClick={() => openForm()}>+ Thêm mới</button>
+      <div className="flex justify-between items-center mb-[20px]">
+        <h3 className="text-[#087c20] font-extrabold text-[18px]">Quản lý {title}</h3>
+        <button className="bg-[#0a8c24] hover:bg-[#07701c] text-white px-[16px] py-[8px] rounded-[8px] font-medium transition-colors shadow-sm" onClick={() => openForm()}>+ Thêm mới</button>
       </div>
 
-      <div style={{ marginTop: 20 }}>
-        {loading ? <p>Đang tải...</p> : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th style={{ width: 60 }}>ID</th>
-                <th style={{ width: 100 }}>Ảnh</th>
-                <th>Tiêu đề</th>
-                <th style={{ width: 120 }}>Ngày tạo</th>
-                <th style={{ width: 160, textAlign: 'right' }}>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              {posts.map(p => {
-                let thumb = p.image;
-                if (p.images) {
-                  try {
-                    const parsed = JSON.parse(p.images);
-                    if (parsed.length > 0) thumb = parsed[0];
-                  } catch (e) { }
-                }
-                return (
-                  <tr key={p.id}>
-                    <td>#{p.id}</td>
-                    <td>{thumb ? <img src={`/uploads/${thumb}`} width="50" height="50" style={{ objectFit: 'cover', borderRadius: 4, display: 'block' }} alt="" /> : <span style={{ color: '#ccc' }}>-</span>}</td>
-                    <td style={{ fontWeight: 600 }}>{p.title}</td>
-                    <td>{new Date(p.createdAt).toLocaleDateString('vi-VN')}</td>
-                    <td style={{ textAlign: 'right' }}>
-                      <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-                        <button className="btn btn-secondary" onClick={() => openForm(p)} style={{ padding: '6px 12px' }}>Sửa</button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px' }}>Xóa</button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-              {posts.length === 0 && <tr><td colSpan="5">Chưa có dữ liệu</td></tr>}
-            </tbody>
-          </table>
+      <div className="mt-[20px]">
+        {loading ? <p className="text-center py-[40px] text-[#718096]">Đang tải...</p> : (
+          <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] overflow-x-auto">
+            <table className="w-full border-collapse text-left text-[14px]">
+              <thead>
+                <tr>
+                  <th className="w-[60px] px-[16px] py-[12px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">ID</th>
+                  <th className="w-[100px] px-[16px] py-[12px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Ảnh</th>
+                  <th className="px-[16px] py-[12px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Tiêu đề</th>
+                  <th className="w-[120px] px-[16px] py-[12px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Ngày tạo</th>
+                  <th className="w-[160px] text-right px-[16px] py-[12px] bg-[#f8fafc] text-[#718096] font-semibold text-[12px] uppercase tracking-[0.05em] border-b border-[#e2e8f0]">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                {posts.map(p => {
+                  let thumb = p.image;
+                  if (p.images) {
+                    try {
+                      const parsed = JSON.parse(p.images);
+                      if (parsed.length > 0) thumb = parsed[0];
+                    } catch (e) { }
+                  }
+                  return (
+                    <tr key={p.id} className="hover:bg-[#f8fafc] transition-colors">
+                      <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[#718096]">#{p.id}</td>
+                      <td className="px-[16px] py-[14px] border-b border-[#e2e8f0]">
+                        {thumb ? <img src={`/uploads/${thumb}`} className="w-[50px] h-[50px] object-cover rounded-[4px] block" alt="" /> : <span className="text-[#cbd5e1]">-</span>}
+                      </td>
+                      <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] font-medium text-[#2d3748]">{p.title}</td>
+                      <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-[#718096]">{new Date(p.createdAt).toLocaleDateString('vi-VN')}</td>
+                      <td className="px-[16px] py-[14px] border-b border-[#e2e8f0] text-right">
+                        <div className="flex gap-[6px] justify-end">
+                          <button className="bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#475569] px-[12px] py-[6px] rounded-[6px] font-medium text-[13px] transition-colors" onClick={() => openForm(p)}>Sửa</button>
+                          <button className="bg-[#fee2e2] hover:bg-[#fecaca] text-[#dc2626] px-[12px] py-[6px] rounded-[6px] font-medium text-[13px] transition-colors" onClick={() => handleDelete(p.id)}>Xóa</button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {posts.length === 0 && <tr><td colSpan="5" className="text-center py-[30px] text-[#718096] border-b border-[#e2e8f0]">Chưa có dữ liệu</td></tr>}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
       {showModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#fff', padding: 24, borderRadius: 12, width: '100%', maxWidth: 700, maxHeight: '90vh', overflow: 'auto' }}>
-            <h3 style={{ marginBottom: 20, color: 'var(--green-dark)' }}>{currentPost ? 'Sửa' : 'Thêm'} {title}</h3>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className="fixed inset-0 bg-black/50 z-[200] flex items-center justify-center p-[16px]">
+          <div className="bg-white p-[24px] rounded-[12px] w-full max-w-[700px] max-h-[90vh] overflow-y-auto shadow-xl">
+            <h3 className="text-[#087c20] font-bold text-[18px] mb-[20px]">{currentPost ? 'Sửa' : 'Thêm'} {title}</h3>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-[16px]">
               <div>
-                <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Tiêu đề</label>
-                <input type="text" value={postTitle} onChange={e => setPostTitle(e.target.value)} style={{ width: '100%', padding: 10, border: '1px solid #ddd', borderRadius: 8 }} required />
+                <label className="block font-semibold text-[#2d3748] mb-[6px]">Tiêu đề</label>
+                <input type="text" value={postTitle} onChange={e => setPostTitle(e.target.value)} className="w-full px-[14px] py-[10px] border border-[#cbd5e1] rounded-[8px] outline-none focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24]" required />
               </div>
               <div>
-                <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Hình ảnh đính kèm (có thể chọn nhiều)</label>
-                <input type="file" multiple onChange={e => setNewFiles(Array.from(e.target.files))} accept="image/*" />
+                <label className="block font-semibold text-[#2d3748] mb-[6px]">Hình ảnh đính kèm (có thể chọn nhiều)</label>
+                <input type="file" multiple onChange={e => setNewFiles(Array.from(e.target.files))} accept="image/*" className="text-[#718096]" />
 
                 {existingImages.length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 10 }}>
+                  <div className="flex flex-wrap gap-[10px] mt-[12px]">
                     {existingImages.map((img, idx) => (
-                      <div key={idx} style={{ position: 'relative' }}>
-                        <img src={`/uploads/${img}`} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #ddd' }} alt="" />
+                      <div key={idx} className="relative group">
+                        <img src={`/uploads/${img}`} className="w-[60px] h-[60px] object-cover rounded-[4px] border border-[#e2e8f0]" alt="" />
                         <button
                           type="button"
                           onClick={() => setExistingImages(prev => prev.filter((_, i) => i !== idx))}
-                          style={{
-                            position: 'absolute', top: -5, right: -5, background: 'red', color: 'white',
-                            border: 'none', borderRadius: '50%', width: 20, height: 20, cursor: 'pointer',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12
-                          }}
+                          className="absolute -top-[6px] -right-[6px] bg-[#ef4444] text-white rounded-full w-[20px] h-[20px] flex items-center justify-center text-[12px] opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#dc2626]"
                         >✕</button>
                       </div>
                     ))}
                   </div>
                 )}
-                {newFiles.length > 0 && <p style={{ fontSize: 13, color: 'var(--green-dark)', marginTop: 8 }}>+ {newFiles.length} ảnh mới được chọn</p>}
+                {newFiles.length > 0 && <p className="text-[13px] text-[#087c20] mt-[8px] font-medium">+ {newFiles.length} ảnh mới được chọn</p>}
               </div>
               <div>
-                <label style={{ fontWeight: 600, display: 'block', marginBottom: 6 }}>Nội dung chi tiết</label>
-                <textarea rows={12} value={postContent} onChange={e => setPostContent(e.target.value)} style={{ width: '100%', padding: 10, border: '1px solid #ddd', borderRadius: 8 }} required />
+                <label className="block font-semibold text-[#2d3748] mb-[6px]">Nội dung chi tiết</label>
+                <textarea rows={12} value={postContent} onChange={e => setPostContent(e.target.value)} className="w-full px-[14px] py-[10px] border border-[#cbd5e1] rounded-[8px] outline-none focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24]" required />
               </div>
-              <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end', marginTop: 10 }}>
-                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Hủy bỏ</button>
-                <button type="submit" className="btn btn-primary">💾 Lưu lại</button>
+              <div className="flex gap-[12px] justify-end mt-[10px]">
+                <button type="button" className="bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#475569] px-[16px] py-[8px] rounded-[8px] font-medium transition-colors" onClick={() => setShowModal(false)}>Hủy bỏ</button>
+                <button type="submit" className="bg-[#0a8c24] hover:bg-[#07701c] text-white px-[16px] py-[8px] rounded-[8px] font-medium transition-colors">💾 Lưu lại</button>
               </div>
             </form>
           </div>

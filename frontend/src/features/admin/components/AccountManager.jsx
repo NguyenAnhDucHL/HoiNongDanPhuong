@@ -51,39 +51,38 @@ export default function AccountManager() {
 
   return (
     <div>
-      <h3 style={{ color: 'var(--green-dark)', fontWeight: 800, marginBottom: 20 }}>Quản lý Tài khoản</h3>
+      <h3 className="text-[#087c20] font-extrabold text-[18px] mb-[20px]">Quản lý Tài khoản</h3>
 
-      <div className="admin-card" style={{ maxWidth: 500, padding: 30 }}>
-        <h4 style={{ marginBottom: 20, color: 'var(--admin-text)' }}>Đổi mật khẩu</h4>
+      <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[30px] max-w-[500px]">
+        <h4 className="font-bold text-[#2d3748] text-[16px] mb-[20px]">Đổi mật khẩu</h4>
 
         {error && (
-          <div style={{ padding: 12, background: '#fef2f2', color: '#991b1b', borderRadius: 8, marginBottom: 20, border: '1px solid #fecaca' }}>
+          <div className="p-[12px] bg-[#fef2f2] text-[#991b1b] rounded-[8px] mb-[20px] border border-[#fecaca]">
             {error}
           </div>
         )}
 
         {success && (
-          <div style={{ padding: 12, background: '#f0fdf4', color: '#166534', borderRadius: 8, marginBottom: 20, border: '1px solid #bbf7d0' }}>
+          <div className="p-[12px] bg-[#f0fdf4] text-[#166534] rounded-[8px] mb-[20px] border border-[#bbf7d0]">
             {success}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-[15px]">
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Mật khẩu hiện tại</label>
-            <div style={{ position: 'relative' }}>
+            <label className="block mb-[8px] font-medium text-[#2d3748]">Mật khẩu hiện tại</label>
+            <div className="relative">
               <input
                 type={showCurrent ? "text" : "password"}
-                className="form-control"
+                className="w-full px-[14px] py-[10px] border border-[#cbd5e1] rounded-[8px] outline-none focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24] pr-[40px]"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="Nhập mật khẩu hiện tại"
-                style={{ paddingRight: 40 }}
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+                className="absolute right-[10px] top-[50%] -translate-y-[50%] bg-transparent border-none cursor-pointer text-[16px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 {showCurrent ? '👁️' : '🙈'}
               </button>
@@ -91,20 +90,19 @@ export default function AccountManager() {
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Mật khẩu mới</label>
-            <div style={{ position: 'relative' }}>
+            <label className="block mb-[8px] font-medium text-[#2d3748]">Mật khẩu mới</label>
+            <div className="relative">
               <input
                 type={showNew ? "text" : "password"}
-                className="form-control"
+                className="w-full px-[14px] py-[10px] border border-[#cbd5e1] rounded-[8px] outline-none focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24] pr-[40px]"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Nhập mật khẩu mới"
-                style={{ paddingRight: 40 }}
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+                className="absolute right-[10px] top-[50%] -translate-y-[50%] bg-transparent border-none cursor-pointer text-[16px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 {showNew ? '👁️' : '🙈'}
               </button>
@@ -112,32 +110,30 @@ export default function AccountManager() {
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--admin-text)' }}>Nhập lại mật khẩu mới</label>
-            <div style={{ position: 'relative' }}>
+            <label className="block mb-[8px] font-medium text-[#2d3748]">Nhập lại mật khẩu mới</label>
+            <div className="relative">
               <input
                 type={showConfirm ? "text" : "password"}
-                className="form-control"
+                className="w-full px-[14px] py-[10px] border border-[#cbd5e1] rounded-[8px] outline-none focus:border-[#0a8c24] focus:ring-1 focus:ring-[#0a8c24] pr-[40px]"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Xác nhận mật khẩu mới"
-                style={{ paddingRight: 40 }}
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, opacity: 0.6 }}
+                className="absolute right-[10px] top-[50%] -translate-y-[50%] bg-transparent border-none cursor-pointer text-[16px] opacity-60 hover:opacity-100 transition-opacity"
               >
                 {showConfirm ? '👁️' : '🙈'}
               </button>
             </div>
           </div>
 
-          <div style={{ marginTop: 10 }}>
+          <div className="mt-[10px]">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="w-full bg-[#0a8c24] hover:bg-[#07701c] text-white px-[16px] py-[12px] rounded-[8px] font-medium transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed"
               disabled={loading}
-              style={{ width: '100%', padding: '12px' }}
             >
               {loading ? 'Đang xử lý...' : 'Lưu thay đổi'}
             </button>

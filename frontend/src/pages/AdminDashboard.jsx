@@ -8,7 +8,6 @@ import CategoryManager from '../features/admin/components/CategoryManager';
 import WardManager from '../features/admin/components/WardManager';
 import AccountManager from '../features/admin/components/AccountManager';
 
-import '../assets/styles/admin.css';
 import AdminSidebar from '../features/admin/components/AdminSidebar';
 import AdminOverview from '../features/admin/components/AdminOverview';
 import AdminPetitions from '../features/admin/components/AdminPetitions';
@@ -204,41 +203,41 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="admin-layout">
+    <div className="flex h-screen overflow-hidden bg-[#f4f7f6]">
       {/* Sidebar */}
       <AdminSidebar currentTab={tab} onTabChange={(t) => { setTab(t); setSidebarOpen(false); }} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="admin-main-wrapper">
+      <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Bar */}
-        <div className="admin-topbar">
-          <div className="admin-topbar-left">
-            <button className="admin-hamburger" onClick={() => setSidebarOpen(true)}>
+        <div className="h-[64px] bg-white flex items-center justify-between px-[24px] border-b border-[#e2e8f0] shadow-sm z-[90]">
+          <div className="flex items-center gap-[16px]">
+            <button className="md:hidden bg-transparent border-none text-[24px] cursor-pointer text-[#2d3748] p-0 mr-[12px]" onClick={() => setSidebarOpen(true)}>
               ☰
             </button>
-            <h1 className="admin-topbar-title">{getTabTitle()}</h1>
+            <h1 className="text-[18px] font-semibold text-[#2d3748] m-0">{getTabTitle()}</h1>
           </div>
-          <div className="admin-topbar-right">
-            <div className="admin-user-info">
-              <div className="admin-avatar">
+          <div className="flex items-center gap-[20px]">
+            <div className="flex items-center gap-[12px]">
+              <div className="w-[32px] h-[32px] bg-[#e6f4ea] text-[#0a8c24] rounded-full flex items-center justify-center font-semibold text-[14px]">
                 {adminInfo.fullName ? adminInfo.fullName.charAt(0).toUpperCase() : 'A'}
               </div>
               <span style={{ fontSize: '14px', fontWeight: 500 }}>
                 {adminInfo.fullName || adminInfo.username}
               </span>
             </div>
-            <div style={{ width: '1px', height: '24px', background: 'var(--admin-border)' }}></div>
-            <a href="/" target="_blank" rel="noreferrer" className="admin-topbar-link" style={{ color: 'var(--admin-primary)', fontSize: '13px', textDecoration: 'none', fontWeight: 500 }}>
-              <span className="hide-on-mobile">Mở trang chủ ↗</span>
-              <span className="show-on-mobile" style={{ display: 'none' }}>🏠</span>
+            <div className="w-[1px] h-[24px] bg-[#e2e8f0]"></div>
+            <a href="/" target="_blank" rel="noreferrer" className="text-[#0a8c24] text-[13px] no-underline font-medium hover:opacity-80 transition-opacity">
+              <span className="hidden md:inline">Mở trang chủ ↗</span>
+              <span className="md:hidden">🏠</span>
             </a>
-            <button className="admin-logout-btn" onClick={logout}>
-              🚪 <span className="hide-on-mobile">Đăng xuất</span>
+            <button className="bg-transparent border border-[#e2e8f0] text-[#718096] px-[10px] md:px-[14px] py-[6px] rounded-[6px] text-[13px] flex items-center gap-[6px] transition-all hover:bg-[#fee2e2] hover:text-[#dc2626] hover:border-[#fca5a5]" onClick={logout}>
+              🚪 <span className="hidden md:inline">Đăng xuất</span>
             </button>
           </div>
         </div>
 
         {/* Dynamic Content */}
-        <div style={{ flex: 1, overflowY: 'auto', background: 'var(--admin-bg)' }}>
+        <div className="flex-1 overflow-y-auto bg-[#f4f7f6]">
           {tab === 'dashboard' && (
             <AdminOverview
               stats={stats}
@@ -269,47 +268,47 @@ export default function AdminDashboard() {
           )}
 
           {tab === 'news' && (
-            <div className="admin-content">
-              <div className="admin-card">
+            <div className="flex-1 overflow-y-auto p-[24px]">
+              <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px]">
                 <PostManager type="news" title="Tin tức" />
               </div>
             </div>
           )}
 
           {tab === 'categories' && (
-            <div className="admin-content">
-              <div className="admin-card">
+            <div className="flex-1 overflow-y-auto p-[24px]">
+              <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px]">
                 <CategoryManager />
               </div>
             </div>
           )}
 
           {tab === 'wards' && (
-            <div className="admin-content">
-              <div className="admin-card">
+            <div className="flex-1 overflow-y-auto p-[24px]">
+              <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px]">
                 <WardManager />
               </div>
             </div>
           )}
 
           {tab === 'guides' && (
-            <div className="admin-content">
-              <div className="admin-card">
+            <div className="flex-1 overflow-y-auto p-[24px]">
+              <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px]">
                 <PostManager type="guide" title="Hướng dẫn" />
               </div>
             </div>
           )}
 
           {tab === 'settings' && (
-            <div className="admin-content">
-              <div className="admin-card">
+            <div className="flex-1 overflow-y-auto p-[24px]">
+              <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[24px]">
                 <SettingsManager />
               </div>
             </div>
           )}
 
           {tab === 'account' && (
-            <div className="admin-content">
+            <div className="flex-1 overflow-y-auto p-[24px]">
               <AccountManager />
             </div>
           )}
