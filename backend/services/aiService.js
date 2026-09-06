@@ -79,7 +79,7 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
 
     // Clean up markdown syntax and extract JSON block robustly
     let rawJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
-    
+
     const jsonStart = rawJson.indexOf('{');
     const jsonEnd = rawJson.lastIndexOf('}');
 
@@ -140,14 +140,14 @@ Hãy trả lời ngắn gọn, súc tích và thân thiện. Trả về dưới 
     }
 
     let rawJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
-    
+
     // Extract JSON block robustly just in case
     const jsonStart = rawJson.indexOf('{');
     const jsonEnd = rawJson.lastIndexOf('}');
     if (jsonStart !== -1 && jsonEnd !== -1 && jsonEnd > jsonStart) {
       rawJson = rawJson.substring(jsonStart, jsonEnd + 1);
     }
-    
+
     // Fix trailing commas
     rawJson = rawJson.replace(/,\s*([}\]])/g, '$1');
 

@@ -77,30 +77,28 @@ const PublicLayout = ({ children }) => {
       </main>
 
       {/* ====== FOOTER ====== */}
-      <footer>
-        <div className="container">
-          <div className="footer-grid">
+      <footer className="mt-[40px] text-white py-[30px] pb-[16px]" style={{ background: 'linear-gradient(135deg, #0a8c24, #075f19)' }}>
+        <div className="container mx-auto px-4 md:px-0">
+          <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr_1fr] gap-[28px]">
             <div>
-              <div className="footer-title">HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</div>
-              <p>Cổng tiếp nhận, xử lý phản ánh, kiến nghị của hội viên.</p>
-              <p>Địa chỉ: 376, Đường Trần Phú, Phường Cẩm Phả, Tỉnh Quảng Ninh</p>
+              <div className="font-extrabold text-[16px] mb-[14px] flex items-center gap-[8px]">HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</div>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">Cổng tiếp nhận, xử lý phản ánh, kiến nghị của hội viên.</p>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">Địa chỉ: 376, Đường Trần Phú, Phường Cẩm Phả, Tỉnh Quảng Ninh</p>
             </div>
             <div>
-              <div className="footer-title">HỖ TRỢ & LIÊN HỆ</div>
-              <p>☎ 0363789100/0838911445</p>
-              <p>✉ hoinongdanphuongcampha@gmail.com</p>
+              <div className="font-extrabold text-[16px] mb-[14px] flex items-center gap-[8px]">HỖ TRỢ & LIÊN HỆ</div>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">☎ 0363789100/0838911445</p>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">✉ hoinongdanphuongcampha@gmail.com</p>
             </div>
             <div>
-              <div className="footer-title">THỜI GIAN LÀM VIỆC</div>
-              <p>Sáng: 7h30 – 11h30</p>
-              <p>Chiều: 13h30 – 17h00</p>
-              <p>Thứ 2 đến Thứ 6</p>
+              <div className="font-extrabold text-[16px] mb-[14px] flex items-center gap-[8px]">THỜI GIAN LÀM VIỆC</div>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">Sáng: 7h30 – 11h30</p>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">Chiều: 13h30 – 17h00</p>
+              <p className="my-[5px] text-[#e8f7ea] text-[14px]">Thứ 2 đến Thứ 6</p>
             </div>
           </div>
-          <div className="footer-bottom" style={{ lineHeight: '1.5' }}>
-            <span>© 2026 HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ.</span>
-            <br />
-            <span>Bản quyền thuộc về UBND phường Cẩm Phả</span>
+          <div className="mt-[22px] pt-[12px] text-center text-[13px] text-[#d7efd9] border-t border-white/20 leading-[1.5]">
+            <span>© 2026 HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ. All rights reserved.</span>
           </div>
         </div>
       </footer>
