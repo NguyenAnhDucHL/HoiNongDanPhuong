@@ -26,15 +26,15 @@ const PublicLayout = ({ children }) => {
           </div>
 
           <div className="flex flex-row items-center gap-2 md:gap-[15px] flex-shrink-0">
-            <div
+            <a
+              href="tel:0363789100"
               className="flex items-center p-2 md:py-[10px] md:px-[22px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
-              onClick={() => alert('Đường dây nóng:\n0363.789.100\n0838.911.445')}
             >
               <span className="flex-shrink-0">
                 <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
               </span>
               <span className="hidden md:block ml-[9px] text-[13px] font-bold leading-[1.3] text-left">ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</span>
-            </div>
+            </a>
             <div
               className="flex items-center p-2 md:py-[10px] md:px-[35px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
               onClick={() => window.location.href = isAdminLoggedIn ? '/admin' : '/admin/login'}
