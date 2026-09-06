@@ -4,6 +4,7 @@ import PublicChatbot from '../ui/PublicChatbot';
 
 const PublicLayout = ({ children }) => {
   const [tab, setTab] = useState('home');
+  const location = useLocation();
   const isAdminLoggedIn = !!localStorage.getItem('hnd_admin_token');
 
   return (
@@ -63,7 +64,7 @@ const PublicLayout = ({ children }) => {
             <a
               key={item.id}
               className={`px-4 md:px-[19px] py-4 font-semibold text-[#18301e] border-b-4 hover:text-[#149b2f] hover:border-[#149b2f] transition-colors ${tab === item.id ? 'border-[#149b2f] text-[#149b2f]' : 'border-transparent'}`}
-              href={item.hash}
+              href={location.pathname === '/' ? item.hash : '/' + item.hash}
               onClick={() => setTab(item.id)}
             >
               {item.label}
