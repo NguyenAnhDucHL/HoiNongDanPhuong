@@ -20,7 +20,9 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] p-0">
             <div className="p-6 md:p-8">
-              <h3 className="text-[#087c20] text-[22px] font-bold mb-[5px]">GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
+              <div className="mb-[15px]">
+                <h3 className="text-[#087c20] text-[22px] font-bold pb-[8px] border-b-[3px] border-[#149b2f] inline-block">GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
+              </div>
               <p className="text-[#4e5e53] mb-[18px]">
                 Vui lòng cung cấp đầy đủ thông tin để phản ánh được tiếp nhận và xử lý nhanh chóng.
               </p>

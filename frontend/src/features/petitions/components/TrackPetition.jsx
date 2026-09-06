@@ -50,7 +50,9 @@ const TrackPetition = () => {
   return (
     <section className="container mx-auto px-4 py-[48px] pb-[40px]" id="tra-cuu">
       <div className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] p-6 md:p-8">
-        <h3 className="text-[#087c20] text-[22px] font-bold">TRA CỨU KẾT QUẢ XỬ LÝ</h3>
+        <div className="mb-[15px]">
+          <h3 className="text-[#087c20] text-[22px] font-bold pb-[8px] border-b-[3px] border-[#149b2f] inline-block">TRA CỨU KẾT QUẢ XỬ LÝ</h3>
+        </div>
         <p className="my-[8px] mb-[12px] text-[#4e5e53]">Nhập mã tiếp nhận để xem tình trạng xử lý phản ánh.</p>
         <div className="flex flex-col md:flex-row gap-[10px]">
           <input
