@@ -59,72 +59,83 @@ const InfoSection = ({ onSelectCategory }) => {
   };
 
   return (
-    <section className="section container" id="gioi-thieu">
+    <section className="container mx-auto px-4 py-[48px] pb-[20px]" id="gioi-thieu">
       {settings.intro_title && (
-        <div style={{ marginBottom: 30, textAlign: 'center' }}>
-          <h2 style={{ color: 'var(--green-dark)', marginBottom: 10 }}>{settings.intro_title}</h2>
-          <p style={{ color: 'var(--muted)', whiteSpace: 'pre-wrap', lineHeight: 1.6, maxWidth: 800, margin: '0 auto' }}>
+        <div className="mb-[30px] text-center">
+          <h2 className="text-[#087c20] text-2xl font-bold mb-[10px]">{settings.intro_title}</h2>
+          <p className="text-[#4e5e53] whitespace-pre-wrap leading-[1.6] max-w-[800px] mx-auto">
             {settings.intro_content}
           </p>
         </div>
       )}
 
-      <div className="grid3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-[18px]">
         {/* DANH MỤC PHẢN ÁNH — fetch từ API, không hardcode */}
-        <div className="card">
-          <h3>DANH MỤC PHẢN ÁNH, KIẾN NGHỊ</h3>
+        <div className="bg-white border border-[#e5ece7] rounded-[14px] shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-[20px]">
+          <h3 className="text-[#087c20] text-[18px] font-bold border-b border-[#e5ece7] pb-[10px] mb-[10px]">DANH MỤC PHẢN ÁNH, KIẾN NGHỊ</h3>
           {categories.length > 0 ? (
-            <ul className="list" style={{
-              maxHeight: 280,
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              scrollbarWidth: 'thin',
-              scrollbarColor: '#c8e6c9 transparent',
-            }}>
+            <ul className="list-none max-h-[280px] overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: 'thin', scrollbarColor: '#c8e6c9 transparent' }}>
               {categories.map(c => (
                 <li
                   key={c.id}
                   onClick={() => handleCategoryClick(c.name)}
-                  style={{ cursor: 'pointer' }}
+                  className="p-[12px_4px] border-b border-[#edf2ee] flex justify-between items-center gap-[12px] cursor-pointer hover:bg-[#f9fdfa] transition-colors group"
                   title={`Gửi phản ánh về: ${c.name}`}
                 >
-                  <span>
-                    <i className="badge-icon">{getCategoryIcon(c.name)}</i>
+                  <span className="flex items-center gap-3 font-semibold text-[#18301e] text-[15px]">
+                    <i className="w-[30px] h-[30px] rounded-full grid place-items-center bg-[#eaf8ec] text-[#149b2f] text-[15px] not-italic">{getCategoryIcon(c.name)}</i>
                     {c.name.toUpperCase()}
                   </span>
-                  <b>›</b>
+                  <b className="text-[#a5bda8] text-xl group-hover:text-[#149b2f] transition-colors">›</b>
                 </li>
               ))}
             </ul>
           ) : (
-            <p style={{ color: 'var(--muted)', fontSize: 14, marginTop: 10 }}>Đang tải danh mục...</p>
+            <p className="text-[#4e5e53] text-[14px] mt-[10px]">Đang tải danh mục...</p>
           )}
         </div>
 
-        <div className="card" id="huong-dan">
-          <h3>QUY TRÌNH &amp; HƯỚNG DẪN</h3>
+        <div className="bg-white border border-[#e5ece7] rounded-[14px] shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-[20px]" id="huong-dan">
+          <h3 className="text-[#087c20] text-[18px] font-bold border-b border-[#e5ece7] pb-[10px] mb-[15px]">QUY TRÌNH &amp; HƯỚNG DẪN</h3>
           {guides.length > 0 ? (
-            <ul className="list">
+            <ul className="list-none">
               {guides.map(g => (
-                <li key={g.id} onClick={() => navigate(`/post/${g.id}`)} style={{ cursor: 'pointer' }}>
-                  <span>{g.title}</span><b>›</b>
+                <li 
+                  key={g.id} 
+                  onClick={() => navigate(`/post/${g.id}`)} 
+                  className="p-[12px_4px] border-b border-[#edf2ee] flex justify-between items-center gap-[12px] cursor-pointer hover:bg-[#f9fdfa] transition-colors group"
+                >
+                  <span className="font-semibold text-[#18301e] text-[15px]">{g.title}</span>
+                  <b className="text-[#a5bda8] text-xl group-hover:text-[#149b2f] transition-colors">›</b>
                 </li>
               ))}
             </ul>
           ) : (
-            <ol className="process">
-              <li><span className="step">1</span><div><b>Tiếp nhận</b>Tiếp nhận phản ánh, kiến nghị qua hệ thống</div></li>
-              <li><span className="step">2</span><div><b>Phân loại</b>Phân loại và chuyển đến đơn vị có thẩm quyền</div></li>
-              <li><span className="step">3</span><div><b>Xử lý</b>Đơn vị có thẩm quyền xử lý theo quy định</div></li>
-              <li><span className="step">4</span><div><b>Phản hồi</b>Phản hồi kết quả xử lý đến người phản ánh</div></li>
+            <ol className="list-none relative before:content-[''] before:absolute before:left-[15px] before:top-[15px] before:bottom-[15px] before:w-[2px] before:bg-[#cfe8d4]">
+              <li className="relative flex gap-[13px] mb-[13px]">
+                <span className="w-[30px] h-[30px] rounded-full bg-[#149b2f] text-white flex-shrink-0 grid place-items-center font-extrabold z-10">1</span>
+                <div><b className="block text-[#18301e] mb-1">Tiếp nhận</b><span className="text-[14px] text-[#4e5e53]">Tiếp nhận phản ánh, kiến nghị qua hệ thống</span></div>
+              </li>
+              <li className="relative flex gap-[13px] mb-[13px]">
+                <span className="w-[30px] h-[30px] rounded-full bg-[#149b2f] text-white flex-shrink-0 grid place-items-center font-extrabold z-10">2</span>
+                <div><b className="block text-[#18301e] mb-1">Phân loại</b><span className="text-[14px] text-[#4e5e53]">Phân loại và chuyển đến đơn vị có thẩm quyền</span></div>
+              </li>
+              <li className="relative flex gap-[13px] mb-[13px]">
+                <span className="w-[30px] h-[30px] rounded-full bg-[#149b2f] text-white flex-shrink-0 grid place-items-center font-extrabold z-10">3</span>
+                <div><b className="block text-[#18301e] mb-1">Xử lý</b><span className="text-[14px] text-[#4e5e53]">Đơn vị có thẩm quyền xử lý theo quy định</span></div>
+              </li>
+              <li className="relative flex gap-[13px] mb-[13px]">
+                <span className="w-[30px] h-[30px] rounded-full bg-[#149b2f] text-white flex-shrink-0 grid place-items-center font-extrabold z-10">4</span>
+                <div><b className="block text-[#18301e] mb-1">Phản hồi</b><span className="text-[14px] text-[#4e5e53]">Phản hồi kết quả xử lý đến người phản ánh</span></div>
+              </li>
             </ol>
           )}
         </div>
 
-        <div className="card" id="tin-tuc">
-          <h3>TIN TỨC - THÔNG BÁO</h3>
+        <div className="bg-white border border-[#e5ece7] rounded-[14px] shadow-[0_4px_12px_rgba(0,0,0,0.04)] p-[20px]" id="tin-tuc">
+          <h3 className="text-[#087c20] text-[18px] font-bold border-b border-[#e5ece7] pb-[10px] mb-[10px]">TIN TỨC - THÔNG BÁO</h3>
           {news.length > 0 ? (
-            <ul className="list">
+            <ul className="list-none">
               {news.map(n => {
                 let thumb = n.image;
                 if (n.images) {
@@ -134,12 +145,16 @@ const InfoSection = ({ onSelectCategory }) => {
                   } catch (e) { }
                 }
                 return (
-                  <li key={n.id} onClick={() => navigate(`/post/${n.id}`)} style={{ display: 'flex', flexDirection: 'column', padding: '10px 0', borderBottom: '1px solid #f0f0f0', cursor: 'pointer' }}>
-                    <div style={{ display: 'flex', gap: 10 }}>
-                      {thumb && <img src={`/uploads/${thumb}`} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4 }} />}
+                  <li 
+                    key={n.id} 
+                    onClick={() => navigate(`/post/${n.id}`)} 
+                    className="flex flex-col py-[10px] border-b border-[#f0f0f0] cursor-pointer hover:bg-[#f9fdfa] transition-colors"
+                  >
+                    <div className="flex gap-[10px]">
+                      {thumb && <img src={`/uploads/${thumb}`} alt="" className="w-[60px] h-[60px] object-cover rounded-[4px]" />}
                       <div>
-                        <span style={{ fontWeight: 600, display: 'block', fontSize: 14 }}>{n.title}</span>
-                        <small style={{ color: 'var(--muted)', fontSize: 12 }}>{new Date(n.createdAt).toLocaleDateString('vi-VN')}</small>
+                        <span className="font-semibold block text-[14px] text-[#18301e] leading-snug mb-1 hover:text-[#149b2f] transition-colors">{n.title}</span>
+                        <small className="text-[#4e5e53] text-[12px]">{new Date(n.createdAt).toLocaleDateString('vi-VN')}</small>
                       </div>
                     </div>
                   </li>
@@ -147,7 +162,7 @@ const InfoSection = ({ onSelectCategory }) => {
               })}
             </ul>
           ) : (
-            <p style={{ color: 'var(--muted)', fontSize: 14, marginTop: 10 }}>Chưa có tin tức nào.</p>
+            <p className="text-[#4e5e53] text-[14px] mt-[10px]">Chưa có tin tức nào.</p>
           )}
         </div>
       </div>

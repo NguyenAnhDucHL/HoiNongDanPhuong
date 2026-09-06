@@ -12,9 +12,9 @@ const PublicLayout = ({ children }) => {
       <header className="relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #079323 0%, #0b7d20 65%, #075f19 100%)' }}>
         {/* Background circle decoration */}
         <div className="absolute rounded-full" style={{ width: '520px', height: '330px', background: 'rgba(184, 227, 106, 0.1)', right: '-130px', top: '-110px' }}></div>
-        
+
         <div className="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center justify-between min-h-[80px] md:min-h-[154px] py-4 md:py-0 relative z-10 gap-4 md:gap-0">
-          
+
           <div className="flex flex-row items-center gap-2 md:gap-[15px]">
             <img src="/logo.png" alt="Hội Nông Dân" className="w-[44px] h-[44px] md:w-[94px] md:h-[94px] flex-shrink-0" />
             <div className="flex flex-col justify-center gap-1 md:gap-[4px]">
@@ -24,7 +24,7 @@ const PublicLayout = ({ children }) => {
           </div>
 
           <div className="flex flex-row items-center gap-2 md:gap-[15px] flex-shrink-0">
-            <div 
+            <div
               className="flex items-center p-2 md:py-[10px] md:px-[22px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
               onClick={() => alert('Đường dây nóng:\n0363.789.100\n0838.911.445')}
             >
@@ -33,7 +33,7 @@ const PublicLayout = ({ children }) => {
               </span>
               <span className="hidden md:block ml-[9px] text-[13px] font-bold leading-[1.3] text-left">ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</span>
             </div>
-            <div 
+            <div
               className="flex items-center p-2 md:py-[10px] md:px-[35px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
               onClick={() => window.location.href = '/admin/login'}
             >
@@ -43,7 +43,7 @@ const PublicLayout = ({ children }) => {
               <span className="hidden md:block ml-[9px] text-[14px] font-bold tracking-wider">ĐĂNG NHẬP</span>
             </div>
           </div>
-          
+
         </div>
       </header>
 
@@ -59,10 +59,10 @@ const PublicLayout = ({ children }) => {
             { id: 'stats', hash: '#thong-ke', label: 'THỐNG KÊ' },
             { id: 'news', hash: '#tin-tuc', label: 'TIN TỨC' }
           ].map((item) => (
-            <a 
+            <a
               key={item.id}
               className={`px-4 md:px-[19px] py-4 font-semibold text-[#18301e] border-b-4 hover:text-[#149b2f] hover:border-[#149b2f] transition-colors ${tab === item.id ? 'border-[#149b2f] text-[#149b2f]' : 'border-transparent'}`}
-              href={item.hash} 
+              href={item.hash}
               onClick={() => setTab(item.id)}
             >
               {item.label}

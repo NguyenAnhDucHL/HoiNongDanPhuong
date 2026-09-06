@@ -106,27 +106,24 @@ export default function SubmitForm({ selectedCategory = '' }) {
 
   if (success) {
     return (
-      <div className="form-card" style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 64, marginBottom: 16 }}>✅</div>
-        <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--green-dark)', marginBottom: 12 }}>
+      <div className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] text-center p-6 md:p-8">
+        <div className="text-[64px] mb-[16px]">✅</div>
+        <h3 className="text-[22px] font-extrabold text-[#087c20] mb-[12px]">
           Phản ánh đã được tiếp nhận thành công!
         </h3>
-        <p style={{ color: 'var(--muted)', marginBottom: 20 }}>
+        <p className="text-[#4e5e53] mb-[20px]">
           Hội Nông Dân Phường Cẩm Phả đã nhận được phản ánh của bạn và sẽ xem xét, xử lý trong thời gian sớm nhất.
         </p>
-        <div style={{
-          background: 'var(--green-light)', border: '2px solid var(--green-muted)',
-          borderRadius: 'var(--radius)', padding: '20px', marginBottom: 24,
-        }}>
-          <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 8 }}>Mã tra cứu của bạn:</p>
-          <p style={{ fontSize: 28, fontWeight: 800, color: '#d32f2f', letterSpacing: 2 }}>
+        <div className="bg-[#e9f8eb] border-2 border-[#cfe8d4] rounded-lg p-[20px] mb-[24px]">
+          <p className="text-[14px] text-[#4e5e53] mb-[8px]">Mã tra cứu của bạn:</p>
+          <p className="text-[28px] font-extrabold text-[#d32f2f] tracking-[2px]">
             {success.trackingCode}
           </p>
-          <p style={{ fontSize: 13, color: 'var(--muted)', marginTop: 8 }}>
+          <p className="text-[13px] text-[#4e5e53] mt-[8px]">
             Lưu lại mã này để theo dõi trạng thái xử lý phản ánh
           </p>
         </div>
-        <button className="btn btn-primary" onClick={() => setSuccess(null)}>
+        <button className="bg-[#149b2f] hover:bg-[#087c20] text-white font-bold py-[12px] px-[24px] rounded-[8px] transition-colors" onClick={() => setSuccess(null)}>
           📝 Gửi phản ánh khác
         </button>
       </div>
@@ -134,42 +131,46 @@ export default function SubmitForm({ selectedCategory = '' }) {
   }
 
   return (
-    <form className="form-card" onSubmit={handleSubmit} noValidate>
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--green-dark)', marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+    <form className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] p-0" onSubmit={handleSubmit} noValidate>
+      <div className="p-6 md:p-8">
+      <h3 className="text-[17px] font-bold text-[#087c20] mb-[20px] flex items-center gap-[8px]">
         📋 Thông tin phản ánh, kiến nghị
       </h3>
 
-      <div className="form-grid">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[15px]">
         {/* Họ tên */}
-        <div className="form-group">
-          <label>Họ và tên <span className="required">*</span></label>
+        <div>
+          <label className="font-semibold text-[14px] mb-[5px] block">Họ và tên <span className="text-[#ef4444]">*</span></label>
           <input
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="fullName"
             value={form.fullName}
             onChange={handleChange}
             placeholder="Nguyễn Văn A"
           />
-          {errors.fullName && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.fullName}</span>}
+          {errors.fullName && <span className="text-[#ef4444] text-[13px]">{errors.fullName}</span>}
         </div>
 
         {/* Số điện thoại */}
-        <div className="form-group">
-          <label>Số điện thoại</label>
+        <div>
+          <label className="font-semibold text-[14px] mb-[5px] block">Số điện thoại</label>
           <input
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="tel"
             name="phone"
             value={form.phone}
             onChange={handleChange}
             placeholder="0912 345 678"
           />
-          {errors.phone && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.phone}</span>}
+          {errors.phone && <span className="text-[#ef4444] text-[13px]">{errors.phone}</span>}
         </div>
 
         {/* CCCD */}
-        <div className="form-group">
-          <label>Số CCCD / CMND</label>
+        <div>
+          <label className="font-semibold text-[14px] mb-[5px] block">Số CCCD / CMND</label>
           <input
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="cccd"
             value={form.cccd}
@@ -179,9 +180,9 @@ export default function SubmitForm({ selectedCategory = '' }) {
         </div>
 
         {/* Khu phố */}
-        <div className="form-group">
-          <label>Khu phố</label>
-          <select name="ward" value={form.ward} onChange={handleChange}>
+        <div>
+          <label className="font-semibold text-[14px] mb-[5px] block">Khu phố</label>
+          <select className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="ward" value={form.ward} onChange={handleChange}>
             <option value="">-- Chọn khu phố --</option>
             {wards.map(w => (
               <option key={w.id} value={w.name}>{w.name}</option>
@@ -190,9 +191,10 @@ export default function SubmitForm({ selectedCategory = '' }) {
         </div>
 
         {/* Địa chỉ */}
-        <div className="form-group full">
-          <label>Địa chỉ cụ thể</label>
+        <div className="col-span-1 md:col-span-2">
+          <label className="font-semibold text-[14px] mb-[5px] block">Địa chỉ cụ thể</label>
           <input
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="address"
             value={form.address}
@@ -202,99 +204,97 @@ export default function SubmitForm({ selectedCategory = '' }) {
         </div>
 
         {/* Lĩnh vực */}
-        <div className="form-group" style={{ gridColumn: form.category === 'Khác' ? '1 / -1' : 'auto' }}>
-          <label>Lĩnh vực <span className="required">*</span></label>
-          <select name="category" value={form.category} onChange={handleChange}>
+        <div className={form.category === 'Khác' ? 'col-span-1 md:col-span-2' : ''}>
+          <label className="font-semibold text-[14px] mb-[5px] block">Lĩnh vực <span className="text-[#ef4444]">*</span></label>
+          <select className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors" name="category" value={form.category} onChange={handleChange}>
             <option value="">-- Chọn lĩnh vực --</option>
             {categories.map(c => (
               <option key={c.id} value={c.name}>{c.name}</option>
             ))}
           </select>
-          {errors.category && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.category}</span>}
+          {errors.category && <span className="text-[#ef4444] text-[13px]">{errors.category}</span>}
 
           {form.category === 'Khác' && (
-            <div style={{ marginTop: 12 }}>
-              <label>Nhập lĩnh vực phản ánh <span className="required">*</span></label>
+            <div className="mt-[12px]">
+              <label className="font-semibold text-[14px] mb-[5px] block">Nhập lĩnh vực phản ánh <span className="text-[#ef4444]">*</span></label>
               <textarea
+                className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors min-h-[60px]"
                 value={customCategory}
                 onChange={e => {
                   setCustomCategory(e.target.value);
                   if (errors.customCategory) setErrors(prev => ({ ...prev, customCategory: '' }));
                 }}
                 placeholder="VD: Cấp phép xây dựng, tranh chấp lối đi chung..."
-                style={{ minHeight: 60 }}
               />
-              {errors.customCategory && <span style={{ color: '#ef4444', fontSize: 13, display: 'block' }}>{errors.customCategory}</span>}
+              {errors.customCategory && <span className="text-[#ef4444] text-[13px] block">{errors.customCategory}</span>}
             </div>
           )}
         </div>
 
         {/* Tiêu đề */}
-        <div className="form-group">
-          <label>Tiêu đề phản ánh <span className="required">*</span></label>
+        <div>
+          <label className="font-semibold text-[14px] mb-[5px] block">Tiêu đề phản ánh <span className="text-[#ef4444]">*</span></label>
           <input
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             type="text"
             name="title"
             value={form.title}
             onChange={handleChange}
             placeholder="Mô tả ngắn gọn vấn đề..."
           />
-          {errors.title && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.title}</span>}
+          {errors.title && <span className="text-[#ef4444] text-[13px]">{errors.title}</span>}
         </div>
 
         {/* Nội dung */}
-        <div className="form-group full">
-          <label>Nội dung chi tiết <span className="required">*</span></label>
+        <div className="col-span-1 md:col-span-2">
+          <label className="font-semibold text-[14px] mb-[5px] block">Nội dung chi tiết <span className="text-[#ef4444]">*</span></label>
           <textarea
+            className="w-full p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors min-h-[150px]"
             name="content"
             value={form.content}
             onChange={handleChange}
             placeholder="Mô tả chi tiết vấn đề cần phản ánh, kiến nghị. Thông tin càng chi tiết, chúng tôi càng xử lý hiệu quả hơn..."
-            style={{ minHeight: 150 }}
           />
-          <span style={{ fontSize: 12, color: form.content.length < 20 ? '#ef4444' : 'var(--muted)' }}>
+          <span className={`text-[12px] ${form.content.length < 20 ? 'text-[#ef4444]' : 'text-[#4e5e53]'}`}>
             {form.content.length} ký tự (tối thiểu 20)
           </span>
-          {errors.content && <span style={{ color: '#ef4444', fontSize: 13 }}>{errors.content}</span>}
+          {errors.content && <span className="text-[#ef4444] text-[13px] block">{errors.content}</span>}
         </div>
 
         {/* Ảnh đính kèm */}
-        <div className="form-group full">
-          <label>Ảnh đính kèm (tối đa 10 ảnh, mỗi ảnh ≤ 5MB)</label>
-          <label className="file-upload-area" htmlFor="image-upload">
+        <div className="col-span-1 md:col-span-2">
+          <label className="font-semibold text-[14px] mb-[5px] block">Ảnh đính kèm (tối đa 10 ảnh, mỗi ảnh ≤ 5MB)</label>
+          <label className="block border-2 border-dashed border-[#cddbd1] rounded-[8px] p-[25px_15px] text-center cursor-pointer hover:border-[#149b2f] hover:bg-[#f9fdfa] transition-colors" htmlFor="image-upload">
             <input
               type="file"
               id="image-upload"
               accept="image/*"
               multiple
               onChange={handleFileChange}
+              className="hidden"
             />
-            <div style={{ color: 'var(--green-dark)' }}>
-              <div style={{ fontSize: 28, marginBottom: 6 }}>📷</div>
-              <div style={{ fontWeight: 600 }}>Nhấn để chọn ảnh hoặc kéo thả vào đây</div>
-              <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>
+            <div className="text-[#087c20]">
+              <div className="text-[28px] mb-[6px]">📷</div>
+              <div className="font-semibold">Nhấn để chọn ảnh hoặc kéo thả vào đây</div>
+              <div className="text-[13px] text-[#4e5e53] mt-[4px]">
                 Hỗ trợ: JPEG, PNG, GIF, WebP
               </div>
             </div>
           </label>
 
           {files.length > 0 && (
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 15 }}>
+            <div className="flex gap-[10px] flex-wrap mt-[15px]">
               {files.map((f, i) => (
-                <div key={i} style={{ position: 'relative' }}>
+                <div key={i} className="relative">
                   <img
                     src={URL.createObjectURL(f)}
                     alt={f.name}
-                    style={{ width: 70, height: 70, objectFit: 'cover', borderRadius: 6, border: '1px solid #ddd' }}
+                    className="w-[70px] h-[70px] object-cover rounded-[6px] border border-[#ddd]"
                   />
                   <button
                     type="button"
                     onClick={() => removeFile(i)}
-                    style={{
-                      position: 'absolute', top: -8, right: -8, background: '#ef4444', color: 'white',
-                      border: 'none', borderRadius: '50%', width: 22, height: 22, cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 'bold'
-                    }}
+                    className="absolute -top-[8px] -right-[8px] bg-[#ef4444] text-white border-none rounded-full w-[22px] h-[22px] cursor-pointer flex items-center justify-center text-[12px] font-bold z-10"
                   >×</button>
                 </div>
               ))}
@@ -304,30 +304,16 @@ export default function SubmitForm({ selectedCategory = '' }) {
       </div>
 
       {submitError && (
-        <div className="alert alert-error" style={{ marginTop: 16 }}>
+        <div className="bg-[#fef2f2] border border-[#fecaca] text-[#ef4444] rounded-[8px] p-[12px_16px] font-medium flex items-center gap-[10px] mt-[16px]">
           ❌ {submitError}
         </div>
       )}
 
-      <div style={{ marginTop: 32, display: 'flex', gap: 16, flexDirection: 'row', alignItems: 'center' }}>
+      <div className="mt-[32px] flex flex-row items-center gap-[16px]">
         <button
           type="button"
           onClick={() => { setForm(initialForm); setFiles([]); setErrors({}); setSubmitError(''); }}
-          style={{ 
-            background: 'transparent', 
-            border: 'none', 
-            color: '#64748b', 
-            padding: '12px 16px', 
-            cursor: 'pointer',
-            fontSize: '15px',
-            fontWeight: 500,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            borderRadius: '8px'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          className="bg-transparent border-none text-[#64748b] p-[12px_16px] cursor-pointer text-[15px] font-medium flex items-center gap-[6px] rounded-[8px] hover:bg-[#f1f5f9] transition-colors"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
           Làm mới
@@ -335,12 +321,11 @@ export default function SubmitForm({ selectedCategory = '' }) {
         
         <button
           type="submit"
-          className="btn btn-primary"
+          className="flex-1 bg-[#149b2f] hover:bg-[#087c20] text-white font-bold p-[14px_24px] text-[16px] rounded-[8px] transition-colors flex justify-center items-center gap-[8px] disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
-          style={{ flex: 1, padding: '14px 24px', fontSize: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
         >
           {loading ? (
-            <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Đang xử lý...</>
+            <><div className="animate-spin rounded-full h-[18px] w-[18px] border-b-2 border-white"></div> Đang xử lý...</>
           ) : (
             <>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -351,9 +336,10 @@ export default function SubmitForm({ selectedCategory = '' }) {
       </div>
 
       {/* Notice */}
-      <div className="alert alert-info" style={{ marginTop: 20 }}>
+      <div className="bg-[#eff6ff] border border-[#bfdbfe] text-[#1e40af] rounded-[8px] p-[12px_16px] font-medium flex items-center gap-[10px] mt-[20px]">
         🔒 Thông tin của bạn được bảo mật và chỉ được sử dụng để xử lý phản ánh.
         Sau khi gửi, bạn sẽ nhận được mã tra cứu để theo dõi tiến trình xử lý.
+      </div>
       </div>
     </form>
   );

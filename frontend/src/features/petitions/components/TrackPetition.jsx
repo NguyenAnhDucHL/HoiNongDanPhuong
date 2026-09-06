@@ -11,8 +11,17 @@ const StatusBadge = ({ status }) => {
 
   const mapped = statusMap[status] || { label: status, type: 'pending' };
 
+  const colorStyles = {
+    pending: 'bg-[#fffbeb] text-[#d97706] border-[#fde68a]',
+    processing: 'bg-[#eff6ff] text-[#1d4ed8] border-[#bfdbfe]',
+    resolved: 'bg-[#f0fdf4] text-[#15803d] border-[#bbf7d0]',
+    rejected: 'bg-[#fef2f2] text-[#b91c1c] border-[#fecaca]'
+  };
+
   return (
-    <span className={`badge badge-${mapped.type}`}>{mapped.label}</span>
+    <span className={`inline-flex items-center px-[10px] py-[4px] rounded-full text-[13px] font-bold border ${colorStyles[mapped.type]}`}>
+      {mapped.label}
+    </span>
   );
 };
 
@@ -39,33 +48,40 @@ const TrackPetition = () => {
   };
 
   return (
-    <section className="section container" id="tra-cuu">
-      <div className="card" style={{ maxWidth: 850, margin: 'auto' }}>
-        <h3>TRA CỨU KẾT QUẢ XỬ LÝ</h3>
-        <p style={{ margin: '8px 0 12px', color: 'var(--muted)' }}>Nhập mã tiếp nhận để xem tình trạng xử lý phản ánh.</p>
-        <div style={{ display: 'flex', gap: 10 }}>
+    <section className="container mx-auto px-4 py-[48px] pb-[40px]" id="tra-cuu">
+      <div className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] p-6 md:p-8">
+        <h3 className="text-[#087c20] text-[22px] font-bold">TRA CỨU KẾT QUẢ XỬ LÝ</h3>
+        <p className="my-[8px] mb-[12px] text-[#4e5e53]">Nhập mã tiếp nhận để xem tình trạng xử lý phản ánh.</p>
+        <div className="flex flex-col md:flex-row gap-[10px]">
           <input
+            className="flex-1 p-[11px_12px] border border-[#cddbd1] rounded-[8px] outline-none focus:border-[#149b2f] transition-colors"
             id="lookup"
             placeholder="Ví dụ: HND-260904-AB12"
             value={trackCode}
             onChange={e => setTrackCode(e.target.value.toUpperCase())}
             onKeyDown={e => e.key === 'Enter' && handleTrack()}
           />
-          <button className="btn btn-primary" style={{ width: 'auto', minWidth: 150 }} onClick={handleTrack} disabled={trackLoading}>
+          <button 
+            className="bg-[#149b2f] hover:bg-[#087c20] text-white font-bold p-[11px_24px] rounded-[8px] transition-colors min-w-[150px] disabled:opacity-50 disabled:cursor-not-allowed" 
+            onClick={handleTrack} 
+            disabled={trackLoading}
+          >
             {trackLoading ? 'ĐANG XỬ LÝ...' : 'TRA CỨU'}
           </button>
         </div>
 
         {trackError && (
-          <div className="alert alert-error" style={{ marginTop: 12 }}>❌ {trackError}</div>
+          <div className="bg-[#fef2f2] border border-[#fecaca] text-[#ef4444] rounded-[8px] p-[12px_16px] font-medium flex items-center gap-[10px] mt-[12px]">
+            ❌ {trackError}
+          </div>
         )}
 
         {trackResult && (
-          <div className="track-result" style={{ marginTop: 15, background: '#f5f9f6', padding: 20, borderRadius: 8, border: '1px solid #dbe7de' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 10, marginBottom: 14 }}>
+          <div className="mt-[15px] bg-[#f5f9f6] p-[20px] rounded-[8px] border border-[#dbe7de]">
+            <div className="flex justify-between items-start flex-wrap gap-[10px] mb-[14px]">
               <div>
-                <h4 style={{ fontWeight: 700, fontSize: 17, marginBottom: 6 }}>{trackResult.title}</h4>
-                <div style={{ fontSize: 14, color: 'var(--muted)', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                <h4 className="font-bold text-[17px] mb-[6px] text-[#18301e]">{trackResult.title}</h4>
+                <div className="text-[14px] text-[#4e5e53] flex gap-[16px] flex-wrap">
                   <span>📄 Mã: <strong>{trackResult.trackingCode}</strong></span>
                   <span>📅 {new Date(trackResult.createdAt).toLocaleDateString('vi-VN')}</span>
                   <span>🏷️ {trackResult.category}</span>
@@ -74,9 +90,9 @@ const TrackPetition = () => {
               <StatusBadge status={trackResult.status} />
             </div>
             {trackResult.aiSummary && (
-              <div style={{ background: '#fff', padding: '12px 16px', borderRadius: 8, border: '1px solid var(--border)' }}>
-                <strong style={{ fontSize: 13, color: 'var(--muted)' }}>🤖 Tóm tắt tự động:</strong>
-                <p style={{ marginTop: 4, fontSize: 14 }}>{trackResult.aiSummary}</p>
+              <div className="bg-white p-[12px_16px] rounded-[8px] border border-[#e5ece7]">
+                <strong className="text-[13px] text-[#4e5e53]">🤖 Tóm tắt tự động:</strong>
+                <p className="mt-[4px] text-[14px] text-[#18301e]">{trackResult.aiSummary}</p>
               </div>
             )}
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../assets/styles/home.css';
+
 import PublicLayout from '../components/Layout/PublicLayout';
 import HeroSection from '../features/misc/components/HeroSection';
 import StatsSection from '../features/misc/components/StatsSection';
@@ -16,14 +16,16 @@ const Home = () => {
       <StatsSection />
       <InfoSection onSelectCategory={setSelectedCategory} />
 
-      <section className="form-section" id="gui-phan-anh">
-        <div className="container">
-          <div className="form-card">
-            <h3 style={{ color: 'var(--green-dark)', fontSize: 22, marginBottom: 5 }}>GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
-            <p style={{ color: 'var(--muted)', marginBottom: 18 }}>
-              Vui lòng cung cấp đầy đủ thông tin để phản ánh được tiếp nhận và xử lý nhanh chóng.
-            </p>
-            <SubmitForm selectedCategory={selectedCategory} />
+      <section className="py-[30px]" id="gui-phan-anh">
+        <div className="container mx-auto px-4">
+          <div className="max-w-[850px] mx-auto bg-white border border-[#e5ece7] shadow-[0_4px_12px_rgba(0,0,0,0.04)] rounded-[16px] p-0">
+            <div className="p-6 md:p-8">
+              <h3 className="text-[#087c20] text-[22px] font-bold mb-[5px]">GỬI PHẢN ÁNH, KIẾN NGHỊ</h3>
+              <p className="text-[#4e5e53] mb-[18px]">
+                Vui lòng cung cấp đầy đủ thông tin để phản ánh được tiếp nhận và xử lý nhanh chóng.
+              </p>
+              <SubmitForm selectedCategory={selectedCategory} />
+            </div>
           </div>
         </div>
       </section>
