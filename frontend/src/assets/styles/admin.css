@@ -536,7 +536,7 @@ body.admin-mode {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 95;
   opacity: 0;
   transition: opacity 0.3s;
@@ -546,30 +546,44 @@ body.admin-mode {
 /* Responsive Admin Layout (Mobile/Tablet) */
 /* ========================================= */
 @media (max-width: 900px) {
-  .admin-hamburger { display: block; }
-  .admin-sidebar-close { display: block; }
-  
+  .admin-hamburger {
+    display: block;
+  }
+
+  .admin-sidebar-close {
+    display: block;
+  }
+
   .admin-sidebar {
     position: fixed;
     top: 0;
-    left: -260px; /* Hide off-screen by default */
+    left: -260px;
+    /* Hide off-screen by default */
     width: 260px !important;
     height: 100vh;
     z-index: 100;
   }
-  
+
   .admin-sidebar.active {
     left: 0;
   }
-  
+
   .admin-sidebar-overlay.active {
     display: block;
     opacity: 1;
   }
 
-  .admin-topbar { padding: 0 16px; }
-  .admin-topbar-title { font-size: 16px; }
-  .admin-user-info span { display: none; }
+  .admin-topbar {
+    padding: 0 16px;
+  }
+
+  .admin-topbar-title {
+    font-size: 16px;
+  }
+
+  .admin-user-info span {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -580,12 +594,12 @@ body.admin-mode {
   .admin-stat-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .admin-filters {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .admin-search {
     width: 100%;
   }

@@ -91,7 +91,11 @@ const PublicLayout = ({ children }) => {
               <p>Thứ 2 đến Thứ 6</p>
             </div>
           </div>
-          <div className="footer-bottom">© 2026 HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ. Bản quyền thuộc về UBND phường Cẩm Phả</div>
+          <div className="footer-bottom" style={{ lineHeight: '1.5' }}>
+            <span>© 2026 HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ. Bản quyền thuộc về</span>
+            <br />
+            <span>UBND phường Cẩm Phả</span>
+          </div>
         </div>
       </footer>
 
