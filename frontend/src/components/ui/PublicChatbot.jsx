@@ -57,8 +57,8 @@ const PublicChatbot = () => {
   return (
     <>
       {/* Draggable Floating Chat Button */}
-      <Draggable 
-        bounds="body" 
+      <Draggable
+        bounds="body"
         cancel=".close-btn"
         onStart={(e, data) => {
           dragStartPos.current = { x: data.x, y: data.y };
