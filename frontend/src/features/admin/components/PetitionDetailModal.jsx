@@ -147,15 +147,22 @@ export default function PetitionDetailModal({
                 ) : (
                   <p className="text-[#64748b] text-[14px] m-0 mb-[16px]">Hệ thống chưa phân tích phản ánh này.</p>
                 )}
-                <button
-                  className="mt-[20px] bg-white border border-[#10b981] text-[#047857] font-semibold inline-flex items-center gap-[8px] px-[16px] py-[8px] rounded-[8px] shadow-sm hover:bg-[#f0fdfa] transition-colors disabled:opacity-70"
-                  onClick={handleAIAnalyze}
-                  disabled={analyzingAI}
-                >
-                  {analyzingAI ? (
-                    <><span className="w-[14px] h-[14px] border-[2px] border-t-[#047857] border-transparent rounded-full animate-spin" /> Đang xử lý...</>
-                  ) : 'Chạy phân tích AI'}
-                </button>
+                <div className="mt-[20px] flex items-center gap-[12px]">
+                  <button
+                    className="bg-white border border-[#10b981] text-[#047857] font-semibold inline-flex items-center gap-[8px] px-[16px] py-[8px] rounded-[8px] shadow-sm hover:bg-[#f0fdfa] transition-colors disabled:opacity-70"
+                    onClick={handleAIAnalyze}
+                    disabled={analyzingAI}
+                  >
+                    {analyzingAI ? (
+                      <><span className="w-[14px] h-[14px] border-[2px] border-t-[#047857] border-transparent rounded-full animate-spin" /> Đang xử lý...</>
+                    ) : 'Chạy phân tích AI'}
+                  </button>
+                  {analyzingAI && (
+                    <span className="text-[#059669] text-[13px] animate-pulse">
+                      Hệ thống đang phân tích ngữ nghĩa, quá trình này có thể mất một ít thời gian...
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Status Update */}
