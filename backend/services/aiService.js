@@ -1,5 +1,3 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-
 // Node 18+ has built-in fetch.
 const _fetch = fetch;
 
@@ -7,12 +5,8 @@ function isOllamaAvailable() {
   return !!process.env.OLLAMA_API_URL;
 }
 
-function isGeminiAvailable() {
-  return !!process.env.GEMINI_API_KEY;
-}
-
 function isAvailable() {
-  return isOllamaAvailable() || isGeminiAvailable();
+  return isOllamaAvailable();
 }
 
 async function askOllama(prompt, systemPrompt = "") {
@@ -65,17 +59,12 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
   try {
     let responseText = "";
 
-    if (isOllamaAvailable()) {
-      // Use Ollama
-      responseText = await askOllama(prompt, systemPrompt);
-    } else {
-      // Use Gemini
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const fullPrompt = `${systemPrompt}\n${prompt}`;
-      const result = await model.generateContent(fullPrompt);
-      responseText = result.response.text();
+    if (!isOllamaAvailable()) {
+      throw new Error("Ollama is not configured.");
     }
+
+    // Use Ollama
+    let responseText = await askOllama(prompt, systemPrompt);
 
     // Clean up markdown syntax and extract JSON block robustly
     let rawJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
@@ -115,7 +104,7 @@ Hãy trả về chính xác 1 đối tượng JSON chứa các khóa sau:
 
 async function chatWithAI(message, context) {
   if (!isAvailable()) {
-    return { reply: "Xin lỗi, AI chưa được cấu hình. Vui lòng thêm OLLAMA_API_URL hoặc GEMINI_API_KEY." };
+    return { reply: "Xin lỗi, AI chưa được cấu hình. Vui lòng thêm OLLAMA_API_URL." };
   }
 
   const prompt = `Đây là dữ liệu ngữ cảnh hiện tại của hệ thống: ${JSON.stringify(context)}. 
@@ -125,19 +114,12 @@ Hãy trả lời ngắn gọn, súc tích và thân thiện. Trả về dưới 
   const systemPrompt = "Bạn là trợ lý ảo (Chatbot) của Hệ thống quản lý phản ánh Hội Nông Dân phường. Chỉ trả về JSON chứa field 'reply'.";
 
   try {
-    let responseText = "";
-
-    if (isOllamaAvailable()) {
-      // Use Ollama
-      responseText = await askOllama(prompt, systemPrompt);
-    } else {
-      // Use Gemini
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const fullPrompt = `${systemPrompt}\n${prompt}`;
-      const result = await model.generateContent(fullPrompt);
-      responseText = result.response.text();
+    if (!isOllamaAvailable()) {
+      throw new Error("Ollama is not configured.");
     }
+
+    // Use Ollama
+    let responseText = await askOllama(prompt, systemPrompt);
 
     let rawJson = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
 
