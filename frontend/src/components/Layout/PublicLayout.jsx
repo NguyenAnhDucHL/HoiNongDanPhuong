@@ -8,60 +8,66 @@ const PublicLayout = ({ children }) => {
   return (
     <div className="home-container">
       <style>{`
-        /* Desktop + Global Overrides */
-        .brand { flex-direction: row !important; align-items: center !important; gap: 15px !important; }
-        .brand-text { display: flex; flex-direction: column; justify-content: center; gap: 4px; }
-        
-        /* Mobile */
-        @media (max-width: 900px) {
-          .header-inner { flex-direction: row !important; padding: 10px 15px !important; align-items: center !important; min-height: auto !important; justify-content: space-between !important; gap: 10px !important; }
-          .brand { gap: 8px !important; flex: 0 1 auto !important; min-width: 0 !important; margin: 0 !important; width: auto !important; }
-          .logo { width: 44px !important; height: 44px !important; flex-shrink: 0 !important; }
-          .brand-text { gap: 2px !important; flex: 0 1 auto !important; min-width: 0 !important; margin: 0 !important; width: auto !important; }
-          .brand h1 { font-size: 13.5px !important; margin: 0 !important; text-align: left !important; line-height: 1.2 !important; }
-          .brand .subtitle { display: block !important; font-size: 10px !important; line-height: 1.25 !important; white-space: normal !important; opacity: 0.9 !important; margin: 0 !important; text-align: left !important; }
-          .actions { flex-direction: row !important; width: auto !important; margin: 0 !important; gap: 5px !important; flex-shrink: 0 !important; }
-          .action { padding: 5px !important; min-width: auto !important; border: 1px solid rgba(255,255,255,0.4) !important; border-radius: 8px !important; }
-          .action-text { display: none !important; }
-        }
-      `}</style>
       {/* ====== HEADER ====== */}
-      <header className="header">
-        <div className="container header-inner">
-          <div className="brand">
-            <img src="/logo.png" alt="Hội Nông Dân" className="logo" />
-            <div className="brand-text">
-              <h1>HỘI NÔNG DÂN CẨM PHẢ</h1>
-              <div className="subtitle">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
+      <header className="relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #079323 0%, #0b7d20 65%, #075f19 100%)' }}>
+        {/* Background circle decoration */}
+        <div className="absolute rounded-full" style={{ width: '520px', height: '330px', background: 'rgba(184, 227, 106, 0.1)', right: '-130px', top: '-110px' }}></div>
+        
+        <div className="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center justify-between min-h-[80px] md:min-h-[154px] py-4 md:py-0 relative z-10 gap-4 md:gap-0">
+          
+          <div className="flex flex-row items-center gap-2 md:gap-[15px]">
+            <img src="/logo.png" alt="Hội Nông Dân" className="w-[44px] h-[44px] md:w-[94px] md:h-[94px] flex-shrink-0" />
+            <div className="flex flex-col justify-center gap-1 md:gap-[4px]">
+              <h1 className="text-[14px] md:text-[34px] font-extrabold m-0 text-left uppercase leading-tight md:leading-[1.1] tracking-wide" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.18)' }}>HỘI NÔNG DÂN CẨM PHẢ</h1>
+              <div className="text-[10px] md:text-[18px] text-left opacity-90 leading-tight md:leading-[1.25] font-semibold whitespace-normal md:whitespace-nowrap">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
             </div>
           </div>
-          <div className="actions">
-            <div className="action hotline" onClick={() => alert('Đường dây nóng:\n0363.789.100\n0838.911.445')} style={{ cursor: 'pointer' }}>
-              <span className="icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+
+          <div className="flex flex-row items-center gap-2 md:gap-[15px] flex-shrink-0">
+            <div 
+              className="flex items-center p-2 md:py-[10px] md:px-[22px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
+              onClick={() => alert('Đường dây nóng:\n0363.789.100\n0838.911.445')}
+            >
+              <span className="flex-shrink-0">
+                <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
               </span>
-              <span className="action-text">&nbsp;ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</span>
+              <span className="hidden md:block ml-[9px] text-[13px] font-bold leading-[1.3] text-left">ĐƯỜNG DÂY NÓNG<br />0363789100/0838911445</span>
             </div>
-            <div className="action" onClick={() => window.location.href = '/admin/login'} style={{ cursor: 'pointer' }}>
-              <span className="icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div 
+              className="flex items-center p-2 md:py-[10px] md:px-[35px] border border-white/40 md:border-white/20 rounded-lg md:rounded-[12px] bg-white/5 md:bg-white/10 hover:bg-white/20 cursor-pointer transition-colors"
+              onClick={() => window.location.href = '/admin/login'}
+            >
+              <span className="flex-shrink-0">
+                <svg width="20" height="20" className="md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </span>
-              <span className="action-text">&nbsp;ĐĂNG NHẬP</span>
+              <span className="hidden md:block ml-[9px] text-[14px] font-bold tracking-wider">ĐĂNG NHẬP</span>
             </div>
           </div>
+          
         </div>
       </header>
 
       {/* ====== NAVIGATION ====== */}
-      <nav className="nav">
-        <div className="container nav-inner">
-          <a className={tab === 'home' ? 'active' : ''} href="#trang-chu" onClick={() => setTab('home')}>⌂ &nbsp; TRANG CHỦ</a>
-          <a className={tab === 'intro' ? 'active' : ''} href="#gioi-thieu" onClick={() => setTab('intro')}>GIỚI THIỆU</a>
-          <a className={tab === 'submit' ? 'active' : ''} href="#gui-phan-anh" onClick={() => setTab('submit')}>GỬI PHẢN ÁNH, KIẾN NGHỊ</a>
-          <a className={tab === 'search' ? 'active' : ''} href="#tra-cuu" onClick={() => setTab('search')}>TRA CỨU KẾT QUẢ</a>
-          <a className={tab === 'guide' ? 'active' : ''} href="#huong-dan" onClick={() => setTab('guide')}>HƯỚNG DẪN</a>
-          <a className={tab === 'stats' ? 'active' : ''} href="#thong-ke" onClick={() => setTab('stats')}>THỐNG KÊ</a>
-          <a className={tab === 'news' ? 'active' : ''} href="#tin-tuc" onClick={() => setTab('news')}>TIN TỨC</a>
+      <nav className="bg-white border-b border-[#dbe7de] shadow-[0_3px_10px_rgba(0,0,0,0.06)] sticky top-0 z-20">
+        <div className="container mx-auto flex items-center justify-start md:justify-center overflow-x-auto whitespace-nowrap hide-scrollbar">
+          {[
+            { id: 'home', hash: '#trang-chu', label: '⌂  TRANG CHỦ' },
+            { id: 'intro', hash: '#gioi-thieu', label: 'GIỚI THIỆU' },
+            { id: 'submit', hash: '#gui-phan-anh', label: 'GỬI PHẢN ÁNH, KIẾN NGHỊ' },
+            { id: 'search', hash: '#tra-cuu', label: 'TRA CỨU KẾT QUẢ' },
+            { id: 'guide', hash: '#huong-dan', label: 'HƯỚNG DẪN' },
+            { id: 'stats', hash: '#thong-ke', label: 'THỐNG KÊ' },
+            { id: 'news', hash: '#tin-tuc', label: 'TIN TỨC' }
+          ].map((item) => (
+            <a 
+              key={item.id}
+              className={`px-4 md:px-[19px] py-4 font-semibold text-[#18301e] border-b-4 hover:text-[#149b2f] hover:border-[#149b2f] transition-colors ${tab === item.id ? 'border-[#149b2f] text-[#149b2f]' : 'border-transparent'}`}
+              href={item.hash} 
+              onClick={() => setTab(item.id)}
+            >
+              {item.label}
+            </a>
+          ))}
         </div>
       </nav>
 
