@@ -63,9 +63,9 @@ const TrackPetition = () => {
             onChange={e => setTrackCode(e.target.value.toUpperCase())}
             onKeyDown={e => e.key === 'Enter' && handleTrack()}
           />
-          <button 
-            className="bg-[#149b2f] hover:bg-[#087c20] text-white font-bold p-[11px_24px] rounded-[8px] transition-colors min-w-[150px] disabled:opacity-50 disabled:cursor-not-allowed" 
-            onClick={handleTrack} 
+          <button
+            className="bg-[#149b2f] hover:bg-[#087c20] text-white font-bold p-[11px_24px] rounded-[8px] transition-colors min-w-[150px] disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleTrack}
             disabled={trackLoading}
           >
             {trackLoading ? 'ĐANG XỬ LÝ...' : 'TRA CỨU'}

@@ -172,7 +172,7 @@ export default function PostManager({ type, title }) {
         )}
       </div>
 
-      {Math.ceil(total / limit) > 0 && (
+      {Math.ceil(total / limit) > 1 && (
         <div className="flex justify-center items-center gap-[16px] mt-[24px]">
           <button
             disabled={page === 1}
