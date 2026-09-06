@@ -13,7 +13,7 @@ const PublicLayout = ({ children }) => {
         {/* Background circle decoration */}
         <div className="absolute rounded-full" style={{ width: '520px', height: '330px', background: 'rgba(184, 227, 106, 0.1)', right: '-130px', top: '-110px' }}></div>
 
-        <div className="container mx-auto px-4 md:px-0 flex flex-col md:flex-row items-center justify-between min-h-[80px] md:min-h-[154px] py-4 md:py-0 relative z-10 gap-4 md:gap-0">
+        <div className="container mx-auto px-4 md:px-0 flex flex-row items-center justify-between min-h-[80px] md:min-h-[154px] py-4 md:py-0 relative z-10 gap-2 md:gap-0">
 
           <div className="flex flex-row items-center gap-2 md:gap-[15px]">
             <img src="/logo.png" alt="Hội Nông Dân" className="w-[44px] h-[44px] md:w-[94px] md:h-[94px] flex-shrink-0" />
