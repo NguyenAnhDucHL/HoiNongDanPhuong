@@ -20,7 +20,7 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - hnd_network
-      - proxy_network
+      - tool-calendar_tool-calendar-net
     deploy:
       resources:
         limits:
@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
     networks:
       - hnd_network
-      - proxy_network
+      - tool-calendar_tool-calendar-net
     deploy:
       resources:
         limits:
@@ -49,6 +49,5 @@ services:
 networks:
   hnd_network:
     driver: bridge
-  proxy_network:
+  tool-calendar_tool-calendar-net:
     external: true
-    name: tool-calendar_tool-calendar-net
