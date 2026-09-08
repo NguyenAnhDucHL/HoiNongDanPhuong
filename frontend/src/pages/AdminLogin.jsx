@@ -74,7 +74,7 @@ export default function AdminLogin() {
 
       <div className="bg-white rounded-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.2)] w-full max-w-[440px] p-8 md:p-10">
         <div className="flex flex-col items-center mb-8 text-center">
-          <img src="/logo.png" alt="Logo" className="w-[72px] h-[72px] mb-3" />
+          <img src="/logo.webp" alt="Logo" className="w-[72px] h-[72px] mb-3" />
           <h2 className="text-[18px] md:text-[20px] font-extrabold text-[#087c20] uppercase leading-tight">HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h2>
           <p className="text-[13px] text-[#6b7280] mt-1 font-medium">Cổng quản trị - Dành cho cán bộ</p>
         </div>
