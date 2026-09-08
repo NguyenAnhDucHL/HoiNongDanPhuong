@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
+    image: ghcr.io/nguyenanhduchl/hnd-backend:latest
     container_name: hnd_backend
     ports:
       - "3002:3002"
@@ -29,9 +27,7 @@ services:
           memory: 512M
 
   frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: ghcr.io/nguyenanhduchl/hnd-frontend:latest
     container_name: hnd_frontend
     expose:
       - "80"

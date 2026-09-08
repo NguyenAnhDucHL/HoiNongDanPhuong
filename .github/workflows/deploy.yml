@@ -4,33 +4,75 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Server via SSH
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/hnd-backend:latest
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/hnd-frontend:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote ssh commands to deploy
+        uses: appleboy/ssh-action@v1.0.3
         env:
-          VNPT_HOST: ${{ secrets.VNPT_HOST }}
-          VNPT_USER: ${{ secrets.VNPT_USER }}
-          VNPT_PASS: ${{ secrets.VNPT_PASS }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-          
-          sshpass -p "$VNPT_PASS" ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 $VNPT_USER@$VNPT_HOST << 'EOF'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        with:
+          host: ${{ secrets.VNPT_HOST }}
+          username: ${{ secrets.VNPT_USER }}
+          password: ${{ secrets.VNPT_PASS }}
+          envs: GITHUB_TOKEN,GITHUB_ACTOR
+          script: |
             set -e
-            cd /root/HoiNongDanPhuong
+            
+            # Đảm bảo mã nguồn trên server đã có (chỉ cần lấy file cấu hình docker-compose, nginx, v.v)
+            if [ ! -d "/root/HoiNongDanPhuong" ]; then
+              cd /root
+              git clone https://github.com/NguyenAnhDucHL/HoiNongDanPhuong.git
+            fi
+            
+            cd /root/HoiNongDanPhuong || exit 1
             git fetch origin main
             git reset --hard origin/main
-            docker rm -f 9813f87c32c17bf5bb372a801c6156080ca53bd5244775d942697ef1d2b3f5f5 || true
-            docker rm -f 3bd51cd8dce8_hnd_backend || true
-            docker compose build --no-cache && docker compose up -d --force-recreate
-            # Dọn dẹp các image cũ/lỗi thời để giải phóng dung lượng
-            docker image prune -f
-          EOF
+
+            echo ">>> Đăng nhập vào Github Container Registry trên VPS..."
+            echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+            echo ">>> Pull image từ GHCR..."
+            docker-compose pull backend
+            docker-compose pull frontend
+
+            echo ">>> Khởi động các container..."
+            docker-compose up -d --no-build
+
+            # Dọn dẹp image thừa
+            docker image prune -f || true
