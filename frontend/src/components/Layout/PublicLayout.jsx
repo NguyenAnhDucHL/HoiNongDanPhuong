@@ -20,7 +20,7 @@ const PublicLayout = ({ children }) => {
           <div className="flex flex-row items-center gap-2 md:gap-[15px]">
             <img src="/logo.webp" alt="Hội Nông Dân" className="w-[44px] h-[44px] md:w-[94px] md:h-[94px] flex-shrink-0" />
             <div className="flex flex-col justify-center gap-1 md:gap-[4px]">
-              <h1 className="text-[14px] md:text-[34px] font-extrabold m-0 text-left uppercase leading-tight md:leading-[1.1] tracking-wide" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.18)' }}>HỘI NÔNG DÂN CẨM PHẢ</h1>
+              <h1 className="text-[14px] md:text-[34px] font-extrabold m-0 text-left uppercase leading-tight md:leading-[1.1] tracking-wide" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.18)' }}>HỘI NÔNG DÂN PHƯỜNG CẨM PHẢ</h1>
               <div className="text-[10px] md:text-[18px] text-left opacity-90 leading-tight md:leading-[1.25] font-semibold whitespace-normal md:whitespace-nowrap">Cổng tiếp nhận & xử lý phản ánh hội viên</div>
             </div>
           </div>

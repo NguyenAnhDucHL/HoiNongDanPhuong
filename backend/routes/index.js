@@ -24,7 +24,7 @@ router.use('/wards', wardRoutes);
 router.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    service: 'Hội Nông Dân Cẩm Phả Backend',
+    service: 'Hội Nông Dân Phường Cẩm Phả Backend',
     timestamp: new Date().toISOString(),
   });
 });

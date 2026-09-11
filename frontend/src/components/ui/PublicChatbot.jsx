@@ -2,6 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { fetchApi } from '../../lib/api';
 
+const SUGGESTED_QUESTIONS = [
+  { icon: '📝', text: 'Làm thế nào để gửi phản ánh?' },
+  { icon: '🔍', text: 'Tra cứu trạng thái phản ánh' },
+  { icon: '🌾', text: 'Hỗ trợ vay vốn nông nghiệp' },
+  { icon: '💊', text: 'Mua thuốc BVTV ở đâu?' },
+  { icon: '📞', text: 'Liên hệ Hội Nông Dân ở đâu?' },
+];
+
 const PublicChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -10,6 +18,7 @@ const PublicChatbot = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const messagesEndRef = useRef(null);
 
   const INITIAL_MESSAGE = { role: 'assistant', content: 'Chào bạn, tôi là trợ lý ảo của Hội Nông Dân Phường. Tôi có thể giúp gì cho bạn?' };
@@ -17,6 +26,7 @@ const PublicChatbot = () => {
   const handleClear = () => {
     setMessages([INITIAL_MESSAGE]);
     setInput('');
+    setShowSuggestions(true);
   };
 
   const scrollToBottom = () => {
@@ -27,11 +37,12 @@ const PublicChatbot = () => {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = async (messageText) => {
+    const textToSend = messageText || input.trim();
+    if (!textToSend) return;
 
-    const userMessage = input.trim();
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setShowSuggestions(false);
+    setMessages(prev => [...prev, { role: 'user', content: textToSend }]);
     setInput('');
     setIsLoading(true);
 
@@ -39,7 +50,7 @@ const PublicChatbot = () => {
       // Use the public AI endpoint
       const response = await fetchApi('/ai/chat/public', {
         method: 'POST',
-        body: JSON.stringify({ message: userMessage })
+        body: JSON.stringify({ message: textToSend })
       });
 
       setMessages(prev => [...prev, { role: 'assistant', content: response.reply }]);
@@ -48,6 +59,10 @@ const PublicChatbot = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSuggestionClick = (questionText) => {
+    handleSend(questionText);
   };
 
   const dragStartPos = useRef({ x: 0, y: 0 });
@@ -253,6 +268,50 @@ const PublicChatbot = () => {
               </div>
             </div>
           )}
+          {/* Suggested Questions - chỉ hiển thị khi còn ở trạng thái ban đầu */}
+          {showSuggestions && messages.length === 1 && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 4 }}>
+              <div style={{ fontSize: 12, color: '#94a3b8', fontWeight: 500, paddingLeft: 4 }}>💡 Gợi ý câu hỏi:</div>
+              {SUGGESTED_QUESTIONS.map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSuggestionClick(q.text)}
+                  disabled={isLoading}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '8px 14px',
+                    backgroundColor: 'white',
+                    border: '1.5px solid #fed7aa',
+                    borderRadius: 20,
+                    cursor: 'pointer',
+                    fontSize: 13,
+                    color: '#c2410c',
+                    fontWeight: 500,
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 1px 4px rgba(255,138,0,0.08)',
+                    width: '100%',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.backgroundColor = '#fff7ed';
+                    e.currentTarget.style.borderColor = '#ff8a00';
+                    e.currentTarget.style.transform = 'translateX(3px)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.backgroundColor = 'white';
+                    e.currentTarget.style.borderColor = '#fed7aa';
+                    e.currentTarget.style.transform = 'translateX(0)';
+                  }}
+                >
+                  <span style={{ fontSize: 16 }}>{q.icon}</span>
+                  <span>{q.text}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
@@ -269,7 +328,7 @@ const PublicChatbot = () => {
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSend()}
+              onKeyDown={e => e.key === 'Enter' && handleSend(null)}
               placeholder="Hỏi tôi bất cứ điều gì..."
               style={{
                 flex: 1,
@@ -282,7 +341,7 @@ const PublicChatbot = () => {
               disabled={isLoading}
             />
             <button
-              onClick={handleSend}
+              onClick={() => handleSend(null)}
               aria-label="Gửi tin nhắn"
               disabled={isLoading || !input.trim()}
               style={{

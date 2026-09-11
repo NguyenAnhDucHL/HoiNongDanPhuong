@@ -8,7 +8,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Hội Nông Dân Cẩm Phả",
+  "author": "Hội Nông Dân Phường Cẩm Phả",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",

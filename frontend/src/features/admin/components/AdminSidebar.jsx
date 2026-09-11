@@ -23,7 +23,7 @@ export default function AdminSidebar({ currentTab, onTabChange, isOpen, onClose 
         
         <div className="h-[64px] flex items-center px-[20px] bg-black/15 border-b border-white/5 shrink-0 relative">
           <img src="/logo.webp" alt="Logo" className="w-[36px] h-[36px] mr-[12px]" />
-          <h2 className="text-[15px] font-bold m-0 text-white leading-[1.2]">Hội Nông Dân Cẩm Phả</h2>
+          <h2 className="text-[15px] font-bold m-0 text-white leading-[1.2]">Hội Nông Dân Phường Cẩm Phả</h2>
           <button 
             className="md:hidden absolute right-[12px] top-1/2 -translate-y-1/2 text-white/70 bg-transparent border-none text-[20px] cursor-pointer p-2 hover:text-white" 
             onClick={onClose}
