@@ -10,6 +10,7 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [kickedOut, setKickedOut] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -20,8 +21,10 @@ export default function AdminLogin() {
       // Tự động ẩn toast sau 4 giây
       setTimeout(() => setSuccess(''), 4000);
     } else if (params.get('error') === 'kicked_out') {
-      setError('Tài khoản của bạn vừa được đăng nhập trên một thiết bị khác. Bạn đã bị đăng xuất khỏi hệ thống!');
+      setKickedOut(true);
       navigate('/admin/login', { replace: true });
+      // Tự động ẩn sau 8 giây
+      setTimeout(() => setKickedOut(false), 8000);
     }
 
     // Already logged in?
@@ -59,7 +62,7 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a8c24] to-[#075f19] flex items-center justify-center p-4">
-      {/* Toast đăng xuất */}
+      {/* Toast đăng xuất thành công */}
       {success && (
         <div className="fixed top-5 right-5 z-[9999] bg-white text-[#1e7e34] py-2.5 px-3 rounded-lg border border-[#d4edda] shadow-[0_4px_16px_rgba(0,0,0,0.12)] flex items-center gap-2 text-sm font-medium min-w-[160px] max-w-[280px] animate-[slideInRight_0.3s_ease-out]">
           <span className="w-5 h-5 rounded-full bg-[#28a745] text-white flex items-center justify-center text-xs flex-shrink-0 font-bold">✓</span>
@@ -69,6 +72,31 @@ export default function AdminLogin() {
             className="bg-transparent border-none cursor-pointer text-[#6c757d] text-base leading-none pl-1 flex-shrink-0"
             title="Đóng"
           >×</button>
+        </div>
+      )}
+
+      {/* Banner cảnh báo bị kick (đăng nhập từ thiết bị khác) */}
+      {kickedOut && (
+        <div className="fixed top-0 left-0 right-0 z-[9999] bg-[#f59e0b] text-white shadow-lg animate-[slideDown_0.4s_ease-out]">
+          <div className="max-w-2xl mx-auto px-4 py-3 flex items-start gap-3">
+            <span className="text-2xl flex-shrink-0 mt-0.5">⚠️</span>
+            <div className="flex-1">
+              <div className="font-bold text-[15px]">Tài khoản đã đăng nhập ở nơi khác!</div>
+              <div className="text-[13px] mt-0.5 opacity-90">
+                Phiên làm việc của bạn đã bị kết thúc vì tài khoản này vừa được đăng nhập trên một thiết bị khác.
+                Nếu không phải bạn, hãy đổi mật khẩu ngay.
+              </div>
+            </div>
+            <button
+              onClick={() => setKickedOut(false)}
+              className="bg-transparent border-none cursor-pointer text-white text-xl leading-none flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity"
+              title="Đóng"
+            >×</button>
+          </div>
+          {/* Progress bar tự động ẩn */}
+          <div className="h-1 bg-white/30">
+            <div className="h-full bg-white/70 animate-[shrinkWidth_8s_linear_forwards]" />
+          </div>
         </div>
       )}
 
