@@ -260,6 +260,7 @@ export default function SubmitForm({ selectedCategory = '' }) {
               value={form.content}
               onChange={handleChange}
               placeholder="Mô tả chi tiết vấn đề cần phản ánh, kiến nghị. Thông tin càng chi tiết, chúng tôi càng xử lý hiệu quả hơn..."
+            />
             <span className="text-[12px] text-[#4e5e53]">
               {form.content.length} ký tự
             </span>
