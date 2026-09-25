@@ -1,6 +1,7 @@
 const recentPetitions = new Map();
 
 const checkDuplicatePetition = (req, res, next) => {
+  if (!req.body) return next();
   const { phone, title } = req.body;
   if (!phone || !title) return next();
 

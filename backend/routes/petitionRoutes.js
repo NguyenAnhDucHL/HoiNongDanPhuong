@@ -10,7 +10,6 @@ const multer = require('multer');
 router.post(
   '/',
   petitionLimiter,
-  checkDuplicatePetition,
   (req, res, next) => {
     const uploadMiddleware = upload.array('images', 10);
     uploadMiddleware(req, res, function (err) {
@@ -22,6 +21,7 @@ router.post(
       next();
     });
   },
+  checkDuplicatePetition,
   petitionController.createPetition
 );
 

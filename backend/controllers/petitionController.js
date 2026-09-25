@@ -5,7 +5,7 @@ const createPetition = asyncHandler(async (req, res) => {
   const files = req.files || [];
   const imagePaths = files.map(f => f.filename).join(',');
 
-  const { fullName, phone, cccd, ward, address, title, category, content } = req.body;
+  const { fullName, phone, cccd, ward, address, title, category, content } = req.body || {};
 
   // Basic validation
   if (!fullName?.trim()) return res.status(400).json({ error: 'Họ tên là bắt buộc.' });
