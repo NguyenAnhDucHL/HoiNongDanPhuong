@@ -12,7 +12,6 @@ const createPetition = asyncHandler(async (req, res) => {
   if (!title?.trim()) return res.status(400).json({ error: 'Tiêu đề là bắt buộc.' });
   if (!category) return res.status(400).json({ error: 'Lĩnh vực là bắt buộc.' });
   if (!content?.trim()) return res.status(400).json({ error: 'Nội dung phản ánh là bắt buộc.' });
-  if (content.trim().length < 20) return res.status(400).json({ error: 'Nội dung phản ánh quá ngắn (tối thiểu 20 ký tự).' });
 
   const result = await petitionService.createPetition({
     fullName, phone, cccd, ward, address, title, category, content, imagePaths,

@@ -45,7 +45,6 @@ export default function SubmitForm({ selectedCategory = '' }) {
     if (!form.category) errs.category = 'Vui lòng chọn lĩnh vực';
     if (form.category === 'Khác' && !customCategory.trim()) errs.customCategory = 'Vui lòng nhập chi tiết lĩnh vực';
     if (!form.content.trim()) errs.content = 'Nội dung phản ánh là bắt buộc';
-    if (form.content.trim().length < 20) errs.content = 'Nội dung quá ngắn (tối thiểu 20 ký tự)';
     if (form.phone && !/^0\d{9}$/.test(form.phone.replace(/\s/g, ''))) {
       errs.phone = 'Số điện thoại không hợp lệ (VD: 0912345678)';
     }
@@ -261,9 +260,8 @@ export default function SubmitForm({ selectedCategory = '' }) {
               value={form.content}
               onChange={handleChange}
               placeholder="Mô tả chi tiết vấn đề cần phản ánh, kiến nghị. Thông tin càng chi tiết, chúng tôi càng xử lý hiệu quả hơn..."
-            />
-            <span className={`text-[12px] ${form.content.length < 20 ? 'text-[#ef4444]' : 'text-[#4e5e53]'}`}>
-              {form.content.length} ký tự (tối thiểu 20)
+            <span className="text-[12px] text-[#4e5e53]">
+              {form.content.length} ký tự
             </span>
             {errors.content && <span className="text-[#ef4444] text-[13px] block">{errors.content}</span>}
           </div>
