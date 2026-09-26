@@ -78,10 +78,19 @@ const changePassword = asyncHandler(async (req, res) => {
   }
 
   const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-  await runAsync('UPDATE admins SET password = ? WHERE id = ?', [hashedNewPassword, adminId]);
+  // Rotate sessionToken to force logout on all other devices
+  const newSessionToken = crypto.randomBytes(16).toString('hex');
+  await runAsync('UPDATE admins SET password = ?, sessionToken = ? WHERE id = ?', [hashedNewPassword, newSessionToken, adminId]);
 
-  res.json({ message: 'Đổi mật khẩu thành công.' });
+  res.json({ message: 'Đổi mật khẩu thành công. Vui lòng đăng nhập lại.' });
 });
 
-module.exports = { login, verifyToken, changePassword };
+const logout = asyncHandler(async (req, res) => {
+  const adminId = req.admin.id;
+  // Clear the sessionToken to invalidate the current JWT
+  await runAsync('UPDATE admins SET sessionToken = NULL WHERE id = ?', [adminId]);
+  res.json({ message: 'Đăng xuất thành công.' });
+});
+
+module.exports = { login, verifyToken, changePassword, logout };
 

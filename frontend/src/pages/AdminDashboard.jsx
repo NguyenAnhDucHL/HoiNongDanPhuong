@@ -57,7 +57,12 @@ export default function AdminDashboard() {
 
   const [categories, setCategories] = useState(['all']);
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await fetchApi('/auth/logout', { method: 'POST' });
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
     localStorage.removeItem('hnd_admin_token');
     localStorage.removeItem('hnd_admin_info');
     navigate('/admin/login?logout=success');

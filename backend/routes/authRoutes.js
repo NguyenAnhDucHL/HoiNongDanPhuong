@@ -13,4 +13,7 @@ router.get('/verify', auth, authController.verifyToken);
 // Change password (protected)
 router.put('/change-password', auth, authController.changePassword);
 
+// Logout (protected)
+router.post('/logout', auth, authController.logout);
+
 module.exports = router;
