@@ -15,6 +15,7 @@ services:
       - ./backend/.env
     environment:
       - DB_PATH=/app/data/database.sqlite
+      - OLLAMA_API_URL=http://host.docker.internal:11434
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
