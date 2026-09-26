@@ -83,7 +83,7 @@ const checkAIStatus = asyncHandler(async (req, res) => {
     available,
     message: available
       ? 'AI Agent đang hoạt động bình thường.'
-      : 'AI Agent chưa được cấu hình. Vui lòng thêm OLLAMA_API_URL hoặc GEMINI_API_KEY vào file .env.',
+      : 'AI Agent chưa được cấu hình. Vui lòng thêm GEMINI_API_KEY vào file .env.',
   });
 });
 
