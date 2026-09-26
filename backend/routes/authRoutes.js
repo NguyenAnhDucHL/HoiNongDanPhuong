@@ -16,4 +16,7 @@ router.put('/change-password', auth, authController.changePassword);
 // Logout (protected)
 router.post('/logout', auth, authController.logout);
 
+// Get Audit Logs (protected)
+router.get('/audit-logs', auth, authController.getAuditLogs);
+
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchApi } from '../../../lib/api';
 
 export default function AccountManager() {
@@ -11,6 +11,25 @@ export default function AccountManager() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [auditLogs, setAuditLogs] = useState([]);
+  const [loadingLogs, setLoadingLogs] = useState(false);
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        setLoadingLogs(true);
+        const data = await fetchApi('/auth/audit-logs');
+        if (Array.isArray(data)) {
+          setAuditLogs(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch audit logs', err);
+      } finally {
+        setLoadingLogs(false);
+      }
+    };
+    fetchLogs();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -139,6 +158,53 @@ export default function AccountManager() {
             </button>
           </div>
         </form>
+      </div>
+
+      <div className="bg-white rounded-[12px] shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-[#e2e8f0] p-[30px] mt-[30px]">
+        <h4 className="font-bold text-[#2d3748] text-[16px] mb-[20px]">Nhật ký bảo mật (Gần đây)</h4>
+        
+        {loadingLogs ? (
+          <p className="text-gray-500">Đang tải dữ liệu...</p>
+        ) : auditLogs.length === 0 ? (
+          <p className="text-gray-500">Chưa có dữ liệu bảo mật.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-200 text-left">
+                  <th className="px-4 py-3 font-medium text-gray-600">Thời gian</th>
+                  <th className="px-4 py-3 font-medium text-gray-600">Hành động</th>
+                  <th className="px-4 py-3 font-medium text-gray-600">Địa chỉ IP</th>
+                  <th className="px-4 py-3 font-medium text-gray-600">Trình duyệt (User Agent)</th>
+                  <th className="px-4 py-3 font-medium text-gray-600">Chi tiết</th>
+                </tr>
+              </thead>
+              <tbody>
+                {auditLogs.map(log => (
+                  <tr key={log.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="px-4 py-3 whitespace-nowrap text-gray-700">
+                      {new Date(log.createdAt).toLocaleString('vi-VN')}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                        log.action.includes('SUCCESS') ? 'bg-green-100 text-green-800' :
+                        log.action.includes('FAILED') ? 'bg-red-100 text-red-800' :
+                        'bg-blue-100 text-blue-800'
+                      }`}>
+                        {log.action}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 font-mono text-gray-600">{log.ipAddress || '-'}</td>
+                    <td className="px-4 py-3 text-gray-500 max-w-[200px] truncate" title={log.userAgent}>
+                      {log.userAgent || '-'}
+                    </td>
+                    <td className="px-4 py-3 text-gray-700">{log.details}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

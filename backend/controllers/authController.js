@@ -8,27 +8,59 @@ const asyncHandler = require('../middlewares/asyncHandler');
 const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
+  const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const userAgent = req.headers['user-agent'];
+
   if (!username || !password) {
     return res.status(400).json({ error: 'Vui lòng nhập tên đăng nhập và mật khẩu.' });
   }
 
   const admin = await getAsync(
-    'SELECT id, username, password, fullName FROM admins WHERE username = ?',
+    'SELECT id, username, password, fullName, failedLoginAttempts, lockedUntil FROM admins WHERE username = ?',
     [username.trim()]
   );
 
-  if (!admin) {
-    return res.status(401).json({ error: 'Tên đăng nhập hoặc mật khẩu không đúng.' });
+  if (admin && admin.lockedUntil) {
+    const lockedUntilDate = new Date(admin.lockedUntil);
+    if (lockedUntilDate > new Date()) {
+      await runAsync(
+        'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+        [admin.id, admin.username, 'LOGIN_FAILED', ipAddress, userAgent, 'Tài khoản đang bị khóa (Lockout)']
+      );
+      return res.status(401).json({ error: 'Tài khoản đang bị khóa do đăng nhập sai quá nhiều. Vui lòng thử lại sau 15 phút.' });
+    }
   }
 
-  const isMatch = await bcrypt.compare(password, admin.password);
-  if (!isMatch) {
+  if (!admin || !(await bcrypt.compare(password, admin.password))) {
+    if (admin) {
+      const attempts = (admin.failedLoginAttempts || 0) + 1;
+      let lockedUntil = null;
+      if (attempts >= 5) {
+        lockedUntil = new Date(Date.now() + 15 * 60 * 1000).toISOString();
+      }
+      await runAsync('UPDATE admins SET failedLoginAttempts = ?, lockedUntil = ? WHERE id = ?', [attempts, lockedUntil, admin.id]);
+
+      await runAsync(
+        'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+        [admin.id, admin.username, 'LOGIN_FAILED', ipAddress, userAgent, `Sai mật khẩu (Lần ${attempts})`]
+      );
+    } else {
+      await runAsync(
+        'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+        [null, username, 'LOGIN_FAILED', ipAddress, userAgent, 'Tài khoản không tồn tại']
+      );
+    }
     return res.status(401).json({ error: 'Tên đăng nhập hoặc mật khẩu không đúng.' });
   }
 
   // Generate a random session token
   const sessionToken = crypto.randomBytes(16).toString('hex');
-  await runAsync('UPDATE admins SET sessionToken = ? WHERE id = ?', [sessionToken, admin.id]);
+  await runAsync('UPDATE admins SET failedLoginAttempts = 0, lockedUntil = NULL, sessionToken = ? WHERE id = ?', [sessionToken, admin.id]);
+
+  await runAsync(
+    'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+    [admin.id, admin.username, 'LOGIN_SUCCESS', ipAddress, userAgent, 'Đăng nhập thành công']
+  );
 
   const token = jwt.sign(
     {
@@ -82,6 +114,13 @@ const changePassword = asyncHandler(async (req, res) => {
   const newSessionToken = crypto.randomBytes(16).toString('hex');
   await runAsync('UPDATE admins SET password = ?, sessionToken = ? WHERE id = ?', [hashedNewPassword, newSessionToken, adminId]);
 
+  const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const userAgent = req.headers['user-agent'];
+  await runAsync(
+    'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+    [adminId, req.admin.username, 'CHANGE_PASSWORD', ipAddress, userAgent, 'Đổi mật khẩu thành công']
+  );
+
   res.json({ message: 'Đổi mật khẩu thành công. Vui lòng đăng nhập lại.' });
 });
 
@@ -89,8 +128,25 @@ const logout = asyncHandler(async (req, res) => {
   const adminId = req.admin.id;
   // Clear the sessionToken to invalidate the current JWT
   await runAsync('UPDATE admins SET sessionToken = NULL WHERE id = ?', [adminId]);
+
+  const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const userAgent = req.headers['user-agent'];
+  await runAsync(
+    'INSERT INTO audit_logs (adminId, username, action, ipAddress, userAgent, details) VALUES (?, ?, ?, ?, ?, ?)',
+    [adminId, req.admin.username, 'LOGOUT', ipAddress, userAgent, 'Đăng xuất thành công']
+  );
+
   res.json({ message: 'Đăng xuất thành công.' });
 });
 
-module.exports = { login, verifyToken, changePassword, logout };
+const getAuditLogs = asyncHandler(async (req, res) => {
+  const adminId = req.admin.id;
+  const logs = await allAsync(
+    'SELECT id, action, ipAddress, userAgent, details, createdAt FROM audit_logs WHERE adminId = ? ORDER BY createdAt DESC LIMIT 50',
+    [adminId]
+  );
+  res.json(logs);
+});
+
+module.exports = { login, verifyToken, changePassword, logout, getAuditLogs };
 

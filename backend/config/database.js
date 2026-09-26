@@ -33,12 +33,16 @@ const initDB = () => {
         password TEXT NOT NULL,
         fullName TEXT,
         sessionToken TEXT,
+        failedLoginAttempts INTEGER DEFAULT 0,
+        lockedUntil DATETIME,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
     // Handle migrations for admins table
     db.run(`ALTER TABLE admins ADD COLUMN sessionToken TEXT`, () => { });
+    db.run(`ALTER TABLE admins ADD COLUMN failedLoginAttempts INTEGER DEFAULT 0`, () => { });
+    db.run(`ALTER TABLE admins ADD COLUMN lockedUntil DATETIME`, () => { });
 
     // 2. Petitions table - extended for Hội Nông Dân with AI fields
     db.run(`
@@ -164,6 +168,21 @@ const initDB = () => {
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_category ON petitions (category)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_petitions_trackingCode ON petitions (trackingCode)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_tracking_logs_petitionId ON tracking_logs (petitionId)`);
+
+    // 9. Audit logs table (Security)
+    db.run(`
+      CREATE TABLE IF NOT EXISTS audit_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        adminId INTEGER,
+        username TEXT,
+        action TEXT NOT NULL,
+        ipAddress TEXT,
+        userAgent TEXT,
+        details TEXT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_audit_logs_createdAt ON audit_logs (createdAt DESC)`);
 
     // 6. Default admin account
     db.get(`SELECT id FROM admins WHERE username = 'admin'`, async (err, row) => {
